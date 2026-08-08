@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Solex — La nouvelle façon de payer</title>
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #050b18;
+            color: white;
+            min-height: 100vh;
+        }
+
+        /* NAVBAR */
+
+        nav {
+            height: 75px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            background: rgba(5,11,24,0.9);
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            color: #37e6a1;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        button {
+            border: none;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .login-btn {
+            background: transparent;
+            color: white;
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 11px 20px;
+            border-radius: 10px;
+        }
+
+        .signup-btn {
+            background: #37e6a1;
+            color: #03110b;
+            padding: 11px 20px;
+            border-radius: 10px;
+        }
+
+        /* HERO */
+
+        .hero {
+            min-height: calc(100vh - 75px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 60px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glow {
+            position: absolute;
+            width: 450px;
+            height: 450px;
+            background: #16d995;
+            opacity: 0.10;
+            filter: blur(100px);
+            border-radius: 50%;
+        }
+
+        .hero-content {
+            max-width: 850px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 8px 15px;
+            border-radius: 30px;
+            background: rgba(55,230,161,0.1);
+            border: 1px solid rgba(55,230,161,0.2);
+            color: #37e6a1;
+            font-size: 13px;
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            font-size: clamp(45px, 7vw, 82px);
+            line-height: 0.98;
+            letter-spacing: -4px;
+            margin-bottom: 25px;
+        }
+
+        h1 span {
+            color: #37e6a1;
+        }
+
+        .hero p {
+            color: #a8b2c5;
+            font-size: 18px;
+            line-height: 1.7;
+            max-width: 650px;
+            margin: auto;
+        }
+
+        .hero-actions {
+            margin-top: 35px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .main-btn {
+            padding: 15px 28px;
+            border-radius: 12px;
+            background: #37e6a1;
+            color: #03110b;
+            font-size: 16px;
+        }
+
+        .secondary-btn {
+            padding: 15px 28px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.12);
+            color: white;
+            font-size: 16px;
+        }
+
+        /* FEATURES */
+
+        .features {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 60px;
+            flex-wrap: wrap;
+        }
+
+        .feature {
+            width: 200px;
+            padding: 20px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 15px;
+        }
+
+        .feature strong {
+            display: block;
+            margin-bottom: 7px;
+        }
+
+        .feature small {
+            color: #8994a9;
+        }
+
+        /* MODAL */
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 100;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-box {
+            width: 100%;
+            max-width: 420px;
+            background: #0b1426;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 30px;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 18px;
+            background: transparent;
+            color: #a8b2c5;
+            font-size: 25px;
+        }
+
+        .modal h2 {
+            margin-bottom: 8px;
+        }
+
+        .modal-description {
+            color: #8793a8;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 7px;
+            color: #cbd3df;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 13px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: #070e1c;
+            color: white;
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: #37e6a1;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: #37e6a1;
+            border-radius: 10px;
+            margin-top: 8px;
+            color: #03110b;
+        }
+
+        .message {
+            margin-top: 15px;
+            text-align: center;
+            font-size: 14px;
+            min-height: 20px;
+        }
+
+        .switch {
+            text-align: center;
+            margin-top: 18px;
+            color: #8994a9;
+            font-size: 14px;
+        }
+
+        .switch span {
+            color: #37e6a1;
+            cursor: pointer;
+        }
+
+        @media(max-width:600px) {
+            nav {
+                padding: 0 20px;
+            }
+
+            .logo {
+                font-size: 24px;
+            }
+
+            .nav-buttons button {
+                padding: 9px 12px;
+                font-size: 13px;
+            }
+
+            h1 {
+                letter-spacing: -2px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav>
+    <div class="logo">Sol<span>ex</span></div>
+
+    <div class="nav-buttons">
+        <button class="login-btn" onclick="openLogin()">
+            Se connecter
+        </button>
+
+        <button class="signup-btn" onclick="openSignup()">
+            S'inscrire
+        </button>
+    </div>
+</nav>
+
+
+<section class="hero">
+
+    <div class="glow"></div>
+
+    <div class="hero-content">
+
+        <div class="badge">
+            L'écosystème financier nouvelle génération
+        </div>
+
+        <h1>
+            Payez.<br>
+            Échangez.<br>
+            <span>Simplement.</span>
+        </h1>
+
+        <p>
+            Solex vous permet de gérer votre solde,
+            effectuer des transactions et accéder à une
+            marketplace pensée pour une nouvelle économie numérique.
+        </p>
+
+        <div class="hero-actions">
+
+            <button class="main-btn" onclick="openSignup()">
+                Commencer maintenant
+            </button>
+
+            <button class="secondary-btn" onclick="openLogin()">
+                J'ai déjà un compte
+            </button>
+
+        </div>
+
+        <div class="features">
+
+            <div class="feature">
+                <strong>💳 Simple</strong>
+                <small>
+                    Gérez vos transactions facilement.
+                </small>
+            </div>
+
+            <div class="feature">
+                <strong>🛒 Marketplace</strong>
+                <small>
+                    Découvrez les produits disponibles.
+                </small>
+            </div>
+
+            <div class="feature">
+                <strong>🔐 Sécurisé</strong>
+                <small>
+                    Votre compte est protégé.
+                </small>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- MODAL INSCRIPTION -->
+
+<div class="modal" id="signupModal">
+
+    <div class="modal-box">
+
+        <button class="close" onclick="closeModals()">×</button>
+
+        <h2>Créer un compte</h2>
+
+        <p class="modal-description">
+            Rejoins l'écosystème Solex.
+        </p>
+
+        <form onsubmit="register(event)">
+
+            <div class="form-group">
+                <label>Nom</label>
+                <input
+                    id="signupName"
+                    type="text"
+                    placeholder="Ton nom"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <input
+                    id="signupEmail"
+                    type="email"
+                    placeholder="ton@email.com"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label>Mot de passe</label>
+                <input
+                    id="signupPassword"
+                    type="password"
+                    placeholder="Minimum 8 caractères"
+                    minlength="8"
+                    required
+                >
+            </div>
+
+            <button class="submit-btn" type="submit">
+                Créer mon compte
+            </button>
+
+            <div class="message" id="signupMessage"></div>
+
+        </form>
+
+        <div class="switch">
+            Déjà inscrit ?
+            <span onclick="openLogin()">
+                Se connecter
+            </span>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- MODAL CONNEXION -->
+
+<div class="modal" id="loginModal">
+
+    <div class="modal-box">
+
+        <button class="close" onclick="closeModals()">×</button>
+
+        <h2>Connexion</h2>
+
+        <p class="modal-description">
+            Accède à ton espace Solex.
+        </p>
+
+        <form onsubmit="login(event)">
+
+            <div class="form-group">
+                <label>Email</label>
+
+                <input
+                    id="loginEmail"
+                    type="email"
+                    placeholder="ton@email.com"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+
+                <label>Mot de passe</label>
+
+                <input
+                    id="loginPassword"
+                    type="password"
+                    placeholder="Ton mot de passe"
+                    required
+                >
+
+            </div>
+
+            <button class="submit-btn" type="submit">
+                Se connecter
+            </button>
+
+            <div class="message" id="loginMessage"></div>
+
+        </form>
+
+        <div class="switch">
+            Pas encore de compte ?
+            <span onclick="openSignup()">
+                S'inscrire
+            </span>
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    /* ================================
+       CONFIGURATION SUPABASE
+    ================================= */
+
+    const SUPABASE_URL =
+        "https://leppncecjxccbkwoktyu.supabase.co";
+
+    const SUPABASE_KEY =
+        "sb_publishable_FDtcO7MF7VVtQ7s94bpGeQ_5D4Reg4j";
+
+    const supabaseClient =
+        window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_KEY
+        );
+
+
+    /* ================================
+       MODALS
+    ================================= */
+
+    function openSignup() {
+
+        closeModals();
+
+        document
+            .getElementById("signupModal")
+            .classList.add("active");
+    }
+
+
+    function openLogin() {
+
+        closeModals();
+
+        document
+            .getElementById("loginModal")
+            .classList.add("active");
+    }
+
+
+    function closeModals() {
+
+        document
+            .getElementById("signupModal")
+            .classList.remove("active");
+
+        document
+            .getElementById("loginModal")
+            .classList.remove("active");
+    }
+
+
+    /* ================================
+       INSCRIPTION
+    ================================= */
+
+    async function register(event) {
+
+        event.preventDefault();
+
+        const name =
+            document.getElementById("signupName").value.trim();
+
+        const email =
+            document.getElementById("signupEmail").value.trim();
+
+        const password =
+            document.getElementById("signupPassword").value;
+
+        const message =
+            document.getElementById("signupMessage");
+
+        message.textContent = "Création du compte...";
+
+
+        try {
+
+            const { data, error } =
+                await supabaseClient.auth.signUp({
+                    email: email,
+                    password: password
+                });
+
+
+            if (error) {
+                message.textContent = error.message;
+                return;
+            }
+
+
+            if (!data.user) {
+
+                message.textContent =
+                    "Impossible de créer le compte.";
+
+                return;
+            }
+
+
+            /*
+             * Création du profil Solex
+             */
+
+            const { error: profileError } =
+                await supabaseClient
+                    .from("profiles")
+                    .insert({
+                        id: data.user.id,
+                        name: name,
+                        balance: 0
+                    });
+
+
+            if (profileError) {
+
+                message.textContent =
+                    "Compte créé mais profil non créé : "
+                    + profileError.message;
+
+                return;
+            }
+
+
+            message.textContent =
+                "Compte créé avec succès !";
+
+
+            setTimeout(() => {
+
+                window.location.href =
+                    "dashboard.html";
+
+            }, 1200);
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            message.textContent =
+                "Une erreur est survenue.";
+
+        }
+
+    }
+
+
+    /* ================================
+       CONNEXION
+    ================================= */
+
+    async function login(event) {
+
+        event.preventDefault();
+
+        const email =
+            document.getElementById("loginEmail").value.trim();
+
+        const password =
+            document.getElementById("loginPassword").value;
+
+        const message =
+            document.getElementById("loginMessage");
+
+        message.textContent =
+            "Connexion...";
+
+
+        try {
+
+            const { data, error } =
+                await supabaseClient.auth.signInWithPassword({
+                    email: email,
+                    password: password
+                });
+
+
+            if (error) {
+
+                message.textContent =
+                    error.message;
+
+                return;
+            }
+
+
+            message.textContent =
+                "Connexion réussie !";
+
+
+            setTimeout(() => {
+
+                window.location.href =
+                    "dashboard.html";
+
+            }, 700);
+
+
+        } catch (error) {
+
+            console.error(error);
+
+            message.textContent =
+                "Une erreur est survenue.";
+
+        }
+
+    }
+
+</script>
+
+</body>
+</html>
