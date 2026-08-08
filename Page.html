@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Solex — Accueil</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #0b1020;
+      --card: #121a2d;
+      --text: #f5f7ff;
+      --muted: #a8b0c5;
+      --accent: #6c63ff;
+      --accent2: #8d85ff;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .container {
+      width: min(1120px, 92%);
+      margin: auto;
+    }
+
+    /* NAVIGATION */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(11, 16, 32, 0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid #202943;
+    }
+
+    nav {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: 900;
+    }
+
+    .logo span {
+      color: var(--accent2);
+    }
+
+    .links {
+      display: flex;
+      gap: 28px;
+      color: #dce1f0;
+    }
+
+    .links a:hover {
+      color: white;
+    }
+
+    .menu {
+      display: none;
+      background: none;
+      border: 0;
+      color: white;
+      font-size: 26px;
+    }
+
+    /* BOUTONS */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 19px;
+      border-radius: 12px;
+      background: var(--accent);
+      font-weight: 700;
+      border: 0;
+      color: white;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: var(--accent2);
+    }
+
+    .btn.secondary {
+      background: #1a233a;
+      border: 1px solid #303a59;
+    }
+
+    /* HERO */
+    .hero {
+      padding: 95px 0 80px;
+      text-align: center;
+      background:
+        radial-gradient(
+          circle at 50% 20%,
+          #25205b 0,
+          transparent 45%
+        );
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 7px 12px;
+      border: 1px solid #343c64;
+      border-radius: 999px;
+      color: #bfc6ff;
+      background: #171d38;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: clamp(44px, 8vw, 78px);
+      line-height: 1.02;
+      letter-spacing: -3px;
+      max-width: 850px;
+      margin: auto;
+    }
+
+    .hero p {
+      max-width: 650px;
+      margin: 24px auto;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* SECTIONS */
+    section {
+      padding: 72px 0;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 36px;
+      margin-bottom: 12px;
+    }
+
+    .section-sub {
+      text-align: center;
+      color: var(--muted);
+      margin-bottom: 40px;
+    }
+
+    /* CARTES */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid #222d48;
+      border-radius: 18px;
+      padding: 28px;
+    }
+
+    .icon {
+      font-size: 32px;
+      margin-bottom: 18px;
+    }
+
+    .card h3 {
+      margin-bottom: 9px;
+      font-size: 20px;
+    }
+
+    .card p {
+      color: var(--muted);
+    }
+
+    /* À PROPOS */
+    .about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 45px;
+      align-items: center;
+    }
+
+    .panel {
+      background: linear-gradient(
+        145deg,
+        #171f37,
+        #0f1628
+      );
+      border: 1px solid #293554;
+      border-radius: 24px;
+      padding: 35px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .stat {
+      background: #0c1324;
+      border-radius: 14px;
+      padding: 18px;
+      text-align: center;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 25px;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* FORMULAIRE */
+    form {
+      max-width: 600px;
+      margin: 30px auto 0;
+      display: flex;
+      gap: 10px;
+    }
+
+    input {
+      flex: 1;
+      background: #121a2d;
+      border: 1px solid #303a59;
+      border-radius: 12px;
+      padding: 14px;
+      color: white;
+      outline: none;
+    }
+
+    #message {
+      margin-top: 15px;
+      text-align: center;
+      color: #9ef0bd;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid #202943;
+      padding: 28px 0;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    /* MOBILE */
+    @media (max-width: 760px) {
+
+      .links,
+      .navbtn {
+        display: none;
+      }
+
+      .menu {
+        display: block;
+      }
+
+      .cards,
+      .about {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 70px;
+      }
+
+      form {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVIGATION -->
+  <header>
+    <div class="container">
+      <nav>
+
+        <a class="logo" href="#">
+          Sol<span>ex</span>
+        </a>
+
+        <div class="links">
+          <a href="#accueil">Accueil</a>
+          <a href="#services">Services</a>
+          <a href="#apropos">À propos</a>
+          <a href="#contact">Contact</a>
+        </div>
+
+        <a class="btn navbtn" href="#contact">
+          Commencer
+        </a>
+
+        <button class="menu" onclick="toggleMenu()">
+          ☰
+        </button>
+
+      </nav>
+    </div>
+  </header>
+
+
+  <!-- CONTENU PRINCIPAL -->
+  <main>
+
+    <!-- ACCUEIL -->
+    <section class="hero" id="accueil">
+
+      <div class="container">
+
+        <div class="badge">
+          Bienvenue sur Solex
+        </div>
+
+        <h1>
+          Construisez votre projet avec une expérience simple.
+        </h1>
+
+        <p>
+          Solex est une plateforme moderne pensée pour
+          présenter vos services, vos produits et vos idées
+          avec une interface rapide et élégante.
+        </p>
+
+        <div class="actions">
+
+          <a class="btn" href="#services">
+            Découvrir Solex
+          </a>
+
+          <a class="btn secondary" href="#apropos">
+            En savoir plus
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- SERVICES -->
+    <section id="services">
+
+      <div class="container">
+
+        <h2 class="section-title">
+          Ce que Solex propose
+        </h2>
+
+        <p class="section-sub">
+          Une base simple que tu peux adapter à ton véritable projet.
+        </p>
+
+        <div class="cards">
+
+          <article class="card">
+
+            <div class="icon">
+              ⚡
+            </div>
+
+            <h3>
+              Rapide
+            </h3>
+
+            <p>
+              Une interface légère et responsive,
+              conçue pour fonctionner aussi bien
+              sur téléphone que sur ordinateur.
+            </p>
+
+          </article>
+
+
+          <article class="card">
+
+            <div class="icon">
+              🔒
+            </div>
+
+            <h3>
+              Simple
+            </h3>
+
+            <p>
+              Une navigation claire avec les éléments
+              essentiels accessibles en quelques clics.
+            </p>
+
+          </article>
+
+
+          <article class="card">
+
+            <div class="icon">
+              🚀
+            </div>
+
+            <h3>
+              Évolutif
+            </h3>
+
+            <p>
+              Tu peux ensuite ajouter une connexion,
+              une base de données, des paiements
+              ou un tableau de bord.
+            </p>
+
+          </article>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- À PROPOS -->
+    <section id="apropos">
+
+      <div class="container about">
+
+        <div>
+
+          <h2
+            class="section-title"
+            style="text-align:left"
+          >
+            À propos de Solex
+          </h2>
+
+          <p
+            style="
+              color:var(--muted);
+              font-size:17px;
+            "
+          >
+            Cette page constitue une base complète
+            pour démarrer le site Solex.
+            Le contenu, les couleurs, le logo et les
+            fonctionnalités peuvent être personnalisés
+            selon ton projet.
+          </p>
+
+
+          <div class="stats">
+
+            <div class="stat">
+              <strong>100%</strong>
+              <span>Responsive</span>
+            </div>
+
+            <div class="stat">
+              <strong>1</strong>
+              <span>Fichier HTML</span>
+            </div>
+
+            <div class="stat">
+              <strong>0</strong>
+              <span>Dépendance</span>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="panel">
+
+          <h3
+            style="
+              font-size:26px;
+              margin-bottom:12px;
+            "
+          >
+            Solex Dashboard
+          </h3>
+
+          <p
+            style="
+              color:var(--muted);
+              margin-bottom:22px;
+            "
+          >
+            Un aperçu de l'espace utilisateur
+            que tu peux développer.
+          </p>
+
+          <div
+            style="
+              height:12px;
+              background:#252f49;
+              border-radius:20px;
+              margin:12px 0;
+            "
+          ></div>
+
+          <div
+            style="
+              height:12px;
+              background:#252f49;
+              border-radius:20px;
+              width:75%;
+              margin:12px 0;
+            "
+          ></div>
+
+          <div
+            style="
+              height:80px;
+              background:#0c1324;
+              border-radius:14px;
+              margin-top:24px;
+            "
+          ></div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- CONTACT -->
+    <section id="contact">
+
+      <div class="container">
+
+        <h2 class="section-title">
+          Contact
+        </h2>
+
+        <p class="section-sub">
+          Entre ton adresse e-mail pour recevoir
+          les nouveautés de Solex.
+        </p>
+
+        <form onsubmit="subscribe(event)">
+
+          <input
+            id="email"
+            type="email"
+            placeholder="Ton adresse e-mail"
+            required
+          >
+
+          <button
+            class="btn"
+            type="submit"
+          >
+            S'inscrire
+          </button>
+
+        </form>
+
+        <div id="message"></div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- FOOTER -->
+  <footer>
+
+    <div class="container">
+
+      ©
+      <span id="year"></span>
+      Solex — Tous droits réservés.
+
+    </div>
+
+  </footer>
+
+
+  <!-- JAVASCRIPT -->
+  <script>
+
+    // Année automatique
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+
+
+    // Formulaire
+    function subscribe(event) {
+
+      event.preventDefault();
+
+      const email =
+        document.getElementById("email").value;
+
+      document.getElementById("message").textContent =
+        "Merci ! " + email +
+        " a bien été enregistré.";
+
+      document.getElementById("email").value = "";
+
+    }
+
+
+    // Menu mobile
+    function toggleMenu() {
+
+      const links =
+        document.querySelector(".links");
+
+      if (links.style.display === "flex") {
+
+        links.style.display = "none";
+
+      } else {
+
+        links.style.display = "flex";
+        links.style.position = "absolute";
+        links.style.top = "72px";
+        links.style.left = "0";
+        links.style.right = "0";
+        links.style.padding = "20px";
+        links.style.background = "#0b1020";
+        links.style.flexDirection = "column";
+
+      }
+
+    }
+
+  </script>
+
+</body>
+</html>
