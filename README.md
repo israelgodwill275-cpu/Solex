@@ -1,2 +1,0 @@
-# Solex
-Finance
