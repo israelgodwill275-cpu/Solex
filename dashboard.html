@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solex — Dashboard</title>
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+:root {
+  --bg: #0b1020;
+  --card: #121a2d;
+  --card2: #171f37;
+  --text: #f5f7ff;
+  --muted: #a8b0c5;
+  --accent: #6c63ff;
+  --accent2: #8d85ff;
+  --line: #26314c;
+  --green: #5ee6a8;
+}
+body {
+  font-family: Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+}
+button {
+  font: inherit;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+/* STRUCTURE */
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+/* SIDEBAR */
+.sidebar {
+  width: 245px;
+  background: #0d1426;
+  border-right: 1px solid var(--line);
+  padding: 24px 16px;
+  position: fixed;
+  inset: 0 auto 0 0;
+}
+.logo {
+  font-size: 28px;
+  font-weight: 900;
+  padding: 0 14px 30px;
+}
+.logo span {
+  color: var(--accent2);
+}
+.nav-title {
+  font-size: 11px;
+  color: #68728c;
+  text-transform: uppercase;
+  padding: 15px 14px 8px;
+}
+.nav a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 11px;
+  color: #b7bfd3;
+  margin: 4px 0;
+}
+.nav a:hover,
+.nav a.active {
+  background: #1a2140;
+  color: white;
+}
+.nav a.active {
+  border-left: 3px solid var(--accent);
+}
+.logout {
+  position: absolute;
+  bottom: 20px;
+  left: 16px;
+  right: 16px;
+}
+/* CONTENU */
+.main {
+  margin-left: 245px;
+  width: calc(100% - 245px);
+  padding: 25px 32px;
+}
+/* TOP BAR */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+.welcome h1 {
+  font-size: 29px;
+}
+.welcome p {
+  color: var(--muted);
+  margin-top: 3px;
+}
+.actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.icon-btn {
+  width: 43px;
+  height: 43px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--card);
+  color: white;
+  cursor: pointer;
+}
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  padding: 7px 12px;
+  border-radius: 13px;
+}
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--accent);
+  font-weight: bold;
+}
+/* GRILLE PRINCIPALE */
+.grid {
+  display: grid;
+  grid-template-columns: 1.35fr 0.65fr;
+  gap: 20px;
+}
+/* SOLDE */
+.balance {
+  background: linear-gradient(135deg, #24205b, #171f37);
+  border: 1px solid #393477;
+  border-radius: 22px;
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
+}
+.balance:after {
+  content: "";
+  position: absolute;
+  width: 210px;
+  height: 210px;
+  border: 35px solid rgba(255,255,255,.04);
+  border-radius: 50%;
+  right: -80px;
+  top: -80px;
+}
+.balance-label {
+  color: #c8c8ed;
+  font-size: 14px;
+}
+.amount {
+  font-size: 42px;
+  font-weight: 800;
+  margin: 7px 0 18px;
+}
+.balance-bottom {
+  display: flex;
+  justify-content: space-between;
+  color: #c0c6d8;
+  font-size: 13px;
+}
+.balance-bottom strong {
+  color: var(--green);
+}
+/* BOUTONS RAPIDES */
+.quick {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 20px;
+}
+.quick button {
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: white;
+  border-radius: 12px;
+  padding: 12px;
+  cursor: pointer;
+}
+.quick button:hover {
+  background: #1a233a;
+}
+/* STATISTIQUES */
+.stat-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 22px;
+}
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+.stat-row:last-child {
+  margin-bottom: 0;
+}
+.stat-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: #1d2643;
+  display: grid;
+  place-items: center;
+}
+.stat-card small {
+  color: var(--muted);
+}
+.stat-card strong {
+  display: block;
+  font-size: 22px;
+  margin-top: 4px;
+}
+/* SECTIONS */
+.section {
+  margin-top: 26px;
+}
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+.section-head h2 {
+  font-size: 22px;
+}
+.view {
+  color: #aaa4ff;
+  font-size: 14px;
+}
+/* MARKETPLACE */
+.products {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+.product {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 17px;
+  overflow: hidden;
+  transition: .2s;
+}
+.product:hover {
+  transform: translateY(-3px);
+  border-color: #4a477d;
+}
+.product-img {
+  height: 120px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(
+    145deg,
+    #1a2140,
+    #10172a
+  );
+  font-size: 42px;
+}
+.product-body {
+  padding: 15px;
+}
+.product-name {
+  font-weight: 700;
+}
+.category {
+  font-size: 12px;
+  color: var(--muted);
+  margin: 3px 0 10px;
+}
+.price {
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+.buy {
+  width: 100%;
+  border: 0;
+  background: var(--accent);
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.buy:hover {
+  background: var(--accent2);
+}
+/* BAS DE PAGE */
+.bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.table-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 20px;
+  overflow: auto;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 450px;
+}
+th,
+td {
+  text-align: left;
+  padding: 13px 8px;
+  border-bottom: 1px solid #202a43;
+  font-size: 14px;
+}
+th {
+  color: #7f89a3;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+td {
+  color: #dce1ee;
+}
+.positive {
+  color: var(--green);
+}
+.negative {
+  color: #ff8f9b;
+}
+/* NOTIFICATIONS */
+.notice {
+  display: flex;
+  gap: 12px;
+  padding: 13px 0;
+  border-bottom: 1px solid #202a43;
+}
+.notice:last-child {
+  border-bottom: 0;
+}
+.dot {
+  width: 9px;
+  height: 9px;
+  background: var(--accent);
+  border-radius: 50%;
+  margin-top: 7px;
+  flex: none;
+}
+.notice p {
+  font-size: 14px;
+}
+.notice small {
+  color: var(--muted);
+}
+/* NOTIFICATION POPUP */
+.toast {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  background: #18213a;
+  border: 1px solid #3a4667;
+  padding: 14px 18px;
+  border-radius: 13px;
+  display: none;
+  box-shadow: 0 15px 40px #0006;
+}
+/* RESPONSIVE */
+@media (max-width: 1000px) {
+  .products {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grid,
+  .bottom-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 720px) {
+  .sidebar {
+    display: none;
+  }
+  .main {
+    margin: 0;
+    width: 100%;
+    padding: 18px;
+  }
+  .welcome h1 {
+    font-size: 23px;
+  }
+  .profile {
+    display: none;
+  }
+  .actions {
+    gap: 6px;
+  }
+  .products {
+    grid-template-columns: 1fr 1fr;
+  }
+  .product-img {
+    height: 100px;
+  }
+  .amount {
+    font-size: 34px;
+  }
+}
+@media (max-width: 430px) {
+  .products {
+    grid-template-columns: 1fr;
+  }
+  .stat-card {
+    margin-top: 15px;
+  }
+  .bottom-grid {
+    display: block;
+  }
+  .table-card {
+    margin-top: 15px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="logo">
+    Sol<span>ex</span>
+  </div>
+  <div class="nav-title">
+    Menu principal
+  </div>
+  <div class="nav">
+    <a class="active" href="#">
+      🏠 <span>Dashboard</span>
+    </a>
+    <a href="#marketplace">
+      🛍️ <span>Marketplace</span>
+    </a>
+    <a href="#transactions">
+      ↔️ <span>Transactions</span>
+    </a>
+    <a href="#notifications">
+      🔔 <span>Notifications</span>
+    </a>
+  </div>
+  <div class="nav-title">
+    Compte
+  </div>
+  <div class="nav">
+    <a href="#">
+      👤 <span>Mon profil</span>
+    </a>
+    <a href="#">
+      ⚙️ <span>Paramètres</span>
+    </a>
+  </div>
+  <div class="logout nav">
+    <a href="#" onclick="showToast('Déconnexion simulée')">
+      🚪 <span>Déconnexion</span>
+    </a>
+  </div>
+</aside>
+<!-- CONTENU -->
+<main class="main">
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="welcome">
+      <h1>
+        Bonjour, bienvenue 👋
+      </h1>
+      <p>
+        Voici un aperçu de ton espace Solex.
+      </p>
+    </div>
+    <div class="actions">
+      <button
+        class="icon-btn"
+        onclick="showToast('Aucune nouvelle notification')"
+      >
+        🔔
+      </button>
+      <div class="profile">
+        <div class="avatar">
+          S
+        </div>
+        <span>
+          Mon compte
+        </span>
+      </div>
+    </div>
+  </div>
+  <!-- SOLDE + STATISTIQUES -->
+  <section class="grid">
+    <div>
+      <div class="balance">
+        <div class="balance-label">
+          Solde disponible
+        </div>
+        <div
+          class="amount"
+          id="balance"
+        >
+          125 000 FCFA
+        </div>
+        <div class="balance-bottom">
+          <span>
+            Compte Solex
+          </span>
+          <strong>
+            ● Actif
+          </strong>
+        </div>
+      </div>
+      <div class="quick">
+        <button
+          onclick="showToast('Fonction de paiement prête à être connectée')"
+        >
+          💳 Payer
+        </button>
+        <button
+          onclick="showToast('Historique ouvert')"
+        >
+          📜 Historique
+        </button>
+      </div>
+    </div>
+    <!-- STATISTIQUES -->
+    <div class="stat-card">
+      <div class="stat-row">
+        <div>
+          <small>
+            Dépenses du mois
+          </small>
+          <strong>
+            42 500 FCFA
+          </strong>
+        </div>
+        <div class="stat-icon">
+          📉
+        </div>
+      </div>
+      <div class="stat-row">
+        <div>
+          <small>
+            Achats marketplace
+          </small>
+          <strong>
+            8
+          </strong>
+        </div>
+        <div class="stat-icon">
+          🛍️
+        </div>
+      </div>
+      <div class="stat-row">
+        <div>
+          <small>
+            Économies estimées
+          </small>
+          <strong>
+            17 800 FCFA
+          </strong>
+        </div>
+        <div class="stat-icon">
+          ⭐
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- MARKETPLACE -->
+  <section
+    class="section"
+    id="marketplace"
+  >
+    <div class="section-head">
+      <h2>
+        Marketplace
+      </h2>
+      <a
+        class="view"
+        href="#"
+      >
+        Voir tout →
+      </a>
+    </div>
+    <div class="products">
+      <!-- PRODUIT 1 -->
+      <article class="product">
+        <div class="product-img">
+          🎧
+        </div>
+        <div class="product-body">
+          <div class="product-name">
+            Écouteurs Bluetooth
+          </div>
+          <div class="category">
+            Électronique
+          </div>
+          <div class="price">
+            12 500 FCFA
+          </div>
+          <button
+            class="buy"
+            onclick="buy('Écouteurs Bluetooth',12500)"
+          >
+            Acheter
+          </button>
+        </div>
+      </article>
+      <!-- PRODUIT 2 -->
+      <article class="product">
+        <div class="product-img">
+          ⌚
+        </div>
+        <div class="product-body">
+          <div class="product-name">
+            Montre connectée
+          </div>
+          <div class="category">
+            Technologie
+          </div>
+          <div class="price">
+            25 000 FCFA
+          </div>
+          <button
+            class="buy"
+            onclick="buy('Montre connectée',25000)"
+          >
+            Acheter
+          </button>
+        </div>
+      </article>
+      <!-- PRODUIT 3 -->
+      <article class="product">
+        <div class="product-img">
+          🎒
+        </div>
+        <div class="product-body">
+          <div class="product-name">
+            Sac à dos
+          </div>
+          <div class="category">
+            Mode
+          </div>
+          <div class="price">
+            9 500 FCFA
+          </div>
+          <button
+            class="buy"
+            onclick="buy('Sac à dos',9500)"
+          >
+            Acheter
+          </button>
+        </div>
+      </article>
+      <!-- PRODUIT 4 -->
+      <article class="product">
+        <div class="product-img">
+          👟
+        </div>
+        <div class="product-body">
+          <div class="product-name">
+            Sneakers
+          </div>
+          <div class="category">
+            Mode
+          </div>
+          <div class="price">
+            18 000 FCFA
+          </div>
+          <button
+            class="buy"
+            onclick="buy('Sneakers',18000)"
+          >
+            Acheter
+          </button>
+        </div>
+      </article>
+    </div>
+  </section>
+  <!-- TRANSACTIONS + ACTIVITÉ -->
+  <section class="section bottom-grid">
+    <!-- TRANSACTIONS -->
+    <div
+      class="table-card"
+      id="transactions"
+    >
+      <div class="section-head">
+        <h2>
+          Transactions récentes
+        </h2>
+        <a
+          class="view"
+          href="#"
+        >
+          Tout voir
+        </a>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Description</th>
+            <th>Date</th>
+            <th>Montant</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              Crédit Solex
+            </td>
+            <td>
+              Aujourd'hui
+            </td>
+            <td class="positive">
+              +50 000 FCFA
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Écouteurs Bluetooth
+            </td>
+            <td>
+              Hier
+            </td>
+            <td class="negative">
+              −12 500 FCFA
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Paiement reçu
+            </td>
+            <td>
+              06 août
+            </td>
+            <td class="positive">
+              +30 000 FCFA
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Sac à dos
+            </td>
+            <td>
+              04 août
+            </td>
+            <td class="negative">
+              −9 500 FCFA
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- ACTIVITÉ -->
+    <div
+      class="table-card"
+      id="notifications"
+    >
+      <div class="section-head">
+        <h2>
+          Activité
+        </h2>
+      </div>
+      <div class="notice">
+        <div class="dot"></div>
+        <div>
+          <p>
+            Nouveau produit disponible
+            dans la Marketplace.
+          </p>
+          <small>
+            Il y a 15 min
+          </small>
+        </div>
+      </div>
+      <div class="notice">
+        <div class="dot"></div>
+        <div>
+          <p>
+            Ton paiement de 12 500 FCFA
+            a été confirmé.
+          </p>
+          <small>
+            Hier
+          </small>
+        </div>
+      </div>
+      <div class="notice">
+        <div class="dot"></div>
+        <div>
+          <p>
+            Ton solde Solex a été mis à jour.
+          </p>
+          <small>
+            Hier
+          </small>
+        </div>
+      </div>
+      <div class="notice">
+        <div class="dot"></div>
+        <div>
+          <p>
+            Découvre les nouvelles offres
+            de la semaine.
+          </p>
+          <small>
+            Il y a 3 jours
+          </small>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+</div>
+<!-- NOTIFICATION -->
+<div
+  class="toast"
+  id="toast"
+></div>
+<script>
+let balance = 125000;
+/* FORMAT FCFA */
+function formatFCFA(value) {
+  return value.toLocaleString("fr-FR")
+    + " FCFA";
+}
+/* ACHAT */
+function buy(name, price) {
+  if (balance < price) {
+    showToast(
+      "Solde insuffisant pour acheter "
+      + name
+    );
+    return;
+  }
+  balance -= price;
+  document.getElementById("balance")
+    .textContent =
+    formatFCFA(balance);
+  showToast(
+    name
+    + " acheté pour "
+    + formatFCFA(price)
+  );
+}
+/* NOTIFICATION */
+function showToast(message) {
+  const toast =
+    document.getElementById("toast");
+  toast.textContent = message;
+  toast.style.display = "block";
+  clearTimeout(window.toastTimer);
+  window.toastTimer =
+    setTimeout(function() {
+      toast.style.display = "none";
+    }, 3000);
+}
+</script>
+</body>
+</html>
