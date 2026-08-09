@@ -1,6 +1,4 @@
-const usname= document.getElementById("username").value.trim();
-    localStorage.setItem("usName",usname);
-    /* ================================
+   /* ================================
        CONFIGURATION SUPABASE
     ================================= */
 
@@ -64,6 +62,7 @@ const usname= document.getElementById("username").value.trim();
         const name =
             document.getElementById("signupName").value.trim();
 
+        localStorage.setItem("usname",name);
         const email =
             document.getElementById("signupEmail").value.trim();
 
