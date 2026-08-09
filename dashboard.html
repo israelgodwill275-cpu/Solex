@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0,
+      maximum-scale=1.0, user-scalable=no">
+<title>SOLEX — Dashboard</title>
+<style>
+/* =====================================================
+   SOLEX DASHBOARD
+   BLACK + TURQUOISE
+   MOBILE FIRST
+===================================================== */
+:root {
+    --bg: #030606;
+    --panel: #080d0d;
+    --panel2: #0b1212;
+    --border: rgba(42, 255, 225, .12);
+    --turquoise: #16e6ce;
+    --turquoise2: #00bfae;
+    --text: #f3ffff;
+    --muted: #718080;
+    --danger: #ff5d72;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+body {
+    background:
+        radial-gradient(
+            circle at 80% -10%,
+            rgba(22,230,206,.10),
+            transparent 35%
+        ),
+        var(--bg);
+    color: var(--text);
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+    overflow-x: hidden;
+}
+/* =====================================================
+   DESKTOP SIDEBAR
+===================================================== */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 245px;
+    height: 100vh;
+    padding: 28px 17px;
+    background: rgba(5,10,10,.96);
+    border-right: 1px solid var(--border);
+    z-index: 100;
+}
+.logo {
+    text-align: center;
+    font-size: 27px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    color: var(--turquoise);
+    margin-bottom: 45px;
+    text-shadow:
+        0 0 25px rgba(22,230,206,.25);
+}
+.logo span {
+    color: white;
+}
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+.menu-item {
+    width: 100%;
+    padding: 14px 15px;
+    border: 0;
+    border-radius: 13px;
+    background: transparent;
+    color: #829090;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .25s;
+}
+.menu-item:hover,
+.menu-item.active {
+    background: rgba(22,230,206,.09);
+    color: var(--turquoise);
+}
+.logout {
+    position: absolute;
+    bottom: 25px;
+    left: 17px;
+    right: 17px;
+}
+/* =====================================================
+   MAIN
+===================================================== */
+.main {
+    margin-left: 245px;
+    max-width: 1450px;
+    padding: 35px;
+}
+/* =====================================================
+   HEADER
+===================================================== */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 27px;
+}
+.greeting small {
+    display: block;
+    color: var(--muted);
+    font-size: 12px;
+    margin-bottom: 6px;
+}
+.greeting h1 {
+    font-size: 27px;
+    font-weight: 750;
+}
+.greeting h1 span {
+    color: var(--turquoise);
+}
+.status {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 9px 13px;
+    background: rgba(22,230,206,.06);
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    font-size: 12px;
+    color: #a4b0b0;
+}
+.status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--turquoise);
+    box-shadow:
+        0 0 12px var(--turquoise);
+}
+/* =====================================================
+   BALANCE
+===================================================== */
+.balance-card {
+    position: relative;
+    overflow: hidden;
+    padding: 27px;
+    border-radius: 24px;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(19,55,53,.95),
+            rgba(6,14,14,.98)
+        );
+    border: 1px solid rgba(22,230,206,.20);
+    box-shadow:
+        0 15px 50px rgba(0,0,0,.30);
+    margin-bottom: 20px;
+}
+.balance-card::before {
+    content: "";
+    position: absolute;
+    width: 190px;
+    height: 190px;
+    right: -80px;
+    top: -90px;
+    border-radius: 50%;
+    background: rgba(22,230,206,.12);
+    filter: blur(10px);
+}
+.balance-label {
+    position: relative;
+    color: #8da0a0;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .7px;
+}
+.balance {
+    position: relative;
+    margin-top: 8px;
+    font-size: 39px;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+.currency {
+    font-size: 17px;
+    color: var(--turquoise);
+    margin-left: 5px;
+}
+.balance-bottom {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 23px;
+}
+.balance-note {
+    font-size: 11px;
+    color: #728080;
+}
+.actions {
+    display: flex;
+    gap: 8px;
+}
+.action {
+    border: 1px solid rgba(22,230,206,.35);
+    background: rgba(22,230,206,.07);
+    color: var(--turquoise);
+    border-radius: 10px;
+    padding: 9px 13px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+/* =====================================================
+   STATISTICS
+===================================================== */
+.stats {
+    display: grid;
+    grid-template-columns:
+        repeat(3, 1fr);
+    gap: 13px;
+    margin-bottom: 22px;
+}
+.stat {
+    padding: 19px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 17px;
+}
+.stat-label {
+    color: var(--muted);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+}
+.stat-value {
+    margin-top: 8px;
+    font-size: 18px;
+    font-weight: 750;
+}
+.stat-value.green {
+    color: var(--turquoise);
+}
+/* =====================================================
+   LIVE INVESTMENT
+===================================================== */
+.investment-box {
+    padding: 24px;
+    background:
+        linear-gradient(
+            180deg,
+            rgba(8,15,15,.98),
+            rgba(5,10,10,.98)
+        );
+    border:
+        1px solid var(--border);
+    border-radius: 23px;
+}
+.section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+}
+.section-head h2 {
+    font-size: 18px;
+}
+.live {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--turquoise);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .7px;
+}
+.live i {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--turquoise);
+    animation: pulse 1.3s infinite;
+}
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0
+        rgba(22,230,206,.7);
+    }
+    70% {
+        box-shadow: 0 0 0 8px
+        rgba(22,230,206,0);
+    }
+    100% {
+        box-shadow: 0 0 0 0
+        rgba(22,230,206,0);
+    }
+}
+/* =====================================================
+   POSITIONS
+===================================================== */
+.positions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 13px;
+}
+.position {
+    position: relative;
+    overflow: hidden;
+    padding: 20px;
+    border-radius: 18px;
+    background: #080f0f;
+    border: 1px solid rgba(255,255,255,.055);
+}
+.position.left {
+    border-color:
+        rgba(22,230,206,.18);
+}
+.position.right {
+    border-color:
+        rgba(0,191,174,.15);
+}
+.position-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+.position-name {
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: .7px;
+}
+.position.left .position-name {
+    color: var(--turquoise);
+}
+.position.right .position-name {
+    color: #8ef8ed;
+}
+.percent {
+    font-size: 25px;
+    font-weight: 850;
+}
+.amount {
+    color: #809090;
+    font-size: 11px;
+    margin-bottom: 12px;
+}
+/* PROGRESS */
+.progress {
+    height: 8px;
+    overflow: hidden;
+    border-radius: 20px;
+    background: #111c1c;
+    margin-bottom: 12px;
+}
+.progress-bar {
+    height: 100%;
+    width: 60%;
+    border-radius: inherit;
+    background:
+        linear-gradient(
+            90deg,
+            #00a995,
+            #1df4db
+        );
+    box-shadow:
+        0 0 15px
+        rgba(22,230,206,.35);
+    transition:
+        width .6s ease;
+}
+.right .progress-bar {
+    background:
+        linear-gradient(
+            90deg,
+            #008f83,
+            #16e6ce
+        );
+}
+.position-footer {
+    display: flex;
+    justify-content: space-between;
+    color: #647272;
+    font-size: 10px;
+}
+/* =====================================================
+   TOTAL LIVE
+===================================================== */
+.total-live {
+    margin-top: 14px;
+    padding: 18px;
+    border-radius: 16px;
+    background:
+        rgba(22,230,206,.035);
+    border:
+        1px solid rgba(22,230,206,.08);
+    text-align: center;
+}
+.total-live-label {
+    color: #687777;
+    font-size: 10px;
+}
+.total-live-value {
+    color: var(--turquoise);
+    font-size: 25px;
+    font-weight: 800;
+    margin-top: 5px;
+}
+/* =====================================================
+   BOTTOM MOBILE NAVIGATION
+===================================================== */
+.mobile-nav {
+    display: none;
+}
+/* =====================================================
+   MOBILE
+===================================================== */
+@media(max-width: 700px) {
+    body {
+        padding-bottom: 75px;
+    }
+    .sidebar {
+        display: none;
+    }
+    .main {
+        margin-left: 0;
+        width: 100%;
+        padding:
+            22px 14px 25px;
+    }
+    .header {
+        margin-bottom: 20px;
+    }
+    .greeting small {
+        font-size: 10px;
+    }
+    .greeting h1 {
+        font-size: 21px;
+    }
+    .status {
+        padding: 7px 9px;
+        font-size: 9px;
+    }
+    .status-dot {
+        width: 5px;
+        height: 5px;
+    }
+    /* BALANCE */
+    .balance-card {
+        padding: 22px 19px;
+        border-radius: 20px;
+        margin-bottom: 13px;
+    }
+    .balance {
+        font-size: 31px;
+    }
+    .currency {
+        font-size: 13px;
+    }
+    .balance-bottom {
+        margin-top: 19px;
+    }
+    .balance-note {
+        font-size: 9px;
+    }
+    .action {
+        padding: 8px 10px;
+        font-size: 10px;
+    }
+    /* STATS */
+    .stats {
+        gap: 8px;
+        margin-bottom: 13px;
+    }
+    .stat {
+        padding: 14px 11px;
+        border-radius: 14px;
+    }
+    .stat-label {
+        font-size: 8px;
+    }
+    .stat-value {
+        font-size: 13px;
+        white-space: nowrap;
+    }
+    /* INVESTMENT */
+    .investment-box {
+        padding: 17px 13px;
+        border-radius: 20px;
+    }
+    .section-head {
+        margin-bottom: 15px;
+    }
+    .section-head h2 {
+        font-size: 16px;
+    }
+    .live {
+        font-size: 9px;
+    }
+    /* POSITIONS */
+    .positions {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+    .position {
+        padding: 14px 11px;
+        border-radius: 15px;
+    }
+    .position-top {
+        margin-bottom: 12px;
+    }
+    .position-name {
+        font-size: 9px;
+    }
+    .percent {
+        font-size: 21px;
+    }
+    .amount {
+        font-size: 9px;
+        margin-bottom: 9px;
+    }
+    .progress {
+        height: 6px;
+        margin-bottom: 9px;
+    }
+    .position-footer {
+        font-size: 8px;
+    }
+    /* TOTAL */
+    .total-live {
+        margin-top: 9px;
+        padding: 14px;
+    }
+    .total-live-label {
+        font-size: 8px;
+    }
+    .total-live-value {
+        font-size: 20px;
+    }
+    /* MOBILE NAV */
+    .mobile-nav {
+        position: fixed;
+        display: flex;
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+        height: 62px;
+        padding: 6px;
+        background:
+            rgba(8,15,15,.94);
+        backdrop-filter:
+            blur(18px);
+        border:
+            1px solid rgba(22,230,206,.14);
+        border-radius: 19px;
+        z-index: 999;
+        box-shadow:
+            0 10px 40px
+            rgba(0,0,0,.55);
+    }
+    .mobile-item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 3px;
+        border: 0;
+        background: transparent;
+        color: #617070;
+        font-size: 9px;
+        border-radius: 14px;
+        cursor: pointer;
+    }
+    .mobile-item .icon {
+        font-size: 17px;
+    }
+    .mobile-item.active {
+        color: var(--turquoise);
+        background:
+            rgba(22,230,206,.08);
+    }
+}
+/* VERY SMALL PHONES */
+@media(max-width: 360px) {
+    .main {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .balance {
+        font-size: 27px;
+    }
+    .position {
+        padding: 12px 9px;
+    }
+    .percent {
+        font-size: 19px;
+    }
+}
+</style>
+</head>
+<body>
+<!-- =====================================================
+     DESKTOP SIDEBAR
+===================================================== -->
+<aside class="sidebar">
+    <div class="logo">
+        SOLEX<span>.</span>
+    </div>
+    <nav class="menu">
+        <button class="menu-item active">
+            ◉ &nbsp; Dashboard
+        </button>
+        <button class="menu-item">
+            ＋ &nbsp; Dépôt
+        </button>
+        <button class="menu-item">
+            ↗ &nbsp; Retrait
+        </button>
+        <button class="menu-item">
+            ◎ &nbsp; Affiliation
+        </button>
+        <button class="menu-item">
+            ◉ &nbsp; En direct
+        </button>
+        <button class="menu-item">
+            ⓘ &nbsp; À propos
+        </button>
+    </nav>
+    <button class="menu-item logout">
+        ⇥ &nbsp; Déconnexion
+    </button>
+</aside>
+<!-- =====================================================
+     MAIN
+===================================================== -->
+<main class="main">
+    <!-- HEADER -->
+    <header class="header">
+        <div class="greeting">
+            <small>
+                BIENVENUE SUR SOLEX
+            </small>
+            <h1>
+                Bonjour
+                <span id="username">
+                    Israël
+                </span>
+                👋
+            </h1>
+        </div>
+        <div class="status">
+            <div class="status-dot"></div>
+            Compte actif
+        </div>
+    </header>
+    <!-- BALANCE -->
+    <section class="balance-card">
+        <div class="balance-label">
+            SOLDE DISPONIBLE
+        </div>
+        <div class="balance">
+            <span id="balance">
+                125 000
+            </span>
+            <span class="currency">
+                FCFA
+            </span>
+        </div>
+        <div class="balance-bottom">
+            <div class="balance-note">
+                Dernière mise à jour : maintenant
+            </div>
+            <div class="actions">
+                <button class="action">
+                    Dépôt
+                </button>
+                <button class="action">
+                    Retrait
+                </button>
+            </div>
+        </div>
+    </section>
+    <!-- STATS -->
+    <section class="stats">
+        <div class="stat">
+            <div class="stat-label">
+                Total
+            </div>
+            <div class="stat-value">
+                100 000
+            </div>
+        </div>
+        <div class="stat">
+            <div class="stat-label">
+                Gains
+            </div>
+            <div class="stat-value green">
+                +25 000
+            </div>
+        </div>
+        <div class="stat">
+            <div class="stat-label">
+                Participants
+            </div>
+            <div class="stat-value">
+                1 248
+            </div>
+        </div>
+    </section>
+    <!-- INVESTMENT -->
+    <section class="investment-box">
+        <div class="section-head">
+            <h2>
+                Positions
+            </h2>
+            <div class="live">
+                <i></i>
+                EN DIRECT
+            </div>
+        </div>
+        <div class="positions">
+            <!-- LEFT -->
+            <article class="position left">
+                <div class="position-top">
+                    <div class="position-name">
+                        GAUCHE
+                    </div>
+                    <div
+                        class="percent"
+                        id="leftPercent">
+                        60%
+                    </div>
+                </div>
+                <div
+                    class="amount"
+                    id="leftAmount">
+                    60 000 FCFA
+                </div>
+                <div class="progress">
+                    <div
+                        class="progress-bar"
+                        id="leftBar">
+                    </div>
+                </div>
+                <div class="position-footer">
+                    <span>
+                        425 participants
+                    </span>
+                    <span>
+                        LIVE
+                    </span>
+                </div>
+            </article>
+            <!-- RIGHT -->
+            <article class="position right">
+                <div class="position-top">
+                    <div class="position-name">
+                        DROITE
+                    </div>
+                    <div
+                        class="percent"
+                        id="rightPercent">
+                        40%
+                    </div>
+                </div>
+                <div
+                    class="amount"
+                    id="rightAmount">
+                    40 000 FCFA
+                </div>
+                <div class="progress">
+                    <div
+                        class="progress-bar"
+                        id="rightBar">
+                    </div>
+                </div>
+                <div class="position-footer">
+                    <span>
+                        319 participants
+                    </span>
+                    <span>
+                        LIVE
+                    </span>
+                </div>
+            </article>
+        </div>
+        <!-- TOTAL -->
+        <div class="total-live">
+            <div class="total-live-label">
+                TOTAL ACTUELLEMENT INVESTI
+            </div>
+            <div
+                class="total-live-value"
+                id="total">
+                100 000 FCFA
+            </div>
+        </div>
+    </section>
+</main>
+<!-- =====================================================
+     MOBILE NAV
+===================================================== -->
+<nav class="mobile-nav">
+    <button class="mobile-item active">
+        <span class="icon">
+            ⌂
+        </span>
+        Accueil
+    </button>
+    <button class="mobile-item">
+        <span class="icon">
+            ＋
+        </span>
+        Dépôt
+    </button>
+    <button class="mobile-item">
+        <span class="icon">
+            ↗
+        </span>
+        Retrait
+    </button>
+    <button class="mobile-item">
+        <span class="icon">
+            ◎
+        </span>
+        Direct
+    </button>
+    <button class="mobile-item">
+        <span class="icon">
+            ☰
+        </span>
+        Menu
+    </button>
+</nav>
+<script>
+/* =====================================================
+   SOLEX — LIVE DEMO DATA
+===================================================== */
+let left = 60000;
+let right = 40000;
+/* FORMAT FCFA */
+function money(value) {
+    return value.toLocaleString("fr-FR")
+        + " FCFA";
+}
+/* UPDATE */
+function updateDashboard() {
+    const total = left + right;
+    const leftPercent =
+        (left / total) * 100;
+    const rightPercent =
+        (right / total) * 100;
+    document
+        .getElementById("leftPercent")
+        .textContent =
+        leftPercent.toFixed(1) + "%";
+    document
+        .getElementById("rightPercent")
+        .textContent =
+        rightPercent.toFixed(1) + "%";
+    document
+        .getElementById("leftAmount")
+        .textContent =
+        money(left);
+    document
+        .getElementById("rightAmount")
+        .textContent =
+        money(right);
+    document
+        .getElementById("leftBar")
+        .style.width =
+        leftPercent + "%";
+    document
+        .getElementById("rightBar")
+        .style.width =
+        rightPercent + "%";
+    document
+        .getElementById("total")
+        .textContent =
+        money(total);
+}
+/* =====================================================
+   SIMULATION TEMPS RÉEL
+===================================================== */
+setInterval(() => {
+    const amount =
+        Math.floor(
+            Math.random() * 4000
+        ) + 500;
+    if (
+        Math.random() > .5
+    ) {
+        left += amount;
+    } else {
+        right += amount;
+    }
+    updateDashboard();
+}, 2500);
+updateDashboard();
+/* =====================================================
+   MOBILE NAV
+===================================================== */
+document
+    .querySelectorAll(".mobile-item")
+    .forEach(item => {
+        item.addEventListener(
+            "click",
+            () => {
+                document
+                    .querySelectorAll(
+                        ".mobile-item"
+                    )
+                    .forEach(
+                        x =>
+                        x.classList
+                         .remove("active")
+                    );
+                item.classList
+                    .add("active");
+            }
+        );
+    });
+</script>
+</body>
+</html>
