@@ -1,4 +1,6 @@
-  /* ================================
+const usname= document.getElementById("username").value.trim();
+    localStorage.setItem("usName",usname);
+    /* ================================
        CONFIGURATION SUPABASE
     ================================= */
 
