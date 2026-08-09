@@ -12,10 +12,7 @@ let right = 40000;
             SUPABASE_KEY
         );
 
- const usaname= localstorage.getItem("usname");
-document.getElementById("username").textContent(usaname);
-
-
+ 
 /* FORMAT FCFA */
 function money(value) {
  return value.toLocaleString("fr-FR")
