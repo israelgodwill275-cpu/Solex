@@ -208,3 +208,78 @@
         }
 
     }
+   /* =====================================================
+   SOLEX — INTERACTIONS
+   ===================================================== */
+/* Effet 3D des boutons */
+document
+    .querySelectorAll(".hero-actions button")
+    .forEach(button => {
+        button.addEventListener("mousemove", event => {
+            const rect =
+                button.getBoundingClientRect();
+            const x =
+                event.clientX - rect.left;
+            const y =
+                event.clientY - rect.top;
+            const rotateY =
+                (x - rect.width / 2) / 15;
+            const rotateX =
+                (rect.height / 2 - y) / 15;
+            button.style.transform =
+                `translateY(-5px)
+                 scale(1.025)
+                 rotateX(${rotateX}deg)
+                 rotateY(${rotateY}deg)`;
+        });
+        button.addEventListener("mouseleave", () => {
+            button.style.transform = "";
+        });
+    });
+/* =====================================================
+   EFFET 3D DES CARTES
+   ===================================================== */
+document
+    .querySelectorAll(".feature")
+    .forEach(card => {
+        card.addEventListener("mousemove", event => {
+            const rect =
+                card.getBoundingClientRect();
+            const x =
+                event.clientX - rect.left;
+            const y =
+                event.clientY - rect.top;
+            const rotateY =
+                (x - rect.width / 2) / 20;
+            const rotateX =
+                (rect.height / 2 - y) / 20;
+            card.style.transform =
+                `translateY(-8px)
+                 scale(1.025)
+                 rotateX(${rotateX}deg)
+                 rotateY(${rotateY}deg)`;
+        });
+        card.addEventListener("mouseleave", () => {
+            card.style.transform = "";
+        });
+    });
+/* =====================================================
+   PETIT PARALLAXE DU HERO
+   ===================================================== */
+const heroContent =
+    document.querySelector(".hero-content");
+document.addEventListener("mousemove", event => {
+    if (!heroContent) return;
+    const x =
+        (event.clientX / window.innerWidth - 0.5);
+    const y =
+        (event.clientY / window.innerHeight - 0.5);
+    heroContent.style.setProperty(
+        "--mouse-x",
+        `${x * 4}px`
+    );
+    heroContent.style.setProperty(
+        "--mouse-y",
+        `${y * 3}px`
+    );
+});
