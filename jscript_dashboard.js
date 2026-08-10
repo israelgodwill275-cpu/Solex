@@ -28,12 +28,9 @@
 
     const nom= data.user.name;
       alert(nom);
-    if (error) { 
-        console.log("Erreur :", error);
-        return;
-    }
+    
 
-    document.getElementById("username").textContent = data.name;
+    document.getElementById("username").textContent = nom;
 }
 
 loadUserName();
