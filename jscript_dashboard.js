@@ -31,8 +31,8 @@
         .select("name")
         .eq("email", user.email)
         ;
-      alert(data.name);
-    if (error) {
+      alert(data);
+    if (error) { 
         console.log("Erreur :", error);
         return;
     }
