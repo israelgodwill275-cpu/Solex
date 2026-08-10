@@ -1,3 +1,18 @@
+   /* ================================
+       CONFIGURATION SUPABASE
+    ================================= */
+
+    const SUPABASE_URL =
+        "https://leppncecjxccbkwoktyu.supabase.co";
+
+    const SUPABASE_KEY =
+        "sb_publishable_FDtcO7MF7VVtQ7s94bpGeQ_5D4Reg4j";
+
+    const supabaseClient =
+        window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_KEY
+        );
 /* ==================================
      RECHERCHE DU NOM DE L'UTILISATEUR
   ============================*/
