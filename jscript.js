@@ -173,20 +173,14 @@
         try {
 
             const { data, error } =
-                await supabaseClient.auth.signInWithPassword({
-                    email: email,
-                    password: password
-                });
+                await supabaseClient.
+                    from("profiles").
+                    select("password").
+                    eq("email",email)
+                ;
+        
 
-
-            if (error) {
-
-                message.textContent =
-                    error.message;
-
-                return;
-            }
-
+         if(password==data) {
 
             message.textContent =
                 "Connexion réussie !";
@@ -198,7 +192,12 @@
                     "dashboard.html";
 
             }, 700);
+            }else{
+                 message.textContent =
+                    error.message;
 
+                return;
+            }
 
         } catch (error) {
 
