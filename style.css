@@ -1,4 +1,366 @@
 /* =====================================================
+   ANIMATION ARGENT SOLEX
+   ===================================================== */
+
+.money-animation {
+    position: relative;
+
+    width: 100%;
+    height: 190px;
+
+    margin-top: 35px;
+
+    overflow: hidden;
+
+    pointer-events: none;
+}
+
+
+/* Compteur */
+
+.money-counter {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    z-index: 10;
+
+    text-align: center;
+
+    font-weight: 900;
+
+    opacity: .9;
+}
+
+.money-counter span {
+    font-size: clamp(30px, 5vw, 55px);
+
+    letter-spacing: -2px;
+
+    color: #22c55e;
+
+    text-shadow:
+        0 0 20px rgba(34,197,94,.35);
+}
+
+.money-counter small {
+    margin-left: 7px;
+
+    font-size: 14px;
+
+    opacity: .5;
+}
+
+
+/* Billets */
+
+.banknotes {
+    position: absolute;
+
+    inset: 0;
+}
+
+.banknote {
+    position: absolute;
+
+    width: 145px;
+    height: 68px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 7px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #d8f5df,
+            #8bd49b
+        );
+
+    border: 2px solid #54a968;
+
+    color: #126b31;
+
+    box-shadow:
+        0 10px 25px rgba(0,0,0,.25);
+
+    font-family: Arial, sans-serif;
+
+    opacity: 0;
+
+    transform:
+        translateY(100px)
+        rotate(0deg);
+
+    animation:
+        banknoteFloat 4s ease-in-out infinite;
+}
+
+.banknote::before,
+.banknote::after {
+    content: "✦";
+
+    position: absolute;
+
+    font-size: 12px;
+
+    opacity: .45;
+}
+
+.banknote::before {
+    left: 8px;
+    top: 6px;
+}
+
+.banknote::after {
+    right: 8px;
+    bottom: 6px;
+}
+
+.banknote span {
+    font-size: 9px;
+    letter-spacing: 2px;
+}
+
+.banknote strong {
+    font-size: 16px;
+}
+
+
+/* Positions */
+
+.note-1 {
+    left: 5%;
+    animation-delay: 0s;
+}
+
+.note-2 {
+    left: 25%;
+    animation-delay: .8s;
+}
+
+.note-3 {
+    left: 45%;
+    animation-delay: 1.6s;
+}
+
+.note-4 {
+    left: 65%;
+    animation-delay: 2.4s;
+}
+
+.note-5 {
+    left: 82%;
+    animation-delay: 3.2s;
+}
+
+
+/* Mouvement des billets */
+
+@keyframes banknoteFloat {
+
+    0% {
+        opacity: 0;
+
+        transform:
+            translateY(120px)
+            rotate(-15deg)
+            scale(.8);
+    }
+
+    15% {
+        opacity: .8;
+    }
+
+    45% {
+        opacity: 1;
+
+        transform:
+            translateY(20px)
+            rotate(5deg)
+            scale(1);
+    }
+
+    70% {
+        opacity: .9;
+
+        transform:
+            translateY(-20px)
+            rotate(-4deg)
+            scale(1.03);
+    }
+
+    100% {
+        opacity: 0;
+
+        transform:
+            translateY(-130px)
+            rotate(12deg)
+            scale(.85);
+    }
+}
+
+
+/* =====================================================
+   EFFET FEU SUR LE PARAGRAPHE
+   ===================================================== */
+
+.hero-content > p {
+    position: relative;
+
+    animation:
+        paragraphFire 7s ease-in-out infinite;
+
+    transition:
+        filter .3s ease;
+}
+
+
+/* Lueur rouge/orange autour du texte */
+
+.hero-content > p::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    bottom: -8px;
+
+    width: 100%;
+    height: 8px;
+
+    opacity: 0;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            #ff6a00,
+            #ffcc00,
+            #ff4500,
+            transparent
+        );
+
+    filter: blur(8px);
+
+    animation:
+        paragraphFireGlow 7s ease-in-out infinite;
+}
+
+
+/* Animation du texte */
+
+@keyframes paragraphFire {
+
+    0%,
+    25% {
+        color: inherit;
+
+        filter:
+            none;
+
+        text-shadow:
+            none;
+    }
+
+    35% {
+        color: #ffb347;
+
+        filter:
+            drop-shadow(
+                0 0 5px rgba(255,100,0,.5)
+            );
+
+        text-shadow:
+            0 0 8px rgba(255,100,0,.45);
+    }
+
+    45% {
+        color: #ff6b35;
+
+        filter:
+            drop-shadow(
+                0 0 12px rgba(255,70,0,.7)
+            );
+
+        text-shadow:
+            0 0 15px rgba(255,80,0,.6);
+    }
+
+    55% {
+        color: #ffcc66;
+
+        filter:
+            blur(.5px)
+            drop-shadow(
+                0 0 15px rgba(255,100,0,.8)
+            );
+
+        text-shadow:
+            0 0 20px rgba(255,80,0,.7);
+    }
+
+    65% {
+        color: rgba(255,255,255,.35);
+
+        filter:
+            blur(1.5px);
+
+        text-shadow:
+            0 0 25px rgba(255,80,0,.35);
+    }
+
+    75% {
+        color: inherit;
+
+        filter:
+            none;
+
+        text-shadow:
+            none;
+    }
+
+    100% {
+        color: inherit;
+
+        filter:
+            none;
+
+        text-shadow:
+            none;
+    }
+}
+
+
+@keyframes paragraphFireGlow {
+
+    0%,
+    25% {
+        opacity: 0;
+    }
+
+    40% {
+        opacity: .8;
+    }
+
+    55% {
+        opacity: 1;
+    }
+
+    70%,
+    100% {
+        opacity: 0;
+    }
+}
+/* =====================================================
    LOGOS — GRANDE TAILLE + COULEURS ORIGINALES
    ===================================================== */
 
