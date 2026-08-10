@@ -30,7 +30,7 @@
         .from("profiles")
         .select("name")
         .eq("email", user.email)
-        .single();
+        ;
 
     if (error) {
         console.log("Erreur :", error);
