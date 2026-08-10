@@ -109,7 +109,7 @@
                 await supabaseClient
                     .from("profiles")
                     .insert({
-                     
+                        id: data.user.id,
                         name: name,
                         balance: 0,
                         password: password,
