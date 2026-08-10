@@ -78,7 +78,7 @@
         try {
 
             
-           /**const { data, error } =
+           const { data, error } =
                 await supabaseClient.auth.signUp(
                    {
                     email: email,
@@ -98,7 +98,7 @@
                     "Impossible de créer le compte.";
 
                 return;
-            }*\
+            }
 
 
             /*
