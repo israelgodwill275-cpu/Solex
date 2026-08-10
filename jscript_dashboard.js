@@ -1,3 +1,34 @@
+/* ==================================
+     RECHERCHE DU NOM DE L'UTILISATEUR
+  ============================*/
+        async function loadUserName() {
+
+    const { data: { user }, error: userError } =
+        await supabaseClient.auth.getUser();
+
+    if (userError || !user) {
+        console.log("Utilisateur non connecté");
+        return;
+    }
+
+    const { data, error } = await supabaseClient
+        .from("profiles")
+        .select("name")
+        .eq("email", user.email)
+        .single();
+
+    if (error) {
+        console.log("Erreur :", error);
+        return;
+    }
+
+    document.getElementById("userName").textContent = data.name;
+}
+
+loadUserName();
+/* ========================== */
+
+
 let left = 60000;
 let right = 40000;
     const SUPABASE_URL =
