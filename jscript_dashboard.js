@@ -18,7 +18,7 @@
   ============================*/
         async function loadUserName() {
 
-    const { data: { user }, error: userError } =
+    const { data, error: userError } =
         await supabaseClient.auth.getUser();
 
     if (userError || !user) {
@@ -26,12 +26,8 @@
         return;
     }
 
-    const { data, error } = await supabaseClient
-        .from("profiles")
-        .select("name")
-        .eq("email", user.email)
-        ;
-      alert(data);
+    const nom= data.user.name;
+      alert(nom);
     if (error) { 
         console.log("Erreur :", error);
         return;
