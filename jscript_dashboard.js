@@ -16,7 +16,7 @@
 /* ==================================
      RECHERCHE DU NOM DE L'UTILISATEUR
   ============================*/
-        async function loadUserName() {
+        /* async function loadUserName() {
 
     const { data, error: userError } =
         await supabaseClient.auth.getUser();
