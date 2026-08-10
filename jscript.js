@@ -62,7 +62,7 @@
         const name =
             document.getElementById("signupName").value.trim();
 
-        localStorage.setItem("usname",name);
+        
         const email =
             document.getElementById("signupEmail").value.trim();
 
