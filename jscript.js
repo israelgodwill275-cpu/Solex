@@ -77,11 +77,12 @@
 
         try {
 
-            const { data, error } =
+            /**. creer un user sur supabase_auth
+           const { data, error } =
                 await supabaseClient.auth.signUp({
                     email: email,
                     password: password
-                });
+                }); */
 
 
             if (error) {
