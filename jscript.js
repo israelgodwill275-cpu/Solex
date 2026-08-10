@@ -196,12 +196,7 @@
                     "dashboard.html";
 
             }, 700);
-            }else{
-                 message.textContent =
-                    error.message;
-
-                return;
-            }
+            
 
         } catch (error) {
 
