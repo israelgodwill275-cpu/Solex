@@ -1,4 +1,204 @@
-    * {
+/* =========================
+   ANIMATION D'ACCUEIL SOLEX
+   ========================= */
+
+#loader {
+    position: fixed;
+    inset: 0;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 99999;
+    animation: loaderExit 0.8s ease forwards;
+    animation-delay: 2.2s;
+}
+
+.loader-logo {
+    font-size: 48px;
+    font-weight: 900;
+    letter-spacing: 8px;
+    color: #111;
+    opacity: 0;
+    transform: scale(0.7);
+    animation: logoAppear 1s ease forwards;
+}
+
+.loader-line {
+    width: 0;
+    height: 3px;
+    background: #22c55e;
+    margin-top: 18px;
+    border-radius: 10px;
+    animation: lineLoading 1.5s ease forwards;
+}
+
+/* Logo */
+@keyframes logoAppear {
+    0% {
+        opacity: 0;
+        transform: scale(0.7);
+    }
+
+    60% {
+        opacity: 1;
+        transform: scale(1.08);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Barre */
+@keyframes lineLoading {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 150px;
+    }
+}
+
+/* Disparition du loader */
+@keyframes loaderExit {
+    0% {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    100% {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+    }
+}
+
+
+/* =========================
+   ANIMATION DU CONTENU
+   ========================= */
+
+body {
+    overflow-x: hidden;
+}
+
+/* Le contenu principal */
+.hero,
+header,
+main {
+    animation: pageAppear 1s ease forwards;
+}
+
+@keyframes pageAppear {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* =========================
+   EFFET LUMINEUX
+   ========================= */
+
+body::before {
+    content: "";
+    position: fixed;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: rgba(34, 197, 94, 0.12);
+    filter: blur(80px);
+    top: -100px;
+    left: -100px;
+    z-index: -1;
+    animation: floatingLight 6s ease-in-out infinite alternate;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    background: rgba(34, 197, 94, 0.08);
+    filter: blur(70px);
+    bottom: -80px;
+    right: -80px;
+    z-index: -1;
+    animation: floatingLight2 7s ease-in-out infinite alternate;
+}
+
+@keyframes floatingLight {
+    from {
+        transform: translate(0, 0);
+    }
+
+    to {
+        transform: translate(120px, 100px);
+    }
+}
+
+@keyframes floatingLight2 {
+    from {
+        transform: translate(0, 0);
+    }
+
+    to {
+        transform: translate(-100px, -80px);
+    }
+}
+
+
+/* =========================
+   ANIMATION DES BOUTONS
+   ========================= */
+
+button,
+.btn {
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+button:hover,
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(34, 197, 94, 0.20);
+}
+
+button:active,
+.btn:active {
+    transform: scale(0.96);
+}
+
+
+/* =========================
+   ANIMATION DES CARTES
+   ========================= */
+
+.card,
+.product-card {
+    transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease;
+}
+
+.card:hover,
+.product-card:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.10);
+}
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
