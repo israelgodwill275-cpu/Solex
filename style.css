@@ -1,3 +1,33 @@
+.brand-item {
+    width: 150px;
+    min-width: 150px;
+    height: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: .65;
+    transition:
+        transform .35s ease,
+        opacity .35s ease;
+}
+.brand-item img {
+    max-width: 120px;
+    max-height: 45px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: grayscale(100%);
+    opacity: .7;
+    transition:
+        filter .35s ease,
+        opacity .35s ease,
+        transform .35s ease;
+}
+.brand-item:hover img {
+    filter: grayscale(0%);
+    opacity: 1;
+    transform: scale(1.12);
+}
 /* =====================================================
    SOLEX — LOGOS DÉFILANTS
    ===================================================== */
