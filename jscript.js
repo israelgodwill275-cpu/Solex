@@ -174,15 +174,17 @@
 
         try {
 
-            const { data, error } =
-                await supabaseClient.
-                    from("profiles").
-                    select("password").
-                    eq("email",email)
-                ;
+                     const { data, error } =
+                await supabaseClient.auth.signInWithPassword({
+                    email: email,
+                    password: password
+                });
         
 
-         if(password==data) {
+         if(error){
+              message.textContent=error.message;
+              return;
+                  }
 
             message.textContent =
                 "Connexion réussie !";
