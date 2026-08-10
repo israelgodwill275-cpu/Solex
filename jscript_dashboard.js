@@ -22,7 +22,7 @@
         return;
     }
 
-    document.getElementById("userName").textContent = data.name;
+    document.getElementById("username").textContent = data.name;
 }
 
 loadUserName();
