@@ -82,7 +82,7 @@
                 await supabaseClient.auth.signUp({
                     email: email,
                     password: password
-                }); */
+                }); 
 
 
             if (error) {
@@ -97,7 +97,7 @@
                     "Impossible de créer le compte.";
 
                 return;
-            }
+            }. */
 
 
             /*
