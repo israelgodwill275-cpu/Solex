@@ -43,33 +43,100 @@ loadUserName();
 //////////////////////*/
 
 /* LOADIND SCREEN*/
-document
-    .getElementById("solexLoginForm")
-    .addEventListener("submit", async (event) => {
+document.addEventListener("DOMContentLoaded", async () => {
+
+    const loadingScreen =
+        document.getElementById("solexLoadingScreen");
+
+    const loginForm =
+        document.getElementById("solexLoginForm");
+
+    const emailInput =
+        document.getElementById("solexEmail");
+
+    const passwordInput =
+        document.getElementById("solexPassword");
+
+    const button =
+        document.getElementById("solexLoginButton");
+
+    const message =
+        document.getElementById("solexLoginMessage");
+
+
+    // Vérifier si une session existe déjà
+    const {
+        data: { session },
+        error
+    } = await supabaseClient.auth.getSession();
+
+
+    // Erreur
+    if (error) {
+
+        console.error(
+            "Erreur de vérification de session :",
+            error
+        );
+
+        return;
+    }
+
+
+    // ==============================
+    // UTILISATEUR DÉJÀ CONNECTÉ
+    // ==============================
+
+    if (session) {
+
+        loadingScreen.classList.add(
+            "solex-loading-hidden"
+        );
+
+        return;
+    }
+
+
+    // ==============================
+    // UTILISATEUR NON CONNECTÉ
+    // ==============================
+
+    loadingScreen.classList.remove(
+        "solex-loading-hidden"
+    );
+
+
+    // Formulaire de connexion
+    loginForm.addEventListener("submit", async (event) => {
 
         event.preventDefault();
 
+
         const email =
-            document.getElementById("solexEmail").value.trim();
+            emailInput.value.trim();
 
         const password =
-            document.getElementById("solexPassword").value;
+            passwordInput.value;
 
-        const button =
-            document.getElementById("solexLoginButton");
-
-        const message =
-            document.getElementById("solexLoginMessage");
 
         button.disabled = true;
         button.textContent = "Connexion...";
 
-        const { data, error } =
-            await supabaseClient.auth.signInWithPassword({
-                email: email,
-                password: password
-            });
+        message.textContent = "";
 
+
+        const {
+            data,
+            error
+        } = await supabaseClient.auth.signInWithPassword({
+
+            email: email,
+            password: password
+
+        });
+
+
+        // Connexion échouée
         if (error) {
 
             message.textContent =
@@ -81,13 +148,16 @@ document
             return;
         }
 
-        message.textContent = "";
 
-        document
-            .getElementById("solexLoadingScreen")
-            .classList.add("solex-loading-hidden");
+        // Connexion réussie
+        loadingScreen.classList.add(
+            "solex-loading-hidden"
+        );
 
     });
+
+});
+
 
 /////////
 let left = 60000;
