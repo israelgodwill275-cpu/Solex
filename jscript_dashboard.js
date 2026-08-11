@@ -39,7 +39,7 @@ loadUserName();
 
 let left = 60000;
 let right = 40000;
-    const SUPABASE_URL =
+    /* const SUPABASE_URL =
         "https://leppncecjxccbkwoktyu.supabase.co";
 
     const SUPABASE_KEY =
@@ -49,7 +49,7 @@ let right = 40000;
         window.supabase.createClient(
             SUPABASE_URL,
             SUPABASE_KEY
-        );
+        );*/
 
  
 /* FORMAT FCFA */
