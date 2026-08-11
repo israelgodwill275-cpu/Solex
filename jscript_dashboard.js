@@ -81,8 +81,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         return;
     }
-
-
+    document
+    .getElementById("solexLoadingScreen")
+    .classList.add("solex-loading-hidden");
     // ==============================
     // UTILISATEUR DÉJÀ CONNECTÉ
     // ==============================
