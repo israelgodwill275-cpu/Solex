@@ -36,9 +36,11 @@
 }
 
 loadUserName();
-/* ========================== */
-
-
+/* ========================== */ 
+/*NOM DE L'UTILISATEUR*/
+ const id_name= localStorage.getItem("use_name");
+   document.getElementById("userName").textContent(id_name);
+//////////////////////
 let left = 60000;
 let right = 40000;
     
