@@ -37,10 +37,59 @@
 
 loadUserName();
 /* ========================== */ 
-/*NOM DE L'UTILISATEUR*/
+/*NOM DE L'UTILISATEUR*
  const id_name= localStorage.getItem("use_name");
    document.getElementById("username").textContent(id_name);
-//////////////////////
+//////////////////////*/
+
+/* LOADIND SCREEN*/
+document
+    .getElementById("solexLoginForm")
+    .addEventListener("submit", async (event) => {
+
+        event.preventDefault();
+
+        const email =
+            document.getElementById("solexEmail").value.trim();
+
+        const password =
+            document.getElementById("solexPassword").value;
+
+        const button =
+            document.getElementById("solexLoginButton");
+
+        const message =
+            document.getElementById("solexLoginMessage");
+
+        button.disabled = true;
+        button.textContent = "Connexion...";
+
+        const { data, error } =
+            await supabaseClient.auth.signInWithPassword({
+                email: email,
+                password: password
+            });
+
+        if (error) {
+
+            message.textContent =
+                "Email ou mot de passe incorrect.";
+
+            button.disabled = false;
+            button.textContent = "Continuer";
+
+            return;
+        }
+
+        message.textContent = "";
+
+        document
+            .getElementById("solexLoadingScreen")
+            .classList.add("solex-loading-hidden");
+
+    });
+
+/////////
 let left = 60000;
 let right = 40000;
     
