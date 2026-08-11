@@ -2075,13 +2075,6 @@ button:active,
             margin: auto;
         }
 
-        .hero-actions {
-            margin-top: 35px;
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
 
         .main-btn {
             padding: 15px 28px;
@@ -2100,32 +2093,7 @@ button:active,
             font-size: 16px;
         }
 
-        /* FEATURES */
-
-        .features {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 60px;
-            flex-wrap: wrap;
-        }
-
-        .feature {
-            width: 200px;
-            padding: 20px;
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.07);
-            border-radius: 15px;
-        }
-
-        .feature strong {
-            display: block;
-            margin-bottom: 7px;
-        }
-
-        .feature small {
-            color: #8994a9;
-        }
+        
 
         /* MODAL */
 
@@ -2264,25 +2232,3 @@ button:active,
     width: 100%;
 }
 
-.hero-actions {
-    order: 4;
-    position: relative !important;
-    left: auto !important;
-    right: auto !important;
-    top: auto !important;
-    bottom: auto !important;
-
-    width: 100%;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-
-    margin: 25px auto 0 !important;
-    padding: 0 !important;
-}
-
-.hero-actions button {
-    margin-left: auto !important;
-    margin-right: auto !important;
-}
