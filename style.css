@@ -135,68 +135,7 @@
        BOUTONS
        ================================ */
 
-    .hero-actions {
-        width: 100%;
-        max-width: 420px;
-
-        margin: 0 auto;
-
-        display: flex;
-
-        flex-direction: column;
-
-        align-items: stretch;
-
-        gap: 12px;
-    }
-
-    .hero-actions button {
-        width: 100%;
-        min-width: 0;
-
-        min-height: 62px;
-
-        padding: 14px 20px;
-
-        font-size: 17px;
-
-        transform: none !important;
-    }
-
-
-    /* ================================
-       CARTES / FEATURES
-       ================================ */
-
-    .hero-features,
-    .features,
-    .feature-container {
-        width: 100% !important;
-        max-width: 100% !important;
-
-        min-width: 0 !important;
-
-        margin-top: 45px;
-
-        display: flex;
-
-        flex-direction: column;
-
-        gap: 15px;
-
-        transform: none !important;
-    }
-
-    .feature {
-        width: 100% !important;
-        min-width: 0 !important;
-        max-width: 100% !important;
-
-        padding: 22px;
-
-        transform: none !important;
-    }
-
+    
 
     /* ================================
        ANIMATION DES BILLETS
