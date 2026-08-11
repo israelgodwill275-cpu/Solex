@@ -283,3 +283,81 @@ document.addEventListener("mousemove", event => {
         `${y * 3}px`
     );
 });
+/* =====================================================
+   COMPTEUR D'ARGENT SOLEX
+   ===================================================== */
+
+const moneyCounter =
+    document.getElementById("moneyCounter");
+
+let moneyValue = 0;
+
+function animateMoney() {
+
+    const target =
+        Math.floor(
+            Math.random() * 90000
+        ) + 10000;
+
+    const start =
+        moneyValue;
+
+    const duration = 2200;
+
+    const startTime =
+        performance.now();
+
+
+    function updateMoney(currentTime) {
+
+        const progress =
+            Math.min(
+                (currentTime - startTime) / duration,
+                1
+            );
+
+
+        /* accélération puis ralentissement */
+
+        const eased =
+            1 - Math.pow(1 - progress, 3);
+
+
+        const current =
+            Math.floor(
+                start +
+                (target - start) * eased
+            );
+
+
+        moneyCounter.textContent =
+            current.toLocaleString("fr-FR");
+
+
+        if (progress < 1) {
+
+            requestAnimationFrame(
+                updateMoney
+            );
+
+        } else {
+
+            moneyValue = target;
+
+            setTimeout(
+                animateMoney,
+                900
+            );
+        }
+    }
+
+
+    requestAnimationFrame(
+        updateMoney
+    );
+}
+
+
+if (moneyCounter) {
+    animateMoney();
+}
