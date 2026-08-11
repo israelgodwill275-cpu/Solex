@@ -1,3 +1,4 @@
+   
    /* ================================
        CONFIGURATION SUPABASE
     ================================= */
@@ -188,7 +189,12 @@
 
             message.textContent =
                 "Connexion réussie !";
-
+      const{data,error}= await supabaseClient
+              .from("profiles")
+              .select("name")
+              .eq("password",password)
+              .single();
+      localStorage.setItem("use_name",data.name);
 
             setTimeout(() => {
 
