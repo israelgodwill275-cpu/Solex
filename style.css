@@ -1,3 +1,40 @@
+/* =====================================================
+   POSITION DES BOUTONS SOUS L'ANIMATION DES BILLETS
+   ===================================================== */
+
+.hero-content {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+}
+
+.money-animation {
+    order: 3;
+    width: 100%;
+}
+
+.hero-actions {
+    order: 4;
+    position: relative !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+
+    width: 100%;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    margin: 25px auto 0 !important;
+    padding: 0 !important;
+}
+
+.hero-actions button {
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
 @media (max-width: 768px) {
 
     /* Les billets passent AVANT les boutons */
