@@ -1,61 +1,19 @@
 /* =====================================================
-   ANIMATION ARGENT SOLEX
+   ANIMATION DES BILLETS SOLEX
    ===================================================== */
 
 .money-animation {
     position: relative;
 
     width: 100%;
-    height: 190px;
+    height: 150px;
 
-    margin-top: 35px;
+    margin-top: 25px;
 
     overflow: hidden;
 
     pointer-events: none;
 }
-
-
-/* Compteur */
-
-.money-counter {
-    position: absolute;
-
-    left: 50%;
-    top: 50%;
-
-    transform: translate(-50%, -50%);
-
-    z-index: 10;
-
-    text-align: center;
-
-    font-weight: 900;
-
-    opacity: .9;
-}
-
-.money-counter span {
-    font-size: clamp(30px, 5vw, 55px);
-
-    letter-spacing: -2px;
-
-    color: #22c55e;
-
-    text-shadow:
-        0 0 20px rgba(34,197,94,.35);
-}
-
-.money-counter small {
-    margin-left: 7px;
-
-    font-size: 14px;
-
-    opacity: .5;
-}
-
-
-/* Billets */
 
 .banknotes {
     position: absolute;
@@ -70,11 +28,9 @@
     height: 68px;
 
     display: flex;
-
     flex-direction: column;
-
-    justify-content: center;
     align-items: center;
+    justify-content: center;
 
     border-radius: 7px;
 
@@ -95,10 +51,6 @@
     font-family: Arial, sans-serif;
 
     opacity: 0;
-
-    transform:
-        translateY(100px)
-        rotate(0deg);
 
     animation:
         banknoteFloat 4s ease-in-out infinite;
@@ -135,7 +87,7 @@
 }
 
 
-/* Positions */
+/* Positions et décalages */
 
 .note-1 {
     left: 5%;
@@ -171,7 +123,7 @@
         opacity: 0;
 
         transform:
-            translateY(120px)
+            translateY(100px)
             rotate(-15deg)
             scale(.8);
     }
@@ -184,7 +136,7 @@
         opacity: 1;
 
         transform:
-            translateY(20px)
+            translateY(10px)
             rotate(5deg)
             scale(1);
     }
@@ -193,7 +145,7 @@
         opacity: .9;
 
         transform:
-            translateY(-20px)
+            translateY(-15px)
             rotate(-4deg)
             scale(1.03);
     }
@@ -202,12 +154,35 @@
         opacity: 0;
 
         transform:
-            translateY(-130px)
+            translateY(-120px)
             rotate(12deg)
             scale(.85);
     }
 }
 
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+    .money-animation {
+        height: 120px;
+    }
+
+    .banknote {
+        width: 110px;
+        height: 52px;
+    }
+
+    .banknote strong {
+        font-size: 13px;
+    }
+
+    .banknote span {
+        font-size: 7px;
+    }
+
+}
 
 /* =====================================================
    EFFET FEU SUR LE PARAGRAPHE
