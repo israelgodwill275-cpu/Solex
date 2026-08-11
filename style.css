@@ -1,3 +1,440 @@
+/* =========================================================
+   SOLEX — CORRECTION MOBILE
+   À AJOUTER À LA FIN DE TON CSS
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    /* Empêche toute la page de dépasser l'écran */
+    html,
+    body {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden !important;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+
+    /* ================================
+       HERO
+       ================================ */
+
+    .hero {
+        width: 100%;
+        min-width: 0 !important;
+        max-width: 100%;
+        overflow: hidden;
+
+        padding:
+            100px 20px
+            60px;
+    }
+
+    .hero-content {
+        width: 100%;
+        max-width: 100% !important;
+
+        margin: 0 auto;
+
+        text-align: center;
+
+        transform: none !important;
+    }
+
+
+    /* ================================
+       BADGE
+       ================================ */
+
+    .badge {
+        display: inline-flex;
+
+        max-width: 100%;
+
+        padding: 9px 15px;
+
+        font-size: 11px;
+
+        white-space: normal;
+
+        text-align: center;
+    }
+
+
+    /* ================================
+       GRAND TITRE
+       ================================ */
+
+    .hero h1 {
+        width: 100%;
+        max-width: 100%;
+
+        margin:
+            25px auto
+            18px;
+
+        font-size:
+            clamp(42px, 12vw, 65px);
+
+        line-height: .95;
+
+        letter-spacing: -2px;
+
+        overflow-wrap: break-word;
+    }
+
+    .hero h1 span {
+        display: inline-block;
+    }
+
+
+    /* ================================
+       DESCRIPTION
+       ================================ */
+
+    .hero-content > p {
+        width: 100%;
+        max-width: 470px;
+
+        margin:
+            0 auto
+            25px;
+
+        font-size: 16px;
+
+        line-height: 1.65;
+
+        text-align: center;
+    }
+
+
+    /* ================================
+       BOUTONS
+       ================================ */
+
+    .hero-actions {
+        width: 100%;
+        max-width: 420px;
+
+        margin: 0 auto;
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+        gap: 12px;
+    }
+
+    .hero-actions button {
+        width: 100%;
+        min-width: 0;
+
+        min-height: 62px;
+
+        padding: 14px 20px;
+
+        font-size: 17px;
+
+        transform: none !important;
+    }
+
+
+    /* ================================
+       CARTES / FEATURES
+       ================================ */
+
+    .hero-features,
+    .features,
+    .feature-container {
+        width: 100% !important;
+        max-width: 100% !important;
+
+        min-width: 0 !important;
+
+        margin-top: 45px;
+
+        display: flex;
+
+        flex-direction: column;
+
+        gap: 15px;
+
+        transform: none !important;
+    }
+
+    .feature {
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+
+        padding: 22px;
+
+        transform: none !important;
+    }
+
+
+    /* ================================
+       ANIMATION DES BILLETS
+       ================================ */
+
+    .money-animation {
+        width: 100% !important;
+        max-width: 100%;
+
+        height: 120px;
+
+        margin:
+            25px auto
+            0;
+
+        overflow: hidden;
+    }
+
+    .banknotes {
+        width: 100%;
+    }
+
+    .banknote {
+        width: 105px;
+        height: 50px;
+
+        font-size: 11px;
+    }
+
+    .banknote strong {
+        font-size: 12px;
+    }
+
+    .banknote span {
+        font-size: 7px;
+    }
+
+    .note-1 {
+        left: -20px;
+    }
+
+    .note-2 {
+        left: 18%;
+    }
+
+    .note-3 {
+        left: 40%;
+    }
+
+    .note-4 {
+        left: 62%;
+    }
+
+    .note-5 {
+        left: 82%;
+    }
+
+
+    /* ================================
+       LOGOS
+       ================================ */
+
+    .solex-brands {
+        width: 100%;
+
+        overflow: hidden;
+
+        padding:
+            55px 0;
+    }
+
+    .brands-mask {
+        width: 100%;
+        max-width: 100%;
+
+        overflow: hidden;
+    }
+
+    .brands-track {
+        gap: 35px;
+    }
+
+    .brand-item {
+        width: 130px;
+        min-width: 130px;
+
+        height: 75px;
+    }
+
+    .brand-item img {
+        max-width: 115px;
+        max-height: 50px;
+    }
+
+
+    /* ================================
+       AVIS
+       ================================ */
+
+    .solex-reviews {
+        width: 100%;
+
+        padding:
+            70px 0;
+
+        overflow: hidden;
+    }
+
+    .reviews-title {
+        width: 100%;
+        max-width: 100%;
+
+        padding:
+            0 20px;
+    }
+
+    .reviews-title h2 {
+        font-size:
+            clamp(35px, 11vw, 52px);
+    }
+
+    .reviews-mask {
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .reviews-track {
+        gap: 15px;
+    }
+
+    .review-card {
+        width: 285px;
+        min-width: 285px;
+
+        padding: 22px;
+    }
+
+
+    /* ================================
+       NAVIGATION MOBILE
+       ================================ */
+
+    nav,
+    header {
+        width: 100%;
+        max-width: 100%;
+
+        overflow: hidden;
+    }
+
+    .nav-buttons {
+        gap: 7px;
+    }
+
+    .nav-buttons button {
+        padding:
+            9px 12px;
+
+        font-size: 12px;
+    }
+
+    .logo {
+        max-width: 120px;
+    }
+
+
+    /* ================================
+       MODALES
+       ================================ */
+
+    .modal {
+        width: 100%;
+        max-width: 100%;
+
+        padding: 15px;
+    }
+
+    .modal-box {
+        width: 100%;
+        max-width: 430px;
+
+        max-height: 90vh;
+
+        overflow-y: auto;
+    }
+
+
+    /* ================================
+       IMAGES / ELEMENTS FLOTTANTS
+       ================================ */
+
+    img,
+    video,
+    canvas {
+        max-width: 100%;
+    }
+
+    canvas {
+        max-width: none;
+    }
+
+
+    /* ================================
+       EMPÊCHE LES ÉLÉMENTS ABSOLUS
+       DE CRÉER UN DÉBORDEMENT
+       ================================ */
+
+    .hero *,
+    .solex-brands *,
+    .solex-reviews * {
+        max-width: 100%;
+    }
+
+}
+
+
+/* =========================================================
+   TRÈS PETITS TÉLÉPHONES
+   ========================================================= */
+
+@media (max-width: 390px) {
+
+    .hero {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .hero h1 {
+        font-size: 40px;
+
+        letter-spacing: -1.8px;
+    }
+
+    .hero-content > p {
+        font-size: 15px;
+    }
+
+    .hero-actions button {
+        min-height: 58px;
+
+        font-size: 16px;
+    }
+
+    .brand-item {
+        width: 115px;
+        min-width: 115px;
+    }
+
+    .brand-item img {
+        max-width: 100px;
+    }
+
+    .review-card {
+        width: 270px;
+        min-width: 270px;
+    }
+
+}
 /* =====================================================
    ANIMATION DES BILLETS SOLEX
    ===================================================== */
