@@ -1,3 +1,30 @@
+@media (max-width: 768px) {
+
+    /* Les billets passent AVANT les boutons */
+    .money-animation {
+        order: 1;
+        margin-top: 25px;
+        margin-bottom: 25px;
+    }
+
+    /* Les boutons passent SOUS les billets */
+    .hero-actions {
+        order: 2;
+
+        display: flex;
+        flex-direction: column;
+
+        width: 100%;
+        max-width: 420px;
+
+        margin: 0 auto;
+    }
+
+    .hero-actions button {
+        width: 100%;
+    }
+
+}
 /* =========================================================
    SOLEX — CORRECTION MOBILE
    À AJOUTER À LA FIN DE TON CSS
