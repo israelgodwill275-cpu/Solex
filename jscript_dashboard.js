@@ -42,7 +42,8 @@ loadUserName();
    document.getElementById("username").textContent(id_name);
 //////////////////////*/
 
-
+document.getElementById("username")
+.textContent(localStorage.getItem("user_name"));
 
 /////////
 let left = 60000;
