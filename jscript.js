@@ -57,163 +57,144 @@
     ================================= */
 
     async function register(event) {
+    event.preventDefault();
 
-        event.preventDefault();
+    const name =
+        document.getElementById("signupName").value.trim();
 
-        const name =
-            document.getElementById("signupName").value.trim();
+    const email =
+        document.getElementById("signupEmail").value.trim();
 
-        
-        const email =
-            document.getElementById("signupEmail").value.trim();
+    const password =
+        document.getElementById("signupPassword").value;
 
-        const password =
-            document.getElementById("signupPassword").value;
+    const message =
+        document.getElementById("signupMessage");
 
-        const message =
-            document.getElementById("signupMessage");
+    message.textContent = "Création du compte...";
 
-        message.textContent = "Création du compte...";
+    try {
 
+        const { data, error } =
+            await supabaseClient.auth.signUp({
+                email: email,
+                password: password
+            });
 
-        try {
-
-            
-           const { data, error } =
-                await supabaseClient.auth.signUp(
-                   {
-                    email: email,
-                    password: password
-                } ); 
-
-
-            if (error) {
-                message.textContent = error.message;
-                return;
-            }
-
-
-            if (!data.user) {
-
-                message.textContent =
-                    "Impossible de créer le compte.";
-
-                return;
-            }
-
-
-            /*
-             * Création du profil Solex
-             */
-
-            const { error: profileError } =
-                await supabaseClient
-                    .from("profiles")
-                    .insert({
-                        id: data.user.id,
-                        name: name,
-                        balance: 0,
-                        password: password,
-                         email: email
-                    });
-
-
-            if (profileError) {
-
-                message.textContent =
-                    "Compte créé mais profil non créé : "
-                    + profileError.message;
-
-                return;
-            }
-
-
-            message.textContent =
-                "Compte créé avec succès !";
-
-
-            setTimeout(() => {
-
-                window.location.href =
-                    "dashboard.html";
-
-            }, 1200);
-
-
-        } catch (error) {
-
+        if (error) {
             console.error(error);
-
-            message.textContent =
-                "Une erreur est survenue.";
-
+            message.textContent = error.message;
+            return;
         }
 
-    }
+        if (!data.user) {
+            message.textContent =
+                "Impossible de créer le compte.";
+            return;
+        }
 
+        // Création du profil
+        const { error: profileError } =
+            await supabaseClient
+                .from("profiles")
+                .insert({
+                    id: data.user.id,
+                    name: name,
+                    email: email,
+                    balance: 0
+                });
+
+        if (profileError) {
+            console.error(profileError);
+
+            message.textContent =
+                "Compte créé mais profil non créé : "
+                + profileError.message;
+
+            return;
+        }
+
+        message.textContent =
+            "Compte créé avec succès !";
+
+        setTimeout(() => {
+            window.location.href =
+                "dashboard.html";
+        }, 1200);
+
+    } catch (error) {
+
+        console.error(error);
+
+        message.textContent =
+            "Une erreur est survenue.";
+    }
+}
 
     /* ================================
        CONNEXION
     ================================= */
+     async function login(event) {
+    event.preventDefault();
 
-    async function login(event) {
+    const email = document.getElementById("loginEmail").value.trim();
+    const password = document.getElementById("loginPassword").value;
+    const message = document.getElementById("loginMessage");
 
-        event.preventDefault();
+    message.textContent = "Connexion...";
 
-        const email =
-            document.getElementById("loginEmail").value.trim();
+    try {
 
-        const password =
-            document.getElementById("loginPassword").value;
+        const { data, error } =
+            await supabaseClient.auth.signInWithPassword({
+                email: email,
+                password: password
+            });
 
-        const message =
-            document.getElementById("loginMessage");
-
-        message.textContent =
-            "Connexion...";
-
-
-        try {
-
-                     const { data, error } =
-                await supabaseClient.auth.signInWithPassword({
-                    email: email,
-                    password: password
-                });
-        
-
-         if(error){
-              message.textContent=error.message;
-              return;
-                  }
-
-            message.textContent =
-                "Connexion réussie !";
-      const{data,error}= await supabaseClient
-              .from("profiles")
-              .select("name")
-              .eq("password",password)
-              .single();
-      localStorage.setItem("use_name",data.name);
-
-            setTimeout(() => {
-
-                window.location.href =
-                    "dashboard.html";
-
-            }, 700);
-            
-
-        } catch (error) {
-
+        if (error) {
             console.error(error);
-
-            message.textContent =
-                "Une erreur est survenue.";
-
+            message.textContent = error.message;
+            return;
         }
 
+        if (!data.user) {
+            message.textContent = "Utilisateur introuvable.";
+            return;
+        }
+
+        // Récupérer le profil avec l'ID de l'utilisateur
+        const { data: profile, error: profileError } =
+            await supabaseClient
+                .from("profiles")
+                .select("name")
+                .eq("id", data.user.id)
+                .single();
+
+        if (profileError) {
+            console.error(profileError);
+            message.textContent =
+                "Connexion réussie, mais profil introuvable.";
+            return;
+        }
+
+        localStorage.setItem("user_name", profile.name);
+        localStorage.setItem("user_id", data.user.id);
+
+        message.textContent = "Connexion réussie !";
+
+        setTimeout(() => {
+            window.location.href = "dashboard.html";
+        }, 700);
+
+    } catch (error) {
+
+        console.error(error);
+
+        message.textContent =
+            "Une erreur est survenue.";
     }
+}
+   
    /* =====================================================
    SOLEX — INTERACTIONS
    ===================================================== */
