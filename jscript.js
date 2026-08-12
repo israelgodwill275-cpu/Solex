@@ -113,6 +113,23 @@
 
             return;
         }
+          // Récupérer le profil avec l'ID de l'utilisateur
+        const { data: profile, error: profileError } =
+            await supabaseClient
+                .from("profiles")
+                .select("name")
+                .eq("id", data.user.id)
+                .single();
+
+        if (profileError) {
+            console.error(profileError);
+            message.textContent =
+                "Connexion réussie, mais profil introuvable.";
+            return;
+        }
+
+        localStorage.setItem("user_name", profile.name);
+        localStorage.setItem("user_id", data.user.id);
 
         message.textContent =
             "Compte créé avec succès !";
