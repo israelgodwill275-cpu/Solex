@@ -309,8 +309,11 @@
     .modal {
         width: 100%;
         max-width: 100%;
-
+        display: none;
         padding: 15px;
+    }
+    .modal.active {
+        display: flex;
     }
 
     .modal-box {
