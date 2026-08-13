@@ -39,11 +39,7 @@ loadUserName();
 /* ========================== */ 
 /*NOM DE L'UTILISATEUR*
  const id_name= localStorage.getItem("use_name");
-   document.getElementById("username").textContent(id_name);
-//////////////////////*/
-
-document.getElementById("username")
-.textContent(localStorage.getItem("user_name"));
+   document.getElementById("username").
 
 /////////
 let left = 60000;
