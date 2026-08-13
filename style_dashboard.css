@@ -825,3 +825,102 @@ body {
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
 }
+
+/* =====================================================
+   PAGES INTERNES — UNE SEULE PAGE
+   ===================================================== */
+
+.page-content {
+    display: none;
+    margin-left: 245px;
+    padding: 35px;
+    min-height: 100vh;
+    position: relative;
+    z-index: 2;
+}
+
+.page-content.active {
+    display: block;
+}
+
+.page-content h2 {
+    font-size: 28px;
+    margin-bottom: 8px;
+    color: var(--turquoise);
+}
+
+.page-content > p {
+    color: var(--muted);
+    margin-bottom: 25px;
+}
+
+.content-card {
+    max-width: 700px;
+    padding: 25px;
+    border-radius: 20px;
+
+    background: rgba(8, 20, 20, 0.45);
+    border: 1px solid rgba(22, 230, 206, 0.15);
+
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+.content-card h3 {
+    margin-bottom: 18px;
+}
+
+.content-card input {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 12px;
+
+    border: 1px solid rgba(22,230,206,.20);
+    border-radius: 12px;
+
+    background: rgba(0,0,0,.20);
+    color: white;
+    outline: none;
+}
+
+.primary-btn {
+    padding: 13px 20px;
+    border: 0;
+    border-radius: 12px;
+
+    background: var(--turquoise);
+    color: #031515;
+
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.menu-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.menu-card button {
+    padding: 15px;
+    border: 1px solid rgba(22,230,206,.12);
+    border-radius: 12px;
+
+    background: rgba(22,230,206,.04);
+    color: white;
+
+    text-align: left;
+    cursor: pointer;
+}
+
+
+/* MOBILE */
+
+@media(max-width:700px) {
+
+    .page-content {
+        margin-left: 0;
+        padding: 22px 14px 100px;
+    }
+
+}
