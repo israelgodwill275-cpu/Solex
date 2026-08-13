@@ -20,7 +20,19 @@
        MODALS
     ================================= */
 
-    function openSignup() {
+      function closeModals() {
+
+        document
+            .getElementById("signupModal")
+            .classList.remove("active");
+
+        document
+            .getElementById("loginModal")
+            .classList.remove("active");
+    }
+
+   
+   function openSignup() {
 
         closeModals();
 
@@ -40,17 +52,7 @@
     }
 
 
-    function closeModals() {
-
-        document
-            .getElementById("signupModal")
-            .classList.remove("active");
-
-        document
-            .getElementById("loginModal")
-            .classList.remove("active");
-    }
-
+  
 
     /* ================================
        INSCRIPTION
