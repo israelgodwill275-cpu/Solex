@@ -107,23 +107,71 @@ updateDashboard();
 /* =====================================================
  MOBILE NAV
 ===================================================== */
-document
- .querySelectorAll(".mobile-item")
- .forEach(item => {
- item.addEventListener(
- "click",
- () => {
- document
- .querySelectorAll(
- ".mobile-item"
- )
- .forEach(
- x =>
- x.classList
- .remove("active")
- );
- item.classList
- .add("active");
- }
- );
- });
+/* =====================================================
+   NAVIGATION SUR UNE SEULE PAGE
+   ===================================================== */
+
+const mobileItems = document.querySelectorAll(".mobile-item");
+
+const pages = {
+    0: "page-accueil",
+    1: "page-depot",
+    2: "page-retrait",
+    3: "page-direct",
+    4: "page-menu"
+};
+
+function showPage(pageId) {
+
+    // Cacher le dashboard
+    document
+        .getElementById("page-accueil")
+        .style.display = "none";
+
+    // Cacher toutes les autres sections
+    document
+        .querySelectorAll(".page-content")
+        .forEach(page => {
+            page.classList.remove("active");
+        });
+
+    // Afficher la page demandée
+    if (pageId === "page-accueil") {
+
+        document
+            .getElementById("page-accueil")
+            .style.display = "block";
+
+    } else {
+
+        document
+            .getElementById(pageId)
+            .classList.add("active");
+    }
+}
+
+
+mobileItems.forEach((item, index) => {
+
+    item.addEventListener("click", () => {
+
+        // Changer le bouton actif
+        mobileItems.forEach(btn => {
+            btn.classList.remove("active");
+        });
+
+        item.classList.add("active");
+
+        // Afficher le contenu correspondant
+        showPage(pages[index]);
+
+        // Remonter en haut
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    });
+
+});
+
