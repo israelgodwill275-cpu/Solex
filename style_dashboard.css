@@ -787,3 +787,41 @@ body {
  font-size: 9px;
  }
 }
+
+/* =====================================================
+   EFFET GLASS / TRANSPARENCE SOLEX
+   ===================================================== */
+
+.stat {
+    background: rgba(8, 20, 20, 0.45);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+.position {
+    background: rgba(8, 20, 20, 0.42);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+.investment-box {
+    background: rgba(8, 20, 20, 0.45);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+.balance-card {
+    background: linear-gradient(
+        135deg,
+        rgba(19, 70, 65, 0.62),
+        rgba(5, 25, 23, 0.48)
+    );
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+}
+
+.total-live {
+    background: rgba(22, 230, 206, 0.07);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
