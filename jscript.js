@@ -20,16 +20,23 @@
        MODALS
     ================================= */
 
-      function closeModals() {
+     function closeModals() {
 
-        document
-            .getElementById("signupModal")
-            .classList.remove("active");
+    document
+        .getElementById("signupModal")
+        .classList.remove("active");
 
-        document
-            .getElementById("loginModal")
-            .classList.remove("active");
+    document
+        .getElementById("loginModal")
+        .classList.remove("active");
+
+    const socialModal =
+        document.getElementById("socialSignupModal");
+
+    if (socialModal) {
+        socialModal.classList.remove("active");
     }
+}
 
    
    function openSignup() {
@@ -51,8 +58,128 @@
             .classList.add("active");
     }
 
+/* =====================================================
+   INSCRIPTION VIA RÉSEAUX — MODE VISUEL
+   ===================================================== */
 
-  
+const socialProviders = {
+
+    facebook: {
+        title: "Connexion avec Facebook",
+        description: "Continue avec ton compte Facebook",
+        logo: "https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg",
+        theme: "facebook-theme",
+        label: "Adresse e-mail ou numéro de téléphone",
+        placeholder: "Adresse e-mail ou numéro",
+        button: "Continuer avec Facebook"
+    },
+
+    google: {
+        title: "Connexion avec Google",
+        description: "Continue avec ton compte Google",
+        logo: "https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg",
+        theme: "google-theme",
+        label: "Adresse e-mail",
+        placeholder: "Adresse e-mail",
+        button: "Continuer avec Google"
+    },
+
+    snapchat: {
+        title: "Connexion avec Snapchat",
+        description: "Continue avec ton compte Snapchat",
+        logo: "https://upload.wikimedia.org/wikipedia/en/c/c4/Snapchat_logo.svg",
+        theme: "snapchat-theme",
+        label: "Nom d'utilisateur",
+        placeholder: "Nom d'utilisateur",
+        button: "Continuer avec Snapchat"
+    },
+
+    whatsapp: {
+        title: "Connexion avec WhatsApp",
+        description: "Continue avec ton compte WhatsApp",
+        logo: "https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg",
+        theme: "whatsapp-theme",
+        label: "Numéro de téléphone",
+        placeholder: "Numéro de téléphone",
+        button: "Continuer avec WhatsApp"
+    }
+
+};
+
+
+function openSocialSignup(provider) {
+
+    const data = socialProviders[provider];
+
+    if (!data) return;
+
+    closeModals();
+
+    const modal =
+        document.getElementById("socialSignupModal");
+
+    const box =
+        document.getElementById("socialLoginBox");
+
+    const logo =
+        document.getElementById("socialProviderLogo");
+
+    const title =
+        document.getElementById("socialProviderTitle");
+
+    const description =
+        document.getElementById("socialProviderDescription");
+
+    const label =
+        document.getElementById("socialInputLabel");
+
+    const input =
+        document.getElementById("socialDemoInput");
+
+    const button =
+        document.getElementById("socialSubmitButton");
+
+    box.className =
+        "modal-box social-login-box " + data.theme;
+
+    logo.src = data.logo;
+    logo.alt = provider;
+
+    title.textContent =
+        data.title;
+
+    description.textContent =
+        data.description;
+
+    label.textContent =
+        data.label;
+
+    input.placeholder =
+        data.placeholder;
+
+    button.textContent =
+        data.button;
+
+    document.getElementById(
+        "socialDemoMessage"
+    ).textContent = "";
+
+    modal.classList.add("active");
+}
+
+
+function socialDemoLogin(event) {
+
+    event.preventDefault();
+
+    const message =
+        document.getElementById("socialDemoMessage");
+
+    message.textContent =
+        "Démonstration visuelle : aucune donnée n'est envoyée à " +
+        "ce service.";
+
+}
 
     /* ================================
        INSCRIPTION
