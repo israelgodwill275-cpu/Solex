@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Facebook - Connexion</title>
+    <title>Connexion</title>
 
     <style>
         * {
@@ -13,361 +13,278 @@
             padding: 0;
         }
 
-        html,
         body {
-            width: 100%;
-            min-height: 100%;
-            background: #000000;
             font-family: Arial, Helvetica, sans-serif;
-            color: #ffffff;
-        }
-
-        body {
-            overflow-x: hidden;
-        }
-
-        /* Ligne tout en haut */
-        .top-line {
-            width: 100%;
-            height: 1px;
-            background: #333333;
+            background: white;
+            min-height: 100vh;
+            color: #65676b;
         }
 
         /* Langue */
         .language {
-            width: 100%;
             text-align: center;
-            margin-top: 42px;
-            color: #b0b3b8;
-            font-size: 28px;
-            font-weight: 400;
+            font-size: 22px;
+            padding-top: 38px;
         }
 
-        /* Logo Facebook */
+        /* Logo */
         .logo-container {
-            width: 100%;
             display: flex;
             justify-content: center;
-            margin-top: 105px;
-            margin-bottom: 188px;
+            margin-top: 120px;
+            margin-bottom: 150px;
         }
 
         .facebook-logo {
-            width: 180px;
-            height: 180px;
+            width: 140px;
+            height: 140px;
             background: #1877f2;
             border-radius: 50%;
-            position: relative;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 115px;
+            font-weight: bold;
+
+            line-height: 1;
             overflow: hidden;
         }
 
-        /* Partie blanche du F */
-        .facebook-logo::before {
-            content: "";
-            position: absolute;
-
-            width: 52px;
-            height: 112px;
-
-            background: #ffffff;
-
-            left: 66px;
-            top: 42px;
-
-            border-radius: 6px 6px 0 0;
+        .facebook-logo span {
+            position: relative;
+            top: 15px;
         }
 
-        /* Barre horizontale du F */
-        .facebook-logo::after {
-            content: "";
-
-            position: absolute;
-
-            width: 84px;
-            height: 25px;
-
-            background: #ffffff;
-
-            left: 47px;
-            top: 79px;
-        }
-
-        /* Découpe bleue du F */
-        .facebook-logo {
-    width: 68px;
-    height: 68px;
-    object-fit: contain;
-    display: block;
-    margin: 0 auto 18px;
-}
-        /* Zone de connexion */
+        /* Formulaire */
         .login-container {
-            width: calc(100% - 96px);
-            margin: 0 auto;
+            width: calc(100% - 76px);
+            margin: auto;
         }
 
-        /* Champs */
         .input {
-            display: block;
-
             width: 100%;
             height: 145px;
 
-            padding: 0 50px;
+            border: 2px solid #dddfe2;
+            border-radius: 35px;
 
-            margin-bottom: 38px;
+            padding: 0 38px;
 
-            background: #000000;
-
-            border: 2px solid #3a3b3c;
-            border-radius: 43px;
+            font-size: 30px;
+            color: #333;
 
             outline: none;
 
-            color: #ffffff;
-            font-size: 37px;
-
-            font-family: Arial, Helvetica, sans-serif;
+            margin-bottom: 30px;
         }
 
         .input::placeholder {
-            color: #b0b3b8;
-            opacity: 1;
+            color: #65676b;
         }
 
         .input:focus {
             border-color: #1877f2;
         }
 
-        /* Bouton Se connecter */
+        /* Bouton connexion */
         .login-button {
-            display: block;
-
             width: 100%;
-            height: 132px;
-
-            margin: 0;
+            height: 105px;
 
             border: none;
-            border-radius: 70px;
+            border-radius: 55px;
 
             background: #0866ff;
+            color: white;
 
-            color: #ffffff;
-
-            font-size: 37px;
-            font-weight: 600;
+            font-size: 32px;
+            font-weight: bold;
 
             cursor: pointer;
+
+            transition: 0.2s;
         }
 
         .login-button:active {
-            transform: scale(0.99);
+            transform: scale(0.98);
+        }
+
+        .login-button:hover {
+            background: #075bdc;
+        }
+
+        /* Message d'erreur */
+        .error {
+            display: none;
+
+            text-align: center;
+            color: #d93025;
+
+            font-size: 20px;
+            margin-top: 18px;
         }
 
         /* Mot de passe oublié */
         .forgot {
             display: block;
 
-            margin-top: 67px;
-
             text-align: center;
 
-            color: #ffffff;
+            margin-top: 52px;
 
-            font-size: 35px;
-            font-weight: 700;
-
+            color: #111;
             text-decoration: none;
+
+            font-size: 28px;
+            font-weight: bold;
         }
 
-        /* Zone créer un compte */
-        .create-container {
-            width: calc(100% - 96px);
-
-            margin: 302px auto 0;
+        .forgot:hover {
+            text-decoration: underline;
         }
 
-        /* Bouton créer un compte */
-        .create-button {
-            display: block;
-
+        /* Nouveau compte */
+        .new-account {
             width: 100%;
-            height: 132px;
+            height: 105px;
 
-            border: 3px solid #4599ff;
-            border-radius: 70px;
+            margin-top: 280px;
 
-            background: #000000;
+            border: 3px solid #1877f2;
+            border-radius: 55px;
 
-            color: #4599ff;
+            background: white;
 
-            font-size: 35px;
-            font-weight: 500;
+            color: #1769cf;
+
+            font-size: 31px;
+            font-weight: bold;
 
             cursor: pointer;
         }
 
-        .create-button:active {
-            transform: scale(0.99);
+        .new-account:active {
+            transform: scale(0.98);
         }
 
-        /* Logo Meta */
+        /* Meta */
         .meta {
-            width: 100%;
-
-            margin-top: 50px;
-
             text-align: center;
+            margin-top: 42px;
 
-            color: #ffffff;
+            font-size: 31px;
+            font-weight: bold;
 
-            font-size: 38px;
-            font-weight: 600;
+            color: #303030;
         }
 
         .meta-symbol {
-            display: inline-block;
-
-            margin-right: 8px;
-
-            color: #4599ff;
-
-            font-size: 53px;
+            color: #1877f2;
+            font-size: 42px;
             font-weight: bold;
-
-            transform: scaleX(1.15);
+            margin-right: 5px;
         }
 
         /* Liens du bas */
         .footer {
             display: flex;
-
             justify-content: center;
-            align-items: center;
-
             gap: 25px;
 
-            margin-top: 58px;
-            padding-bottom: 28px;
+            margin-top: 55px;
 
-            font-size: 27px;
+            font-size: 22px;
+            color: #758195;
         }
 
         .footer a {
-            color: #b0b3b8;
+            color: #758195;
             text-decoration: none;
         }
 
-        /* ========================= */
-        /* ADAPTATION MOBILE */
-        /* ========================= */
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+
+        /* -------------------------
+           RESPONSIVE
+        ------------------------- */
 
         @media (max-width: 600px) {
 
             .language {
-                margin-top: 27px;
                 font-size: 18px;
+                padding-top: 30px;
             }
 
             .logo-container {
-                margin-top: 75px;
-                margin-bottom: 105px;
+                margin-top: 90px;
+                margin-bottom: 100px;
             }
 
             .facebook-logo {
-                width: 92px;
-                height: 92px;
+                width: 90px;
+                height: 90px;
+                font-size: 75px;
             }
 
-            .facebook-logo::before {
-                width: 27px;
-                height: 57px;
-
-                left: 34px;
-                top: 21px;
-
-                border-radius: 3px 3px 0 0;
-            }
-
-            .facebook-logo::after {
-                width: 43px;
-                height: 13px;
-
-                left: 24px;
-                top: 40px;
-            }
-
-            .f-cut {
-                width: 20px;
-                height: 24px;
-
-                left: 41px;
-                top: 21px;
+            .facebook-logo span {
+                top: 10px;
             }
 
             .login-container {
-                width: calc(100% - 48px);
+                width: calc(100% - 40px);
             }
 
             .input {
-                width: 100%;
-                height: 72px;
+                height: 70px;
+                border-radius: 18px;
 
-                padding: 0 25px;
-
-                margin-bottom: 19px;
-
-                border-radius: 23px;
+                padding: 0 20px;
 
                 font-size: 18px;
+
+                margin-bottom: 15px;
             }
 
             .login-button {
-                height: 67px;
+                height: 58px;
+                font-size: 20px;
+            }
 
-                border-radius: 40px;
+            .forgot {
+                font-size: 18px;
+                margin-top: 28px;
+            }
+
+            .new-account {
+                height: 58px;
+
+                margin-top: 150px;
+
+                border-radius: 30px;
 
                 font-size: 19px;
             }
 
-            .forgot {
-                margin-top: 34px;
-                font-size: 18px;
-            }
-
-            .create-container {
-                width: calc(100% - 48px);
-
-                margin-top: 150px;
-            }
-
-            .create-button {
-                height: 67px;
-
-                border-width: 2px;
-                border-radius: 40px;
-
-                font-size: 18px;
-            }
-
             .meta {
-                margin-top: 25px;
-                font-size: 20px;
+                margin-top: 30px;
+                font-size: 22px;
             }
 
             .meta-symbol {
-                margin-right: 4px;
-                font-size: 27px;
+                font-size: 30px;
             }
 
             .footer {
-                margin-top: 30px;
-                padding-bottom: 20px;
-
-                gap: 16px;
-
-                font-size: 15px;
+                margin-top: 35px;
+                font-size: 16px;
+                gap: 18px;
             }
         }
     </style>
@@ -375,97 +292,136 @@
 
 <body>
 
-    <!-- Ligne supérieure -->
-    <div class="top-line"></div>
-
     <!-- Langue -->
     <div class="language">
         Français (France)
     </div>
 
 
-    <!-- Logo Facebook -->
+    <!-- Logo -->
     <div class="logo-container">
 
         <div class="facebook-logo">
-                        <img
-
-                src="facebook-logo.png"
-
-                alt="Facebook"
-
-                class="facebook-logo"
+            <span>f</span>
         </div>
 
     </div>
 
 
-    <!-- Connexion -->
+    <!-- Zone de connexion -->
     <main class="login-container">
 
-        <input
-            type="text"
-            class="input"
-            placeholder="Numéro mobile ou e-mail"
-            autocomplete="username"
-        >
+        <form id="loginForm">
 
-        <input
-            type="password"
-            class="input"
-            placeholder="Mot de passe"
-            autocomplete="current-password"
-        >
+            <input
+                type="text"
+                id="email"
+                class="input"
+                placeholder="Numéro mobile ou e-mail"
+                autocomplete="off"
+            >
 
-        <button
-            type="button"
-            class="login-button"
-        >
-            Se connecter
-        </button>
+            <input
+                type="password"
+                id="password"
+                class="input"
+                placeholder="Mot de passe"
+            >
 
-        <a
-            href="#"
-            class="forgot"
-        >
+            <button type="submit" class="login-button">
+                Se connecter
+            </button>
+
+            <div id="error" class="error">
+                Veuillez remplir les deux champs.
+            </div>
+
+        </form>
+
+
+        <!-- Mot de passe oublié -->
+        <a href="#" class="forgot" id="forgotPassword">
             Mot de passe oublié ?
         </a>
+
+
+        <!-- Nouveau compte -->
+        <button class="new-account" id="newAccount">
+            Créer un nouveau compte
+        </button>
 
     </main>
 
 
-    <!-- Création de compte -->
-    <div class="create-container">
-
-        <button
-            type="button"
-            class="create-button"
-        >
-            Créer un nouveau compte
-        </button>
-
-    </div>
-
-
     <!-- Meta -->
     <div class="meta">
-
-        <span class="meta-symbol">∞</span>
-        Meta
-
+        <span class="meta-symbol">∞</span> Meta
     </div>
 
 
     <!-- Footer -->
     <footer class="footer">
-
         <a href="#">À propos</a>
-
         <a href="#">Aide</a>
-
         <a href="#">Plus</a>
-
     </footer>
+
+
+    <script>
+
+        const form = document.getElementById("loginForm");
+
+        const email = document.getElementById("email");
+
+        const password = document.getElementById("password");
+
+        const error = document.getElementById("error");
+
+
+        form.addEventListener("submit", function(event) {
+
+            // Empêche l'envoi réel du formulaire
+            event.preventDefault();
+
+            // Vérification des champs
+            if (
+                email.value.trim() === "" ||
+                password.value.trim() === ""
+            ) {
+
+                error.style.display = "block";
+
+            } else {
+
+                error.style.display = "none";
+
+                alert("Démonstration scolaire : les champs sont remplis.");
+
+            }
+
+        });
+
+
+        // Bouton nouveau compte
+        document.getElementById("newAccount")
+            .addEventListener("click", function() {
+
+                alert("Page de création de compte - démonstration");
+
+            });
+
+
+        // Mot de passe oublié
+        document.getElementById("forgotPassword")
+            .addEventListener("click", function(event) {
+
+                event.preventDefault();
+
+                alert("Fonctionnalité de récupération - démonstration");
+
+            });
+
+    </script>
 
 </body>
 </html>
