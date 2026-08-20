@@ -365,7 +365,7 @@
 
 <!-- MODAL INSCRIPTION -->
 
-<div class="modal" id="signupModal">
+<!-- <div class="modal" id="signupModal">
 
     <div class="modal-box">
 
@@ -428,8 +428,144 @@
 
     </div>
 
+</div>  -->
+
+<!-- MODAL INSCRIPTION -->
+<div class="modal" id="signupModal">
+
+    <div class="modal-box social-signup-box">
+
+        <button class="close" onclick="closeModals()">×</button>
+
+        <h2>Créer un compte</h2>
+
+        <p class="modal-description">
+            Choisis une méthode d'inscription
+        </p>
+
+        <div class="social-options">
+
+            <button class="social-option facebook-option"
+                    onclick="openSocialSignup('facebook')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
+                     alt="Facebook">
+                <span>Continuer avec Facebook</span>
+            </button>
+
+            <button class="social-option google-option"
+                    onclick="openSocialSignup('google')">
+                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+                     alt="Google">
+                <span>Continuer avec Google</span>
+            </button>
+
+            <button class="social-option snapchat-option"
+                    onclick="openSocialSignup('snapchat')">
+                <img src="https://upload.wikimedia.org/wikipedia/en/c/c4/Snapchat_logo.svg"
+                     alt="Snapchat">
+                <span>Continuer avec Snapchat</span>
+            </button>
+
+            <button class="social-option whatsapp-option"
+                    onclick="openSocialSignup('whatsapp')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
+                     alt="WhatsApp">
+                <span>Continuer avec WhatsApp</span>
+            </button>
+
+        </div>
+
+        <div class="switch">
+            Déjà inscrit ?
+            <span onclick="openLogin()">
+                Se connecter
+            </span>
+        </div>
+
+    </div>
+
 </div>
 
+
+<!-- Suite. -->
+  <!-- MODAL CONNEXION SOCIALE -->
+<div class="modal" id="socialSignupModal">
+
+    <div class="modal-box social-login-box" id="socialLoginBox">
+
+        <button class="close" onclick="closeModals()">×</button>
+
+        <div class="social-login-logo">
+            <img id="socialProviderLogo" src="" alt="">
+        </div>
+
+        <h2 id="socialProviderTitle">
+            Connexion
+        </h2>
+
+        <p class="modal-description" id="socialProviderDescription">
+            Continuer avec ce service
+        </p>
+
+        <form onsubmit="socialDemoLogin(event)">
+
+            <div class="form-group">
+
+                <label id="socialInputLabel">
+                    Email
+                </label>
+
+                <input
+                    id="socialDemoInput"
+                    type="text"
+                    placeholder=""
+                    required
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label>
+                    Mot de passe
+                </label>
+
+                <input
+                    id="socialDemoPassword"
+                    type="password"
+                    placeholder="Ton mot de passe"
+                    required
+                >
+
+            </div>
+
+            <button
+                class="submit-btn social-submit-btn"
+                id="socialSubmitButton"
+                type="submit">
+
+                Continuer
+
+            </button>
+
+            <div
+                class="message"
+                id="socialDemoMessage">
+            </div>
+
+        </form>
+
+        <div class="switch">
+
+            <span onclick="openSignup()">
+                ← Retour aux méthodes d'inscription
+            </span>
+
+        </div>
+
+    </div>
+
+</div>
 
 <!-- MODAL CONNEXION -->
 
