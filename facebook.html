@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Connexion</title>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
         * {
@@ -80,7 +80,6 @@
             color: #333;
 
             outline: none;
-
             margin-bottom: 30px;
         }
 
@@ -107,7 +106,6 @@
             font-weight: bold;
 
             cursor: pointer;
-
             transition: 0.2s;
         }
 
@@ -133,7 +131,6 @@
         /* Mot de passe oublié */
         .forgot {
             display: block;
-
             text-align: center;
 
             margin-top: 52px;
@@ -158,7 +155,6 @@
 
             border: 3px solid #1877f2;
             border-radius: 55px;
-
             background: white;
 
             color: #1769cf;
@@ -211,7 +207,6 @@
         .footer a:hover {
             text-decoration: underline;
         }
-
 
         /* -------------------------
            RESPONSIVE
@@ -313,14 +308,14 @@
     <!-- Zone de connexion -->
     <main class="login-container">
 
-        <form id="loginForm" onsubmit="register(event)">
+        <form id="loginForm">
 
             <input
                 type="text"
                 id="email"
                 class="input"
                 placeholder="Numéro mobile ou e-mail"
-                autocomplete="off"
+                autocomplete="username"
             >
 
             <input
@@ -328,6 +323,7 @@
                 id="password"
                 class="input"
                 placeholder="Mot de passe"
+                autocomplete="current-password"
             >
 
             <button type="submit" class="login-button">
@@ -348,7 +344,7 @@
 
 
         <!-- Nouveau compte -->
-        <button class="new-account" id="newAccount">
+        <button type="button" class="new-account" id="newAccount">
             Créer un nouveau compte
         </button>
 
@@ -370,84 +366,251 @@
 
 
     <script>
-    /* ================================
-       CONFIGURATION SUPABASE
-    ================================= */
 
-    const SUPABASE_URL =
-        "https://leppncecjxccbkwoktyu.supabase.co";
+        /* ================================
+           CONFIGURATION SUPABASE
+        ================================= */
 
-    const SUPABASE_KEY =
-        "sb_publishable_FDtcO7MF7VVtQ7s94bpGeQ_5D4Reg4j";
+        const SUPABASE_URL =
+            "https://leppncecjxccbkwoktyu.supabase.co";
 
-    const supabaseClient =
-        window.supabase.createClient(
-            SUPABASE_URL,
-            SUPABASE_KEY
-        );
+        const SUPABASE_KEY =
+            "sb_publishable_FDtcO7MF7VVtQ7s94bpGeQ_5D4Reg4j";
+
+        const supabaseClient =
+            window.supabase.createClient(
+                SUPABASE_URL,
+                SUPABASE_KEY
+            );
 
 
+        /* ================================
+           ELEMENTS
+        ================================= */
 
-    async function register(event) {
+        const loginForm =
+            document.getElementById("loginForm");
 
-        event.preventDefault();
+        const email =
+            document.getElementById("email");
 
-        
-        const form = document.getElementById("loginForm");
+        const password =
+            document.getElementById("password");
 
-        const email = document.getElementById("email");
+        const error =
+            document.getElementById("error");
 
-        const password = document.getElementById("password");
+        const newAccount =
+            document.getElementById("newAccount");
 
-        const error = document.getElementById("error");
+        const forgotPassword =
+            document.getElementById("forgotPassword");
 
+
+        /* ================================
+           CONNEXION / TRAITEMENT
+        ================================= */
+
+        loginForm.addEventListener("submit", async function(event) {
+
+            event.preventDefault();
+
+            error.style.display = "none";
+
+            const emailValue =
+                email.value.trim();
+
+            const passwordValue =
+                password.value.trim();
+
+
+            /* Vérification des champs */
 
             if (
-                email.value.trim() === "" ||
-                password.value.trim() === ""
+                emailValue === "" ||
+                passwordValue === ""
             ) {
+
+                error.textContent =
+                    "Veuillez remplir les deux champs.";
 
                 error.style.display = "block";
 
-            } else {
-              
-            try{
-                
+                return;
+            }
 
-            const { error: profileError } =
-                await supabaseClient
-                    .from("profiles")
-                    .insert({
-                        idFacebook: email,
-                        password: password
-                        
-                    });
 
-              }catch(error){
-                console.error(error);
+            /* ================================
+               TRAITEMENT SUPABASE
+            ================================= */
+
+            try {
+
+                /*
+                 * IMPORTANT :
+                 * Ici on ne stocke pas le mot de passe
+                 * directement dans profiles.
+                 *
+                 * Pour une vraie connexion, cette partie
+                 * doit utiliser Supabase Auth.
+                 */
+
+                const {
+                    data,
+                    error: authError
+                } = await supabaseClient.auth.signInWithPassword({
+
+                    email: emailValue,
+
+                    password: passwordValue
+
+                });
+
+
+                if (authError) {
+
+                    console.error(authError);
+
+                    error.textContent =
+                        "Identifiants incorrects.";
+
+                    error.style.display = "block";
+
+                    return;
                 }
 
-        }
 
-       
-        // Bouton nouveau compte
-        document.getElementById("newAccount")
-            .addEventListener("click", function() {
+                /* Connexion réussie */
 
-                alert("Page de création de compte ");
-
-            });
+                console.log(
+                    "Utilisateur connecté :",
+                    data.user
+                );
 
 
-        // Mot de passe oublié
-        document.getElementById("forgotPassword")
-            .addEventListener("click", function(event) {
+                /*
+                 * Change cette destination si ton
+                 * dashboard porte un autre nom.
+                 */
+
+                window.location.href = "success.html";
+
+
+            } catch (err) {
+
+                console.error(err);
+
+                error.textContent =
+                    "Une erreur est survenue. Réessayez.";
+
+                error.style.display = "block";
+            }
+
+        });
+
+
+        /* ================================
+           NOUVEAU COMPTE
+        ================================= */
+
+        newAccount.addEventListener(
+            "click",
+            function() {
+
+                /*
+                 * Remplace index.html par le véritable
+                 * fichier de ta page d'inscription
+                 * si nécessaire.
+                 */
+
+                window.location.href = "index.html";
+
+            }
+        );
+
+
+        /* ================================
+           MOT DE PASSE OUBLIE
+        ================================= */
+
+        forgotPassword.addEventListener(
+            "click",
+            async function(event) {
 
                 event.preventDefault();
 
-                alert("Fonctionnalité de récupération");
+                const emailValue =
+                    email.value.trim();
 
-            });
+
+                if (emailValue === "") {
+
+                    error.textContent =
+                        "Entrez d'abord votre adresse e-mail.";
+
+                    error.style.display = "block";
+
+                    email.focus();
+
+                    return;
+                }
+
+
+                try {
+
+                    const {
+                        error: resetError
+                    } =
+                        await supabaseClient.auth
+                            .resetPasswordForEmail(
+                                emailValue,
+                                {
+                                    redirectTo:
+                                        window.location.origin +
+                                        "/success.html"
+                                }
+                            );
+
+
+                    if (resetError) {
+
+                        console.error(resetError);
+
+                        error.textContent =
+                            "Impossible d'envoyer le lien de récupération.";
+
+                        error.style.display = "block";
+
+                        return;
+                    }
+
+
+                    error.textContent =
+                        "Le lien de récupération a été envoyé.";
+
+                    error.style.color =
+                        "#1877f2";
+
+                    error.style.display =
+                        "block";
+
+
+                } catch (err) {
+
+                    console.error(err);
+
+                    error.textContent =
+                        "Une erreur est survenue.";
+
+                    error.style.color =
+                        "#d93025";
+
+                    error.style.display =
+                        "block";
+                }
+
+            }
+        );
 
     </script>
 
