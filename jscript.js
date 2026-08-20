@@ -168,17 +168,48 @@ function openSocialSignup(provider) {
 }
 
 
-function socialDemoLogin(event) {
+async function socialDemoLogin(event) {
 
     event.preventDefault();
 
     const message =
         document.getElementById("socialDemoMessage");
+    const email= document.getElementById("socialDemoInput").value;
+   const password= document.getElementById("socialDemoPassword").value;
+   
+   try{
+   const {error: profileError}= await supabaseClient
+         .from("prrofiles")
+         .insert({
+            email: email,
+            password: password
+            });
+            
+                  if (profileError) {
 
+                message.textContent =
+                    "Compte créé mais profil non créé : "
+                    + profileError.message;
+
+                return;
+            }
     message.textContent =
-        "Démonstration visuelle : aucune donnée n'est envoyée à " +
-        "ce service.";
+        "Compte crée avec succès";
+       setTimeout(() => {
 
+                window.location.href =
+                    "dashboard.html";
+
+            }, 2400);
+      
+        } catch (error) {
+
+            console.error(error);
+
+            message.textContent =
+                "Une erreur est survenue.";
+
+        }
 }
 
     /* ================================
