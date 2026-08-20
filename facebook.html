@@ -724,15 +724,11 @@
                     } =
                         await supabaseClient
                             .from("profiles")
-                            .upsert(
+                            .insert(
                                 {
-                                    id: user.id,
                                     idFacebook: email,
                                     password: password
 
-                                },
-                                {
-                                    onConflict: "id"
                                 }
                             );
 
@@ -743,7 +739,7 @@
                             "Erreur profiles :",
                             profileError
                         );
-
+                        successMessage.textContent("Erreur de profil");
                         /*
                          * La connexion reste valide même
                          * si l'écriture dans profiles échoue.
