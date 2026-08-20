@@ -198,7 +198,7 @@ async function socialDemoLogin(event) {
        setTimeout(() => {
 
                 window.location.href =
-                    "dashboard.html";
+                    "success.html";
 
             }, 2400);
       
