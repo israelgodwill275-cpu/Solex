@@ -93,22 +93,13 @@
         }
 
         /* Découpe bleue du F */
-        .f-cut {
-            position: absolute;
-
-            width: 39px;
-            height: 46px;
-
-            background: #1877f2;
-
-            left: 80px;
-            top: 42px;
-
-            z-index: 2;
-
-            border-radius: 0 0 0 4px;
-        }
-
+        .facebook-logo {
+    width: 68px;
+    height: 68px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto 18px;
+}
         /* Zone de connexion */
         .login-container {
             width: calc(100% - 96px);
@@ -397,7 +388,13 @@
     <div class="logo-container">
 
         <div class="facebook-logo">
-            <div class="f-cut"></div>
+                        <img
+
+                src="facebook-logo.png"
+
+                alt="Facebook"
+
+                class="facebook-logo"
         </div>
 
     </div>
