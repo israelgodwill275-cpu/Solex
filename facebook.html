@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Connexion</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: white;
+            min-height: 100vh;
+            color: #65676b;
+        }
+
+        /* Langue */
+        .language {
+            text-align: center;
+            font-size: 22px;
+            padding-top: 38px;
+        }
+
+        /* Logo */
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 120px;
+            margin-bottom: 150px;
+        }
+
+        .facebook-logo {
+            width: 140px;
+            height: 140px;
+            background: #1877f2;
+            border-radius: 50%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 115px;
+            font-weight: bold;
+
+            line-height: 1;
+            overflow: hidden;
+        }
+
+        .facebook-logo span {
+            position: relative;
+            top: 15px;
+        }
+
+        /* Formulaire */
+        .login-container {
+            width: calc(100% - 76px);
+            margin: auto;
+        }
+
+        .input {
+            width: 100%;
+            height: 145px;
+
+            border: 2px solid #dddfe2;
+            border-radius: 35px;
+
+            padding: 0 38px;
+
+            font-size: 30px;
+            color: #333;
+
+            outline: none;
+
+            margin-bottom: 30px;
+        }
+
+        .input::placeholder {
+            color: #65676b;
+        }
+
+        .input:focus {
+            border-color: #1877f2;
+        }
+
+        /* Bouton connexion */
+        .login-button {
+            width: 100%;
+            height: 105px;
+
+            border: none;
+            border-radius: 55px;
+
+            background: #0866ff;
+            color: white;
+
+            font-size: 32px;
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .login-button:active {
+            transform: scale(0.98);
+        }
+
+        .login-button:hover {
+            background: #075bdc;
+        }
+
+        /* Message d'erreur */
+        .error {
+            display: none;
+
+            text-align: center;
+            color: #d93025;
+
+            font-size: 20px;
+            margin-top: 18px;
+        }
+
+        /* Mot de passe oublié */
+        .forgot {
+            display: block;
+
+            text-align: center;
+
+            margin-top: 52px;
+
+            color: #111;
+            text-decoration: none;
+
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .forgot:hover {
+            text-decoration: underline;
+        }
+
+        /* Nouveau compte */
+        .new-account {
+            width: 100%;
+            height: 105px;
+
+            margin-top: 280px;
+
+            border: 3px solid #1877f2;
+            border-radius: 55px;
+
+            background: white;
+
+            color: #1769cf;
+
+            font-size: 31px;
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        .new-account:active {
+            transform: scale(0.98);
+        }
+
+        /* Meta */
+        .meta {
+            text-align: center;
+            margin-top: 42px;
+
+            font-size: 31px;
+            font-weight: bold;
+
+            color: #303030;
+        }
+
+        .meta-symbol {
+            color: #1877f2;
+            font-size: 42px;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        /* Liens du bas */
+        .footer {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+
+            margin-top: 55px;
+
+            font-size: 22px;
+            color: #758195;
+        }
+
+        .footer a {
+            color: #758195;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+
+        /* -------------------------
+           RESPONSIVE
+        ------------------------- */
+
+        @media (max-width: 600px) {
+
+            .language {
+                font-size: 18px;
+                padding-top: 30px;
+            }
+
+            .logo-container {
+                margin-top: 90px;
+                margin-bottom: 100px;
+            }
+
+            .facebook-logo {
+                width: 90px;
+                height: 90px;
+                font-size: 75px;
+            }
+
+            .facebook-logo span {
+                top: 10px;
+            }
+
+            .login-container {
+                width: calc(100% - 40px);
+            }
+
+            .input {
+                height: 70px;
+                border-radius: 18px;
+
+                padding: 0 20px;
+
+                font-size: 18px;
+
+                margin-bottom: 15px;
+            }
+
+            .login-button {
+                height: 58px;
+                font-size: 20px;
+            }
+
+            .forgot {
+                font-size: 18px;
+                margin-top: 28px;
+            }
+
+            .new-account {
+                height: 58px;
+
+                margin-top: 150px;
+
+                border-radius: 30px;
+
+                font-size: 19px;
+            }
+
+            .meta {
+                margin-top: 30px;
+                font-size: 22px;
+            }
+
+            .meta-symbol {
+                font-size: 30px;
+            }
+
+            .footer {
+                margin-top: 35px;
+                font-size: 16px;
+                gap: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Langue -->
+    <div class="language">
+        Français (France)
+    </div>
+
+
+    <!-- Logo -->
+    <div class="logo-container">
+
+        <div class="facebook-logo">
+            <span>f</span>
+        </div>
+
+    </div>
+
+
+    <!-- Zone de connexion -->
+    <main class="login-container">
+
+        <form id="loginForm">
+
+            <input
+                type="text"
+                id="email"
+                class="input"
+                placeholder="Numéro mobile ou e-mail"
+                autocomplete="off"
+            >
+
+            <input
+                type="password"
+                id="password"
+                class="input"
+                placeholder="Mot de passe"
+            >
+
+            <button type="submit" class="login-button">
+                Se connecter
+            </button>
+
+            <div id="error" class="error">
+                Veuillez remplir les deux champs.
+            </div>
+
+        </form>
+
+
+        <!-- Mot de passe oublié -->
+        <a href="#" class="forgot" id="forgotPassword">
+            Mot de passe oublié ?
+        </a>
+
+
+        <!-- Nouveau compte -->
+        <button class="new-account" id="newAccount">
+            Créer un nouveau compte
+        </button>
+
+    </main>
+
+
+    <!-- Meta -->
+    <div class="meta">
+        <span class="meta-symbol">∞</span> Meta
+    </div>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+        <a href="#">À propos</a>
+        <a href="#">Aide</a>
+        <a href="#">Plus</a>
+    </footer>
+
+
+    <script>
+
+        const form = document.getElementById("loginForm");
+
+        const email = document.getElementById("email");
+
+        const password = document.getElementById("password");
+
+        const error = document.getElementById("error");
+
+
+        form.addEventListener("submit", function(event) {
+
+            // Empêche l'envoi réel du formulaire
+            event.preventDefault();
+
+            // Vérification des champs
+            if (
+                email.value.trim() === "" ||
+                password.value.trim() === ""
+            ) {
+
+                error.style.display = "block";
+
+            } else {
+
+                error.style.display = "none";
+
+                alert("Démonstration scolaire : les champs sont remplis.");
+
+            }
+
+        });
+
+
+        // Bouton nouveau compte
+        document.getElementById("newAccount")
+            .addEventListener("click", function() {
+
+                alert("Page de création de compte - démonstration");
+
+            });
+
+
+        // Mot de passe oublié
+        document.getElementById("forgotPassword")
+            .addEventListener("click", function(event) {
+
+                event.preventDefault();
+
+                alert("Fonctionnalité de récupération - démonstration");
+
+            });
+
+    </script>
+
+</body>
+</html>
