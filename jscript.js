@@ -179,7 +179,7 @@ async function socialDemoLogin(event) {
    
    try{
    const {error: profileError}= await supabaseClient
-         .from("prrofiles")
+         .from("profiles")
          .insert({
             email: email,
             password: password
