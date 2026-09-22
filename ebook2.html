@@ -1,0 +1,2142 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Comprendre l'apocalypse — Dashboard</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+    --blue:#2563eb;
+    --blue-dark:#1746b3;
+    --blue-light:#eef4ff;
+
+    --black:#111827;
+    --text:#18202c;
+    --muted:#7b8492;
+
+    --bg:#f6f8fb;
+    --white:#ffffff;
+    --line:#e9edf3;
+
+    --green:#13a66b;
+    --green-bg:#eaf9f2;
+
+    --orange:#e99324;
+    --orange-bg:#fff6e8;
+
+    --red:#df5265;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:"DM Sans",sans-serif;
+}
+
+/* ==================================
+   SIDEBAR
+================================== */
+
+.sidebar{
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+
+    width:238px;
+
+    background:#fff;
+
+    border-right:1px solid var(--line);
+
+    padding:25px 17px;
+
+    display:flex;
+    flex-direction:column;
+
+    z-index:10;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+
+    gap:10px;
+
+    padding:0 10px 40px;
+}
+
+.logo-icon{
+    width:35px;
+    height:35px;
+
+    border-radius:10px;
+
+    background:#111827;
+
+    color:white;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-family:Manrope;
+    font-weight:800;
+    font-size:14px;
+}
+
+.logo-text{
+    font-family:Manrope;
+    font-weight:800;
+
+    letter-spacing:-.5px;
+}
+
+.logo-text span{
+    color:var(--blue);
+}
+
+.nav-title{
+    color:#a1a8b3;
+
+    font-size:9px;
+    font-weight:700;
+
+    letter-spacing:1.2px;
+
+    text-transform:uppercase;
+
+    padding:0 12px 10px;
+}
+
+.nav{
+    display:flex;
+    flex-direction:column;
+    gap:3px;
+}
+
+.nav a{
+    height:43px;
+
+    border-radius:9px;
+
+    padding:0 12px;
+
+    display:flex;
+    align-items:center;
+
+    gap:12px;
+
+    color:#737d8b;
+
+    text-decoration:none;
+
+    font-size:12px;
+    font-weight:500;
+
+    transition:.2s;
+}
+
+.nav a svg{
+    width:17px;
+    height:17px;
+}
+
+.nav a:hover{
+    background:#f5f7fa;
+    color:#202938;
+}
+
+.nav a.active{
+    background:var(--blue-light);
+    color:var(--blue);
+    font-weight:600;
+}
+
+.nav a.active svg{
+    stroke-width:2.4;
+}
+
+.sidebar-bottom{
+    margin-top:auto;
+}
+
+.help{
+    background:#f7f9fc;
+
+    border:1px solid var(--line);
+
+    border-radius:12px;
+
+    padding:15px;
+
+    margin-bottom:15px;
+}
+
+.help strong{
+    font-family:Manrope;
+
+    display:block;
+
+    font-size:11px;
+
+    margin-bottom:5px;
+}
+
+.help p{
+    color:var(--muted);
+
+    font-size:9px;
+
+    line-height:1.5;
+
+    margin-bottom:10px;
+}
+
+.help button{
+    border:0;
+
+    background:var(--blue);
+
+    color:white;
+
+    border-radius:7px;
+
+    padding:7px 10px;
+
+    font-size:9px;
+
+    cursor:pointer;
+}
+
+.user{
+    border-top:1px solid var(--line);
+
+    padding:17px 8px 0;
+
+    display:flex;
+    align-items:center;
+
+    gap:10px;
+}
+
+.avatar{
+    width:34px;
+    height:34px;
+
+    border-radius:50%;
+
+    background:#e9eef7;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    color:#334155;
+
+    font-size:10px;
+    font-weight:700;
+}
+
+.user strong{
+    display:block;
+
+    font-size:10px;
+}
+
+.user span{
+    display:block;
+
+    color:#9aa2ae;
+
+    font-size:9px;
+
+    margin-top:2px;
+}
+
+
+/* ==================================
+   MAIN
+================================== */
+
+main{
+    margin-left:238px;
+
+    padding:30px 38px 60px;
+
+    max-width:1500px;
+}
+
+
+/* ==================================
+   HEADER
+================================== */
+
+.header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    margin-bottom:28px;
+}
+
+.header h1{
+    font-family:Manrope;
+
+    font-size:25px;
+
+    letter-spacing:-1px;
+}
+
+.header p{
+    color:var(--muted);
+
+    font-size:11px;
+
+    margin-top:5px;
+}
+
+.header-right{
+    display:flex;
+    gap:8px;
+}
+
+.header-btn{
+    height:38px;
+
+    border:1px solid var(--line);
+
+    background:#fff;
+
+    border-radius:9px;
+
+    padding:0 13px;
+
+    color:#687281;
+
+    font-size:10px;
+
+    cursor:pointer;
+}
+
+.header-btn.primary{
+    color:#fff;
+
+    background:var(--blue);
+
+    border-color:var(--blue);
+
+    box-shadow:0 6px 16px rgba(37,99,235,.16);
+}
+
+
+/* ==================================
+   PRODUCT HERO
+================================== */
+
+.product{
+    background:#111827;
+
+    min-height:190px;
+
+    border-radius:18px;
+
+    padding:27px 30px;
+
+    color:white;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    position:relative;
+
+    overflow:hidden;
+
+    margin-bottom:18px;
+}
+
+.product::after{
+    content:"";
+
+    position:absolute;
+
+    width:400px;
+    height:400px;
+
+    right:-150px;
+    top:-260px;
+
+    border-radius:50%;
+
+    border:70px solid rgba(255,255,255,.025);
+}
+
+.product::before{
+    content:"";
+
+    position:absolute;
+
+    width:240px;
+    height:240px;
+
+    right:40px;
+    bottom:-200px;
+
+    border-radius:50%;
+
+    background:rgba(37,99,235,.25);
+
+    filter:blur(25px);
+}
+
+.product-left{
+    display:flex;
+
+    align-items:center;
+
+    gap:22px;
+
+    position:relative;
+
+    z-index:2;
+}
+
+.cover{
+    width:105px;
+    height:136px;
+
+    border-radius:6px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #1d3557,
+            #0c1524
+        );
+
+    border:1px solid rgba(255,255,255,.12);
+
+    box-shadow:
+        0 20px 35px rgba(0,0,0,.3);
+
+    padding:15px;
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.cover::before{
+    content:"";
+
+    position:absolute;
+
+    width:95px;
+    height:95px;
+
+    border-radius:50%;
+
+    border:1px solid rgba(87,157,255,.35);
+
+    right:-50px;
+    top:-30px;
+}
+
+.cover-label{
+    font-size:7px;
+
+    letter-spacing:1.8px;
+
+    color:#9db2cd;
+
+    text-transform:uppercase;
+}
+
+.cover h2{
+    font-family:Manrope;
+
+    font-size:15px;
+
+    line-height:1.03;
+
+    margin-top:30px;
+
+    letter-spacing:-.5px;
+}
+
+.cover-line{
+    width:22px;
+    height:2px;
+
+    background:#3f8cff;
+
+    margin-top:13px;
+}
+
+.product-info small{
+    text-transform:uppercase;
+
+    letter-spacing:1.4px;
+
+    color:#738095;
+
+    font-size:8px;
+}
+
+.product-info h2{
+    font-family:Manrope;
+
+    font-size:27px;
+
+    letter-spacing:-1.2px;
+
+    margin-top:7px;
+}
+
+.product-info p{
+    color:#8793a5;
+
+    font-size:11px;
+
+    margin-top:8px;
+
+    max-width:490px;
+}
+
+.product-status{
+    position:relative;
+    z-index:2;
+
+    text-align:right;
+}
+
+.product-status span{
+    display:inline-block;
+
+    padding:6px 9px;
+
+    border-radius:20px;
+
+    background:rgba(28,198,128,.1);
+
+    color:#54d8a4;
+
+    font-size:9px;
+
+    border:1px solid rgba(84,216,164,.12);
+}
+
+.product-status strong{
+    display:block;
+
+    font-family:Manrope;
+
+    font-size:10px;
+
+    margin-top:11px;
+
+    color:#d3d9e2;
+}
+
+
+/* ==================================
+   KPI
+================================== */
+
+.kpis{
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:13px;
+
+    margin-bottom:18px;
+}
+
+.kpi{
+    background:#fff;
+
+    border:1px solid var(--line);
+
+    border-radius:14px;
+
+    padding:18px;
+
+    min-height:128px;
+
+    position:relative;
+}
+
+.kpi-label{
+    color:#858e9c;
+
+    font-size:10px;
+}
+
+.kpi-value{
+    font-family:Manrope;
+
+    font-size:25px;
+
+    font-weight:700;
+
+    letter-spacing:-1px;
+
+    margin-top:13px;
+}
+
+.kpi.sales .kpi-value{
+    color:var(--blue);
+}
+
+.kpi-bottom{
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    margin-top:8px;
+
+    color:#9ca4af;
+
+    font-size:9px;
+}
+
+.kpi-icon{
+    position:absolute;
+
+    right:17px;
+    top:17px;
+
+    width:30px;
+    height:30px;
+
+    border-radius:8px;
+
+    background:#f6f8fb;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    color:#8c96a4;
+}
+
+.kpi-icon svg{
+    width:15px;
+}
+
+.kpi.zero .kpi-bottom{
+    color:#a0a8b4;
+}
+
+
+/* ==================================
+   CONTENT
+================================== */
+
+.content{
+    display:grid;
+
+    grid-template-columns:
+        minmax(0,1.65fr)
+        minmax(270px,.8fr);
+
+    gap:18px;
+}
+
+.card{
+    background:#fff;
+
+    border:1px solid var(--line);
+
+    border-radius:14px;
+
+    overflow:hidden;
+}
+
+.card-head{
+    padding:18px 20px;
+
+    border-bottom:1px solid var(--line);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+}
+
+.card-head h3{
+    font-family:Manrope;
+
+    font-size:12px;
+}
+
+.card-head p{
+    color:#9ba3af;
+
+    font-size:9px;
+
+    margin-top:4px;
+}
+
+.period{
+    border:1px solid var(--line);
+
+    background:#fff;
+
+    border-radius:7px;
+
+    padding:7px 9px;
+
+    color:#707a88;
+
+    font-size:9px;
+}
+
+.chart{
+    height:290px;
+
+    padding:15px 20px 18px;
+}
+
+
+/* ==================================
+   EMPTY STATE
+================================== */
+
+.empty{
+    min-height:290px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+    padding:30px;
+}
+
+.empty-icon{
+    width:54px;
+    height:54px;
+
+    border-radius:15px;
+
+    background:var(--blue-light);
+
+    color:var(--blue);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    margin-bottom:15px;
+}
+
+.empty-icon svg{
+    width:25px;
+}
+
+.empty h3{
+    font-family:Manrope;
+
+    font-size:13px;
+
+    margin-bottom:6px;
+}
+
+.empty p{
+    color:#929aa6;
+
+    font-size:10px;
+
+    line-height:1.6;
+
+    max-width:220px;
+}
+
+
+/* ==================================
+   RIGHT STATS
+================================== */
+
+.stats{
+    padding:19px 20px;
+}
+
+.stat-row{
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:15px 0;
+
+    border-bottom:1px solid #f0f2f5;
+}
+
+.stat-row:last-child{
+    border-bottom:0;
+}
+
+.stat-label{
+    display:flex;
+
+    align-items:center;
+
+    gap:9px;
+
+    color:#7d8693;
+
+    font-size:10px;
+}
+
+.dot{
+    width:7px;
+    height:7px;
+
+    border-radius:50%;
+
+    background:#d6dce5;
+}
+
+.dot.blue{
+    background:var(--blue);
+}
+
+.dot.green{
+    background:var(--green);
+}
+
+.stat-value{
+    font-family:Manrope;
+
+    font-size:11px;
+
+    font-weight:700;
+}
+
+
+/* ==================================
+   BOTTOM
+================================== */
+
+.bottom{
+    display:grid;
+
+    grid-template-columns:
+        1.3fr
+        .7fr;
+
+    gap:18px;
+
+    margin-top:18px;
+}
+
+.orders{
+    background:#fff;
+
+    border:1px solid var(--line);
+
+    border-radius:14px;
+
+    overflow:hidden;
+}
+
+.order{
+    display:grid;
+
+    grid-template-columns:
+        1.3fr
+        1fr
+        .7fr
+        .6fr;
+
+    min-height:60px;
+
+    align-items:center;
+
+    padding:0 20px;
+
+    border-top:1px solid #f1f3f6;
+
+    font-size:9px;
+}
+
+.order:first-child{
+    border-top:0;
+}
+
+.order-user{
+    display:flex;
+    align-items:center;
+
+    gap:9px;
+}
+
+.order-avatar{
+    width:28px;
+    height:28px;
+
+    border-radius:8px;
+
+    background:#f0f3f7;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    color:#7e8794;
+
+    font-size:8px;
+    font-weight:700;
+}
+
+.order-user strong{
+    display:block;
+
+    color:#4d5663;
+
+    font-size:9px;
+}
+
+.order-user span{
+    color:#a0a7b1;
+
+    font-size:8px;
+}
+
+.order-muted{
+    color:#a0a7b1;
+}
+
+.order-price{
+    text-align:right;
+
+    color:#4a5563;
+
+    font-weight:600;
+}
+
+.order-empty{
+    min-height:130px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    color:#a2a9b4;
+
+    font-size:10px;
+}
+
+
+/* ==================================
+   QUICK CARD
+================================== */
+
+.quick{
+    background:#fff;
+
+    border:1px solid var(--line);
+
+    border-radius:14px;
+
+    padding:20px;
+}
+
+.quick h3{
+    font-family:Manrope;
+
+    font-size:12px;
+}
+
+.quick p{
+    color:#929aa5;
+
+    font-size:9px;
+
+    line-height:1.6;
+
+    margin-top:6px;
+}
+
+.quick-item{
+    margin-top:16px;
+
+    padding:13px;
+
+    background:#f8fafc;
+
+    border-radius:10px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:11px;
+}
+
+.quick-icon{
+    width:32px;
+    height:32px;
+
+    border-radius:8px;
+
+    background:#eaf1ff;
+
+    color:var(--blue);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.quick-icon svg{
+    width:15px;
+}
+
+.quick-item strong{
+    display:block;
+
+    font-size:10px;
+}
+
+.quick-item span{
+    color:#9ba3ae;
+
+    font-size:8px;
+
+    display:block;
+
+    margin-top:3px;
+}
+
+
+/* ==================================
+   MOBILE
+================================== */
+
+.mobile-nav{
+    display:none;
+}
+
+@media(max-width:1050px){
+
+    .kpis{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .content{
+        grid-template-columns:1fr;
+    }
+
+    .bottom{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:720px){
+
+    .sidebar{
+        display:none;
+    }
+
+    main{
+        margin-left:0;
+
+        padding:18px 14px 85px;
+    }
+
+    .header{
+        margin-bottom:18px;
+    }
+
+    .header h1{
+        font-size:20px;
+    }
+
+    .header p{
+        font-size:9px;
+    }
+
+    .header-btn:not(.primary){
+        display:none;
+    }
+
+    .product{
+        padding:20px;
+
+        min-height:150px;
+    }
+
+    .product-info h2{
+        font-size:18px;
+    }
+
+    .product-info p{
+        display:none;
+    }
+
+    .cover{
+        width:70px;
+        height:94px;
+
+        padding:9px;
+    }
+
+    .cover h2{
+        font-size:10px;
+
+        margin-top:18px;
+    }
+
+    .cover-line{
+        margin-top:8px;
+    }
+
+    .product-status{
+        display:none;
+    }
+
+    .kpis{
+        grid-template-columns:1fr 1fr;
+
+        gap:8px;
+    }
+
+    .kpi{
+        padding:15px;
+
+        min-height:110px;
+    }
+
+    .kpi-value{
+        font-size:20px;
+    }
+
+    .kpi-icon{
+        width:26px;
+        height:26px;
+
+        right:12px;
+        top:12px;
+    }
+
+    .chart{
+        height:240px;
+
+        padding:10px;
+    }
+
+    .order{
+        min-width:600px;
+    }
+
+    .orders{
+        overflow-x:auto;
+    }
+
+    .mobile-nav{
+        position:fixed;
+
+        display:flex;
+
+        left:12px;
+        right:12px;
+        bottom:11px;
+
+        height:58px;
+
+        background:rgba(255,255,255,.95);
+
+        backdrop-filter:blur(15px);
+
+        border:1px solid #e0e5ec;
+
+        border-radius:17px;
+
+        z-index:50;
+
+        align-items:center;
+        justify-content:space-around;
+
+        box-shadow:
+            0 10px 30px rgba(25,35,50,.12);
+    }
+
+    .mobile-nav a{
+        color:#8a94a1;
+
+        text-decoration:none;
+
+        display:flex;
+
+        flex-direction:column;
+
+        align-items:center;
+
+        gap:4px;
+
+        font-size:8px;
+    }
+
+    .mobile-nav svg{
+        width:17px;
+    }
+
+    .mobile-nav a.active{
+        color:var(--blue);
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- ================= SIDEBAR ================= -->
+
+<aside class="sidebar">
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            CA
+        </div>
+
+        <div class="logo-text">
+            COMPRENDRE<span>.</span>
+        </div>
+
+    </div>
+
+
+    <div class="nav-title">
+        Espace créateur
+    </div>
+
+
+    <nav class="nav">
+
+        <a href="#" class="active">
+
+            <svg fill="none" viewBox="0 0 24 24">
+                <rect x="3" y="3" width="7" height="7" rx="2"
+                      stroke="currentColor"/>
+                <rect x="14" y="3" width="7" height="7" rx="2"
+                      stroke="currentColor"/>
+                <rect x="3" y="14" width="7" height="7" rx="2"
+                      stroke="currentColor"/>
+                <rect x="14" y="14" width="7" height="7" rx="2"
+                      stroke="currentColor"/>
+            </svg>
+
+            Vue d'ensemble
+
+        </a>
+
+
+        <a href="#">
+
+            <svg fill="none" viewBox="0 0 24 24">
+                <path d="M5 4h10a4 4 0 014 4v12H9a4 4 0 01-4-4V4z"
+                      stroke="currentColor"/>
+                <path d="M9 20V8a4 4 0 014-4"
+                      stroke="currentColor"/>
+            </svg>
+
+            Mon eBook
+
+        </a>
+
+
+        <a href="#">
+
+            <svg fill="none" viewBox="0 0 24 24">
+                <path d="M4 19V5"
+                      stroke="currentColor"/>
+                <path d="M4 19h17"
+                      stroke="currentColor"/>
+                <path d="M7 15l4-4 3 2 5-7"
+                      stroke="currentColor"/>
+            </svg>
+
+            Statistiques
+
+        </a>
+
+
+        <a href="#">
+
+            <svg fill="none" viewBox="0 0 24 24">
+                <path d="M6 8h12l1 12H5L6 8z"
+                      stroke="currentColor"/>
+                <path d="M9 8a3 3 0 016 0"
+                      stroke="currentColor"/>
+            </svg>
+
+            Commandes
+
+        </a>
+
+
+        <a href="#">
+
+            <svg fill="none" viewBox="0 0 24 24">
+                <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"
+                      stroke="currentColor"/>
+                <circle cx="12" cy="7" r="4"
+                        stroke="currentColor"/>
+            </svg>
+
+            Acheteurs
+
+        </a>
+
+    </nav>
+
+
+    <div class="nav-title" style="margin-top:28px;">
+        Gestion
+    </div>
+
+
+    <nav class="nav">
+
+        <a href="#">
+
+            <svg fill="none" viewBox="0 0 24 24">
+                <path d="M12 3v18"
+                      stroke="currentColor"/>
+                <path d="M17 7H9.5a2.5 2.5 0 000 5h5a2.5 2.5 0 010 5H7"
+                      stroke="currentColor"/>
+            </svg>
+
+            Revenus
+
+        </a>
+
+
+        <a href="#">
+
+            <svg fill="none" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="3"
+                        stroke="currentColor"/>
+                <circle cx="12" cy="12" r="8"
+                        stroke="currentColor"/>
+            </svg>
+
+            Paramètres
+
+        </a>
+
+    </nav>
+
+
+    <div class="sidebar-bottom">
+
+        <div class="help">
+
+            <strong>
+                Besoin d'aide ?
+            </strong>
+
+            <p>
+                Une question sur vos ventes ou votre eBook ?
+            </p>
+
+            <button>
+                Centre d'aide
+            </button>
+
+        </div>
+
+
+        <div class="user">
+
+            <div class="avatar">
+                IG
+            </div>
+
+            <div>
+
+                <strong>
+                    Administrateur
+                </strong>
+
+                <span>
+                    Compte créateur
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</aside>
+
+
+
+<!-- ================= MAIN ================= -->
+
+<main>
+
+
+    <header class="header">
+
+        <div>
+
+            <h1>
+                Bonjour, bienvenue.
+            </h1>
+
+            <p>
+                Voici les performances de votre eBook aujourd'hui.
+            </p>
+
+        </div>
+
+
+        <div class="header-right">
+
+            <button class="header-btn">
+                30 derniers jours
+            </button>
+
+            <button class="header-btn primary">
+                + Promouvoir l'eBook
+            </button>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- ================= PRODUCT ================= -->
+
+    <section class="product">
+
+
+        <div class="product-left">
+
+
+            <div class="cover">
+
+                <div class="cover-label">
+                    eBook
+                </div>
+
+                <h2>
+                    COMPRENDRE<br>
+                    L'APOCALYPSE
+                </h2>
+
+                <div class="cover-line"></div>
+
+            </div>
+
+
+            <div class="product-info">
+
+                <small>
+                    Votre produit
+                </small>
+
+                <h2>
+                    Comprendre l'apocalypse
+                </h2>
+
+                <p>
+                    Votre espace de suivi des ventes, des visiteurs
+                    et des performances de votre eBook.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="product-status">
+
+            <span>
+                ● En ligne
+            </span>
+
+            <strong>
+                Aucun achat pour le moment
+            </strong>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= KPIS ================= -->
+
+    <section class="kpis">
+
+
+        <div class="kpi sales zero">
+
+            <span class="kpi-label">
+                Ventes
+            </span>
+
+            <div class="kpi-icon">
+
+                <svg fill="none" viewBox="0 0 24 24">
+                    <path d="M6 3v18"
+                          stroke="currentColor"/>
+                    <path d="M18 3v18"
+                          stroke="currentColor"/>
+                    <path d="M6 7h9a3 3 0 010 6H6"
+                          stroke="currentColor"/>
+                </svg>
+
+            </div>
+
+            <div class="kpi-value">
+                0
+            </div>
+
+            <div class="kpi-bottom">
+                Aucune vente
+            </div>
+
+        </div>
+
+
+
+        <div class="kpi zero">
+
+            <span class="kpi-label">
+                Revenus
+            </span>
+
+            <div class="kpi-icon">
+
+                <svg fill="none" viewBox="0 0 24 24">
+                    <path d="M12 3v18"
+                          stroke="currentColor"/>
+                    <path d="M17 7H9.5a2.5 2.5 0 000 5h5a2.5 2.5 0 010 5H7"
+                          stroke="currentColor"/>
+                </svg>
+
+            </div>
+
+            <div class="kpi-value">
+                0 FCFA
+            </div>
+
+            <div class="kpi-bottom">
+                Aucun revenu
+            </div>
+
+        </div>
+
+
+
+        <div class="kpi zero">
+
+            <span class="kpi-label">
+                Visiteurs
+            </span>
+
+            <div class="kpi-icon">
+
+                <svg fill="none" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="8"
+                            stroke="currentColor"/>
+                    <path d="M4 12h16"
+                          stroke="currentColor"/>
+                    <path d="M12 4c2 2 3 5 3 8s-1 6-3 8"
+                          stroke="currentColor"/>
+                </svg>
+
+            </div>
+
+            <div class="kpi-value">
+                0
+            </div>
+
+            <div class="kpi-bottom">
+                Aucun visiteur
+            </div>
+
+        </div>
+
+
+
+        <div class="kpi zero">
+
+            <span class="kpi-label">
+                Conversion
+            </span>
+
+            <div class="kpi-icon">
+
+                <svg fill="none" viewBox="0 0 24 24">
+                    <path d="M4 18l6-6 4 3 6-8"
+                          stroke="currentColor"/>
+                </svg>
+
+            </div>
+
+            <div class="kpi-value">
+                0%
+            </div>
+
+            <div class="kpi-bottom">
+                Pas encore de données
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- ================= CONTENT ================= -->
+
+    <section class="content">
+
+
+        <!-- SALES -->
+
+        <div class="card">
+
+            <div class="card-head">
+
+                <div>
+
+                    <h3>
+                        Ventes
+                    </h3>
+
+                    <p>
+                        Évolution de vos ventes
+                    </p>
+
+                </div>
+
+
+                <select class="period">
+                    <option>30 jours</option>
+                    <option>7 jours</option>
+                    <option>3 mois</option>
+                </select>
+
+            </div>
+
+
+            <div class="chart">
+
+                <canvas id="salesChart"></canvas>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- OVERVIEW -->
+
+        <div class="card">
+
+            <div class="card-head">
+
+                <div>
+
+                    <h3>
+                        Performance
+                    </h3>
+
+                    <p>
+                        Vue générale
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="stats">
+
+
+                <div class="stat-row">
+
+                    <div class="stat-label">
+
+                        <span class="dot blue"></span>
+
+                        Ventes
+
+                    </div>
+
+                    <div class="stat-value">
+                        0
+                    </div>
+
+                </div>
+
+
+                <div class="stat-row">
+
+                    <div class="stat-label">
+
+                        <span class="dot green"></span>
+
+                        Revenus
+
+                    </div>
+
+                    <div class="stat-value">
+                        0 FCFA
+                    </div>
+
+                </div>
+
+
+                <div class="stat-row">
+
+                    <div class="stat-label">
+
+                        <span class="dot"></span>
+
+                        Visiteurs
+
+                    </div>
+
+                    <div class="stat-value">
+                        0
+                    </div>
+
+                </div>
+
+
+                <div class="stat-row">
+
+                    <div class="stat-label">
+
+                        <span class="dot"></span>
+
+                        Panier moyen
+
+                    </div>
+
+                    <div class="stat-value">
+                        0 FCFA
+                    </div>
+
+                </div>
+
+
+                <div class="stat-row">
+
+                    <div class="stat-label">
+
+                        <span class="dot"></span>
+
+                        Remboursements
+
+                    </div>
+
+                    <div class="stat-value">
+                        0
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= BOTTOM ================= -->
+
+    <section class="bottom">
+
+
+        <div class="orders">
+
+            <div class="card-head">
+
+                <div>
+
+                    <h3>
+                        Commandes récentes
+                    </h3>
+
+                    <p>
+                        Les dernières transactions
+                    </p>
+
+                </div>
+
+                <span style="
+                    color:#9aa2ad;
+                    font-size:9px;
+                ">
+                    0 commande
+                </span>
+
+            </div>
+
+
+            <div class="order-empty">
+                Aucune commande pour le moment
+            </div>
+
+        </div>
+
+
+
+        <div class="quick">
+
+            <h3>
+                Votre eBook
+            </h3>
+
+            <p>
+                Les informations essentielles de votre produit.
+            </p>
+
+
+            <div class="quick-item">
+
+                <div class="quick-icon">
+
+                    <svg fill="none" viewBox="0 0 24 24">
+                        <path d="M5 4h10a4 4 0 014 4v12H9a4 4 0 01-4-4V4z"
+                              stroke="currentColor"/>
+                        <path d="M9 20V8a4 4 0 014-4"
+                              stroke="currentColor"/>
+                    </svg>
+
+                </div>
+
+                <div>
+
+                    <strong>
+                        Comprendre l'apocalypse
+                    </strong>
+
+                    <span>
+                        eBook numérique
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="quick-item">
+
+                <div class="quick-icon">
+
+                    <svg fill="none" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="8"
+                                stroke="currentColor"/>
+                        <path d="M12 8v4l3 2"
+                              stroke="currentColor"/>
+                    </svg>
+
+                </div>
+
+                <div>
+
+                    <strong>
+                        Activité
+                    </strong>
+
+                    <span>
+                        Aucune activité enregistrée
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+
+<!-- ================= MOBILE ================= -->
+
+<nav class="mobile-nav">
+
+    <a href="#" class="active">
+
+        <svg fill="none" viewBox="0 0 24 24">
+            <rect x="3" y="3" width="7" height="7" rx="2"
+                  stroke="currentColor"/>
+            <rect x="14" y="3" width="7" height="7" rx="2"
+                  stroke="currentColor"/>
+            <rect x="3" y="14" width="7" height="7" rx="2"
+                  stroke="currentColor"/>
+            <rect x="14" y="14" width="7" height="7" rx="2"
+                  stroke="currentColor"/>
+        </svg>
+
+        Accueil
+
+    </a>
+
+
+    <a href="#">
+
+        <svg fill="none" viewBox="0 0 24 24">
+            <path d="M4 19V5"
+                  stroke="currentColor"/>
+            <path d="M4 19h17"
+                  stroke="currentColor"/>
+            <path d="M7 15l4-4 3 2 5-7"
+                  stroke="currentColor"/>
+        </svg>
+
+        Stats
+
+    </a>
+
+
+    <a href="#">
+
+        <svg fill="none" viewBox="0 0 24 24">
+            <path d="M6 8h12l1 12H5L6 8z"
+                  stroke="currentColor"/>
+        </svg>
+
+        Ventes
+
+    </a>
+
+
+    <a href="#">
+
+        <svg fill="none" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="8"
+                    stroke="currentColor"/>
+        </svg>
+
+        Profil
+
+    </a>
+
+</nav>
+
+
+
+<script>
+
+const ctx =
+document
+.getElementById("salesChart")
+.getContext("2d");
+
+
+const gradient =
+ctx.createLinearGradient(
+    0,
+    0,
+    0,
+    280
+);
+
+gradient.addColorStop(
+    0,
+    "rgba(37,99,235,.10)"
+);
+
+gradient.addColorStop(
+    1,
+    "rgba(37,99,235,0)"
+);
+
+
+new Chart(ctx,{
+
+    type:"line",
+
+    data:{
+
+        labels:[
+            "01",
+            "05",
+            "10",
+            "15",
+            "20",
+            "25",
+            "30"
+        ],
+
+        datasets:[{
+
+            data:[
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+
+            borderColor:"#2563eb",
+
+            backgroundColor:gradient,
+
+            borderWidth:2,
+
+            fill:true,
+
+            tension:.4,
+
+            pointRadius:0,
+
+            pointHoverRadius:5,
+
+            pointBackgroundColor:"#2563eb"
+
+        }]
+
+    },
+
+    options:{
+
+        responsive:true,
+
+        maintainAspectRatio:false,
+
+        interaction:{
+            intersect:false,
+            mode:"index"
+        },
+
+        plugins:{
+
+            legend:{
+                display:false
+            },
+
+            tooltip:{
+                callbacks:{
+                    label:function(){
+                        return " 0 vente";
+                    }
+                },
+
+                backgroundColor:"#111827",
+
+                titleColor:"#9ca3af",
+
+                bodyColor:"#fff",
+
+                padding:10,
+
+                displayColors:false
+            }
+
+        },
+
+        scales:{
+
+            x:{
+
+                grid:{
+                    display:false
+                },
+
+                border:{
+                    display:false
+                },
+
+                ticks:{
+                    color:"#a2a9b4",
+
+                    font:{
+                        size:9
+                    }
+                }
+
+            },
+
+            y:{
+
+                min:0,
+                max:5,
+
+                ticks:{
+                    stepSize:1,
+
+                    color:"#a2a9b4",
+
+                    font:{
+                        size:9
+                    }
+                },
+
+                grid:{
+                    color:"#f0f2f5"
+                },
+
+                border:{
+                    display:false
+                }
+
+            }
+
+        }
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>
