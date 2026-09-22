@@ -4,919 +4,2381 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>eBook Dashboard</title>
+<title>Comprendre l'apocalypse — Dashboard</title>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root{
+    --bg:#07090c;
+    --panel:#0d1015;
+    --panel2:#11151b;
+    --border:#1c222b;
+    --text:#f5f7fa;
+    --muted:#737d8b;
+
+    --blue:#2588ff;
+    --blue2:#4ba0ff;
+    --blue-soft:rgba(37,136,255,.12);
+
+    --green:#36d399;
+    --red:#ff5d72;
+
+    --radius:16px;
+}
+
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:Inter,Arial,sans-serif;
+}
+
+html{
+    scroll-behavior:smooth;
 }
 
 body{
-    background:#0a0d12;
-    color:#fff;
+    background:
+        radial-gradient(
+            circle at 75% -10%,
+            rgba(37,136,255,.08),
+            transparent 30%
+        ),
+        var(--bg);
+
+    color:var(--text);
+    font-family:Inter,Arial,sans-serif;
     min-height:100vh;
 }
 
-/* ================= SIDEBAR ================= */
+/* =========================
+   SIDEBAR
+========================= */
 
 .sidebar{
     position:fixed;
     left:0;
     top:0;
-    width:250px;
-    height:100vh;
-    background:#0f131a;
-    border-right:1px solid #1d2530;
-    padding:25px 18px;
-}
+    bottom:0;
+    width:245px;
 
-.logo{
-    font-size:24px;
-    font-weight:800;
-    margin-bottom:40px;
-    padding-left:10px;
-}
+    background:rgba(9,11,15,.96);
 
-.logo span{
-    color:#248cff;
-}
+    border-right:1px solid var(--border);
 
-.menu{
+    padding:24px 16px;
+
     display:flex;
     flex-direction:column;
-    gap:8px;
+
+    z-index:20;
 }
 
-.menu a{
-    text-decoration:none;
-    color:#8e99a8;
-    padding:14px 15px;
+.brand{
+    display:flex;
+    align-items:center;
+    gap:11px;
+
+    padding:3px 10px 35px;
+}
+
+.brand-mark{
+    width:34px;
+    height:34px;
+
     border-radius:10px;
-    transition:.3s;
+
+    background:
+        linear-gradient(
+            145deg,
+            #3998ff,
+            #1266cf
+        );
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    box-shadow:
+        0 8px 25px rgba(37,136,255,.22);
+}
+
+.brand-mark::before{
+    content:"";
+    width:11px;
+    height:11px;
+
+    border-radius:4px;
+
+    border:2px solid white;
+}
+
+.brand-name{
+    font-size:15px;
+    font-weight:800;
+    letter-spacing:-.3px;
+}
+
+.brand-name span{
+    color:#7f8997;
+    font-weight:500;
+}
+
+.section-title{
+    padding:0 12px;
+    margin:0 0 9px;
+
+    color:#4f5967;
+
+    text-transform:uppercase;
+    letter-spacing:1px;
+
+    font-size:10px;
+    font-weight:700;
+}
+
+.nav{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+}
+
+.nav a{
+    height:45px;
+
     display:flex;
     align-items:center;
     gap:12px;
+
+    padding:0 12px;
+
+    border-radius:10px;
+
+    text-decoration:none;
+
+    color:#7f8997;
+
+    font-size:13px;
+    font-weight:500;
+
+    transition:.2s;
 }
 
-.menu a:hover,
-.menu a.active{
-    background:#172234;
-    color:#fff;
+.nav a svg{
+    width:18px;
+    height:18px;
+    stroke:currentColor;
 }
 
-.menu a.active{
-    border-left:3px solid #248cff;
+.nav a:hover{
+    background:#11161d;
+    color:white;
 }
 
-/* ================= MAIN ================= */
+.nav a.active{
+    background:var(--blue-soft);
+    color:white;
+}
+
+.nav a.active svg{
+    color:var(--blue2);
+}
+
+.sidebar-bottom{
+    margin-top:auto;
+
+    border-top:1px solid var(--border);
+
+    padding-top:18px;
+}
+
+.profile-mini{
+    display:flex;
+    align-items:center;
+    gap:11px;
+
+    padding:9px;
+}
+
+.avatar{
+    width:36px;
+    height:36px;
+
+    border-radius:50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #28303c,
+            #12161c
+        );
+
+    border:1px solid #29313c;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:11px;
+    font-weight:700;
+}
+
+.profile-info{
+    min-width:0;
+}
+
+.profile-info strong{
+    display:block;
+
+    font-size:12px;
+
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.profile-info span{
+    display:block;
+
+    margin-top:3px;
+
+    color:var(--muted);
+
+    font-size:10px;
+}
+
+
+/* =========================
+   MAIN
+========================= */
 
 .main{
-    margin-left:250px;
-    padding:30px;
+    margin-left:245px;
+
+    padding:28px 34px 50px;
+
+    max-width:1600px;
 }
 
-/* HEADER */
 
-.header{
+/* =========================
+   TOPBAR
+========================= */
+
+.topbar{
+    height:52px;
+
     display:flex;
     justify-content:space-between;
     align-items:center;
-    margin-bottom:30px;
+
+    margin-bottom:28px;
 }
 
-.header h1{
-    font-size:28px;
+.page-title h1{
+    font-size:22px;
+    letter-spacing:-.7px;
 }
 
-.header p{
-    color:#7f8997;
-    margin-top:6px;
-}
-
-.profile{
-    width:44px;
-    height:44px;
-    border-radius:50%;
-    background:#248cff;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-weight:bold;
-}
-
-/* ================= CARDS ================= */
-
-.cards{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:18px;
-}
-
-.card{
-    background:#10151d;
-    border:1px solid #1c2530;
-    border-radius:16px;
-    padding:22px;
-    position:relative;
-    overflow:hidden;
-}
-
-.card::after{
-    content:"";
-    position:absolute;
-    width:100px;
-    height:100px;
-    right:-40px;
-    top:-40px;
-    background:#248cff;
-    opacity:.05;
-    border-radius:50%;
-}
-
-.card-title{
-    color:#8b96a5;
-    font-size:14px;
-    margin-bottom:15px;
-}
-
-.card-value{
-    font-size:28px;
-    font-weight:800;
-}
-
-.sales .card-value{
-    color:#248cff;
-}
-
-.card-change{
-    margin-top:12px;
-    font-size:13px;
-    color:#35d48b;
-}
-
-/* ================= CONTENT ================= */
-
-.content{
-    margin-top:20px;
-    display:grid;
-    grid-template-columns:2fr 1fr;
-    gap:20px;
-}
-
-.box{
-    background:#10151d;
-    border:1px solid #1c2530;
-    border-radius:16px;
-    padding:22px;
-}
-
-.box-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:25px;
-}
-
-.box-header h2{
-    font-size:18px;
-}
-
-.select{
-    background:#171e28;
-    color:#aaa;
-    border:1px solid #27313e;
-    padding:8px 12px;
-    border-radius:8px;
-}
-
-/* ================= OBJECTIVE ================= */
-
-.progress{
-    height:9px;
-    background:#202731;
-    border-radius:20px;
-    overflow:hidden;
-    margin:20px 0 10px;
-}
-
-.progress-bar{
-    width:72%;
-    height:100%;
-    background:#248cff;
-    border-radius:20px;
-}
-
-.goal-info{
-    display:flex;
-    justify-content:space-between;
-    color:#8994a2;
-    font-size:13px;
-}
-
-/* ================= PRODUCT ================= */
-
-.product{
-    display:flex;
-    align-items:center;
-    gap:15px;
-    padding:12px 0;
-    border-bottom:1px solid #202731;
-}
-
-.product:last-child{
-    border-bottom:none;
-}
-
-.product-image{
-    width:50px;
-    height:65px;
-    border-radius:7px;
-    background:linear-gradient(135deg,#248cff,#173d70);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:20px;
-}
-
-.product-info{
-    flex:1;
-}
-
-.product-info h3{
-    font-size:14px;
-}
-
-.product-info p{
-    color:#788391;
-    font-size:12px;
+.page-title p{
     margin-top:5px;
-}
 
-.product-price{
-    font-weight:bold;
-}
+    color:var(--muted);
 
-/* ================= ORDERS ================= */
-
-.orders{
-    margin-top:20px;
-}
-
-table{
-    width:100%;
-    border-collapse:collapse;
-}
-
-th{
-    color:#737f8d;
     font-size:12px;
-    text-align:left;
-    padding:15px;
-    border-bottom:1px solid #202731;
 }
 
-td{
-    padding:16px 15px;
-    border-bottom:1px solid #1a212b;
-    font-size:13px;
+.top-actions{
+    display:flex;
+    align-items:center;
+    gap:9px;
 }
 
-.status{
-    background:#123c2b;
-    color:#35d48b;
-    padding:6px 10px;
-    border-radius:20px;
+.icon-btn{
+    width:38px;
+    height:38px;
+
+    border-radius:10px;
+
+    background:#0d1116;
+
+    border:1px solid var(--border);
+
+    color:#7e8896;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    cursor:pointer;
+}
+
+.icon-btn svg{
+    width:17px;
+}
+
+.date-btn{
+    height:38px;
+
+    padding:0 13px;
+
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    border-radius:10px;
+
+    border:1px solid var(--border);
+
+    background:#0d1116;
+
+    color:#aeb6c1;
+
     font-size:11px;
 }
 
-.amount{
-    font-weight:bold;
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+    position:relative;
+
+    min-height:195px;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    background:
+        linear-gradient(
+            105deg,
+            #111820 0%,
+            #0d1218 52%,
+            #0b0e13 100%
+        );
+
+    border:1px solid #202832;
+
+    padding:28px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:18px;
 }
 
-/* ================= RESPONSIVE ================= */
+.hero::before{
+    content:"";
 
-@media(max-width:1100px){
+    position:absolute;
 
-    .cards{
-        grid-template-columns:repeat(2,1fr);
+    width:360px;
+    height:360px;
+
+    right:-100px;
+    top:-190px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(37,136,255,.18),
+            transparent 65%
+        );
+}
+
+.hero-left{
+    position:relative;
+    z-index:2;
+
+    display:flex;
+    align-items:center;
+    gap:22px;
+}
+
+.book-cover{
+    width:102px;
+    height:136px;
+
+    border-radius:7px;
+
+    flex-shrink:0;
+
+    background:
+        linear-gradient(
+            150deg,
+            #0e1c2d,
+            #07101a
+        );
+
+    border:1px solid #314050;
+
+    box-shadow:
+        0 20px 40px rgba(0,0,0,.45);
+
+    position:relative;
+
+    overflow:hidden;
+
+    padding:14px;
+}
+
+.book-cover::before{
+    content:"";
+
+    position:absolute;
+
+    width:130px;
+    height:130px;
+
+    right:-60px;
+    top:-45px;
+
+    border-radius:50%;
+
+    border:1px solid rgba(75,160,255,.3);
+}
+
+.book-cover::after{
+    content:"";
+
+    position:absolute;
+
+    width:70px;
+    height:70px;
+
+    right:-30px;
+    top:-15px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(37,136,255,.4),
+            transparent 70%
+        );
+}
+
+.book-small{
+    color:#7e8da1;
+
+    font-size:6px;
+
+    text-transform:uppercase;
+    letter-spacing:1.4px;
+
+    position:relative;
+    z-index:2;
+}
+
+.book-title{
+    position:relative;
+    z-index:2;
+
+    margin-top:25px;
+
+    font-size:14px;
+    line-height:1.05;
+
+    font-weight:800;
+
+    letter-spacing:-.5px;
+}
+
+.book-line{
+    width:24px;
+    height:2px;
+
+    background:var(--blue);
+
+    margin-top:13px;
+}
+
+.hero-text small{
+    color:#657181;
+
+    font-size:10px;
+
+    text-transform:uppercase;
+
+    letter-spacing:1.3px;
+}
+
+.hero-text h2{
+    margin-top:7px;
+
+    font-size:27px;
+
+    letter-spacing:-1px;
+}
+
+.hero-text p{
+    color:#7f8997;
+
+    margin-top:8px;
+
+    max-width:500px;
+
+    font-size:12px;
+    line-height:1.6;
+}
+
+.hero-actions{
+    position:relative;
+    z-index:2;
+
+    display:flex;
+    gap:9px;
+}
+
+.btn{
+    height:39px;
+
+    padding:0 15px;
+
+    border-radius:9px;
+
+    border:1px solid var(--border);
+
+    background:#12171e;
+
+    color:#b5bdc8;
+
+    font-size:11px;
+    font-weight:600;
+
+    cursor:pointer;
+}
+
+.btn.primary{
+    background:var(--blue);
+
+    border-color:var(--blue);
+
+    color:white;
+
+    box-shadow:
+        0 8px 25px rgba(37,136,255,.2);
+}
+
+
+/* =========================
+   KPI
+========================= */
+
+.kpis{
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:13px;
+
+    margin-bottom:18px;
+}
+
+.kpi{
+    background:var(--panel);
+
+    border:1px solid var(--border);
+
+    border-radius:var(--radius);
+
+    padding:19px;
+
+    min-height:132px;
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+.kpi-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.kpi-label{
+    color:#7b8694;
+
+    font-size:11px;
+}
+
+.kpi-icon{
+    width:31px;
+    height:31px;
+
+    border-radius:8px;
+
+    background:#141a22;
+
+    color:#697686;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.kpi-icon svg{
+    width:15px;
+}
+
+.kpi-value{
+    margin-top:17px;
+
+    font-size:25px;
+
+    font-weight:700;
+
+    letter-spacing:-1px;
+}
+
+.kpi.sales .kpi-value{
+    color:var(--blue2);
+}
+
+.kpi-bottom{
+    display:flex;
+    align-items:center;
+    gap:7px;
+
+    margin-top:9px;
+
+    font-size:10px;
+}
+
+.up{
+    color:var(--green);
+}
+
+.down{
+    color:var(--red);
+}
+
+.kpi-bottom span:last-child{
+    color:#555f6d;
+}
+
+
+/* =========================
+   GRID
+========================= */
+
+.dashboard-grid{
+    display:grid;
+
+    grid-template-columns:
+        minmax(0,2fr)
+        minmax(280px,1fr);
+
+    gap:18px;
+}
+
+.panel{
+    background:var(--panel);
+
+    border:1px solid var(--border);
+
+    border-radius:var(--radius);
+
+    overflow:hidden;
+}
+
+.panel-header{
+    min-height:63px;
+
+    padding:0 20px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    border-bottom:1px solid var(--border);
+}
+
+.panel-title h3{
+    font-size:13px;
+    font-weight:600;
+}
+
+.panel-title p{
+    color:#596371;
+
+    margin-top:4px;
+
+    font-size:10px;
+}
+
+.panel-action{
+    color:#657080;
+
+    font-size:10px;
+}
+
+
+/* =========================
+   CHART
+========================= */
+
+.chart-wrap{
+    height:285px;
+
+    padding:20px 20px 12px;
+}
+
+#salesChart{
+    width:100% !important;
+    height:100% !important;
+}
+
+
+/* =========================
+   CHANNELS
+========================= */
+
+.channel-content{
+    padding:20px;
+}
+
+.channel-row{
+    margin-bottom:20px;
+}
+
+.channel-head{
+    display:flex;
+    justify-content:space-between;
+
+    font-size:11px;
+
+    margin-bottom:8px;
+}
+
+.channel-head span:first-child{
+    color:#a1aab6;
+}
+
+.channel-head span:last-child{
+    color:#737d8b;
+}
+
+.channel-bar{
+    height:5px;
+
+    background:#181e25;
+
+    border-radius:10px;
+
+    overflow:hidden;
+}
+
+.channel-progress{
+    height:100%;
+
+    border-radius:10px;
+
+    background:var(--blue);
+}
+
+.channel-progress.two{
+    background:#4c6fff;
+}
+
+.channel-progress.three{
+    background:#64748b;
+}
+
+.channel-progress.four{
+    background:#39424e;
+}
+
+
+/* =========================
+   LOWER GRID
+========================= */
+
+.lower-grid{
+    display:grid;
+
+    grid-template-columns:
+        minmax(0,1.4fr)
+        minmax(0,1fr);
+
+    gap:18px;
+
+    margin-top:18px;
+}
+
+
+/* =========================
+   ORDERS
+========================= */
+
+.orders{
+    padding:0 20px 8px;
+}
+
+.order{
+    display:grid;
+
+    grid-template-columns:
+        1fr
+        1fr
+        .7fr
+        .6fr;
+
+    align-items:center;
+
+    min-height:62px;
+
+    border-bottom:1px solid #171d24;
+
+    font-size:10px;
+}
+
+.order:last-child{
+    border-bottom:0;
+}
+
+.order-name{
+    display:flex;
+    align-items:center;
+    gap:9px;
+}
+
+.order-avatar{
+    width:30px;
+    height:30px;
+
+    border-radius:8px;
+
+    background:#171d25;
+
+    color:#8994a2;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:9px;
+    font-weight:700;
+}
+
+.order-name strong{
+    display:block;
+
+    color:#dce1e7;
+
+    font-size:10px;
+}
+
+.order-name span{
+    display:block;
+
+    color:#555f6b;
+
+    margin-top:3px;
+}
+
+.order-product{
+    color:#858f9d;
+}
+
+.order-date{
+    color:#555f6b;
+}
+
+.order-price{
+    text-align:right;
+
+    color:#dce1e7;
+
+    font-weight:600;
+}
+
+.paid{
+    color:var(--green);
+    font-size:9px;
+}
+
+
+/* =========================
+   ACTIVITY
+========================= */
+
+.activity{
+    padding:17px 20px;
+}
+
+.activity-item{
+    display:flex;
+
+    gap:12px;
+
+    padding:11px 0;
+
+    border-bottom:1px solid #171d24;
+}
+
+.activity-item:last-child{
+    border-bottom:0;
+}
+
+.activity-dot{
+    width:8px;
+    height:8px;
+
+    border-radius:50%;
+
+    background:var(--blue);
+
+    margin-top:5px;
+
+    box-shadow:
+        0 0 0 4px rgba(37,136,255,.09);
+}
+
+.activity-text{
+    color:#7d8794;
+
+    font-size:10px;
+
+    line-height:1.5;
+}
+
+.activity-text strong{
+    color:#dfe4ea;
+}
+
+.activity-time{
+    color:#4f5965;
+
+    margin-top:3px;
+
+    font-size:9px;
+}
+
+
+/* =========================
+   GOAL
+========================= */
+
+.goal{
+    margin-top:18px;
+
+    padding:20px;
+
+    background:
+        linear-gradient(
+            120deg,
+            rgba(37,136,255,.09),
+            transparent
+        );
+
+    border:1px solid rgba(37,136,255,.13);
+
+    border-radius:var(--radius);
+}
+
+.goal-top{
+    display:flex;
+    justify-content:space-between;
+}
+
+.goal-title{
+    font-size:11px;
+    color:#9ca6b3;
+}
+
+.goal-percent{
+    color:var(--blue2);
+    font-size:12px;
+    font-weight:700;
+}
+
+.goal-number{
+    font-size:21px;
+    font-weight:700;
+
+    margin-top:9px;
+}
+
+.goal-number span{
+    color:#555f6c;
+    font-size:11px;
+    font-weight:500;
+}
+
+.goal-bar{
+    height:6px;
+
+    background:#171d24;
+
+    border-radius:10px;
+
+    margin-top:14px;
+
+    overflow:hidden;
+}
+
+.goal-fill{
+    width:71%;
+
+    height:100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #1978e9,
+            #55a5ff
+        );
+
+    border-radius:10px;
+}
+
+
+/* =========================
+   MOBILE NAV
+========================= */
+
+.mobile-nav{
+    display:none;
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:1150px){
+
+    .kpis{
+        grid-template-columns:
+            repeat(2,1fr);
     }
 
-    .content{
+    .dashboard-grid{
         grid-template-columns:1fr;
     }
+
+    .lower-grid{
+        grid-template-columns:1fr;
+    }
+
 }
 
-@media(max-width:700px){
+@media(max-width:750px){
 
     .sidebar{
-        width:70px;
-        padding:20px 10px;
-    }
-
-    .logo{
-        font-size:0;
-        text-align:center;
-        padding:0;
-    }
-
-    .logo span{
-        font-size:25px;
-    }
-
-    .menu a{
-        justify-content:center;
-        font-size:0;
-    }
-
-    .menu a::first-letter{
-        font-size:20px;
+        display:none;
     }
 
     .main{
-        margin-left:70px;
-        padding:18px;
+        margin-left:0;
+
+        padding:
+            18px
+            15px
+            82px;
     }
 
-    .header h1{
-        font-size:22px;
+    .topbar{
+        margin-bottom:18px;
     }
 
-    .cards{
+    .page-title h1{
+        font-size:19px;
+    }
+
+    .page-title p{
+        font-size:10px;
+    }
+
+    .date-btn{
+        display:none;
+    }
+
+    .hero{
+        padding:19px;
+
+        min-height:auto;
+
+        align-items:flex-start;
+    }
+
+    .hero-left{
+        align-items:flex-start;
+
+        gap:15px;
+    }
+
+    .book-cover{
+        width:70px;
+        height:95px;
+
+        padding:9px;
+    }
+
+    .book-title{
+        margin-top:17px;
+        font-size:10px;
+    }
+
+    .book-line{
+        margin-top:8px;
+    }
+
+    .hero-text h2{
+        font-size:19px;
+    }
+
+    .hero-text p{
+        display:none;
+    }
+
+    .hero-actions{
+        display:none;
+    }
+
+    .kpis{
         grid-template-columns:1fr 1fr;
-        gap:10px;
+
+        gap:9px;
     }
 
-    .card{
-        padding:16px;
+    .kpi{
+        min-height:115px;
+
+        padding:15px;
     }
 
-    .card-value{
-        font-size:22px;
+    .kpi-value{
+        font-size:20px;
+
+        margin-top:13px;
     }
 
-    .content{
-        grid-template-columns:1fr;
+    .kpi-label{
+        font-size:9px;
     }
 
-    .box{
-        padding:16px;
+    .chart-wrap{
+        height:235px;
+
+        padding:13px;
+    }
+
+    .panel-header{
+        padding:0 15px;
     }
 
     .orders{
+        padding:0 15px 8px;
+
         overflow-x:auto;
     }
 
-    table{
-        min-width:650px;
+    .order{
+        min-width:570px;
     }
+
+    .mobile-nav{
+        display:flex;
+
+        position:fixed;
+
+        bottom:12px;
+        left:12px;
+        right:12px;
+
+        height:59px;
+
+        background:rgba(14,18,23,.95);
+
+        border:1px solid #252d37;
+
+        border-radius:17px;
+
+        backdrop-filter:blur(18px);
+
+        z-index:50;
+
+        justify-content:space-around;
+        align-items:center;
+    }
+
+    .mobile-nav a{
+        color:#657080;
+
+        text-decoration:none;
+
+        display:flex;
+        flex-direction:column;
+
+        align-items:center;
+
+        gap:4px;
+
+        font-size:8px;
+    }
+
+    .mobile-nav svg{
+        width:17px;
+        height:17px;
+    }
+
+    .mobile-nav a.active{
+        color:var(--blue2);
+    }
+
 }
+
 </style>
 </head>
 
+
 <body>
 
-<!-- SIDEBAR -->
+
+<!-- ================= SIDEBAR ================= -->
 
 <aside class="sidebar">
 
-    <div class="logo">
-        E<span>BOOK</span>
+    <div class="brand">
+
+        <div class="brand-mark"></div>
+
+        <div class="brand-name">
+            EBOOK <span>STUDIO</span>
+        </div>
+
     </div>
 
-    <nav class="menu">
+
+    <div class="section-title">
+        Principal
+    </div>
+
+
+    <nav class="nav">
 
         <a href="#" class="active">
-            🏠
-            <span>Dashboard</span>
+
+            <svg fill="none" viewBox="0 0 24 24">
+                <rect x="3" y="3" width="7" height="7" rx="2" stroke="currentColor"/>
+                <rect x="14" y="3" width="7" height="7" rx="2" stroke="currentColor"/>
+                <rect x="3" y="14" width="7" height="7" rx="2" stroke="currentColor"/>
+                <rect x="14" y="14" width="7" height="7" rx="2" stroke="currentColor"/>
+            </svg>
+
+            Dashboard
+
         </a>
 
-        <a href="#">
-            📚
-            <span>Mes eBooks</span>
-        </a>
 
         <a href="#">
-            🛒
-            <span>Ventes</span>
+
+            <svg fill="none" viewBox="0 0 24 24">
+                <path d="M5 4h10a4 4 0 014 4v12H9a4 4 0 01-4-4V4z"
+                      stroke="currentColor"/>
+                <path d="M9 20V8a4 4 0 014-4"
+                      stroke="currentColor"/>
+            </svg>
+
+            Mon eBook
+
         </a>
 
-        <a href="#">
-            👥
-            <span>Clients</span>
-        </a>
 
         <a href="#">
-            💳
-            <span>Paiements</span>
+
+            <svg fill="none" viewBox="0 0 24 24">
+                <path d="M4 19V5"
+                      stroke="currentColor"/>
+                <path d="M4 19h17"
+                      stroke="currentColor"/>
+                <path d="M7 15l4-4 3 2 5-7"
+                      stroke="currentColor"/>
+            </svg>
+
+            Analytics
+
         </a>
 
+
         <a href="#">
-            ⚙️
-            <span>Paramètres</span>
+
+            <svg fill="none" viewBox="0 0 24 24">
+                <path d="M6 8h12l1 12H5L6 8z"
+                      stroke="currentColor"/>
+                <path d="M9 8a3 3 0 016 0"
+                      stroke="currentColor"/>
+            </svg>
+
+            Commandes
+
+        </a>
+
+
+        <a href="#">
+
+            <svg fill="none" viewBox="0 0 24 24">
+                <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"
+                      stroke="currentColor"/>
+                <circle cx="12" cy="7" r="4"
+                        stroke="currentColor"/>
+            </svg>
+
+            Clients
+
         </a>
 
     </nav>
 
+
+    <div class="section-title" style="margin-top:28px;">
+        Gestion
+    </div>
+
+
+    <nav class="nav">
+
+        <a href="#">
+
+            <svg fill="none" viewBox="0 0 24 24">
+                <path d="M12 3v18"
+                      stroke="currentColor"/>
+                <path d="M17 7H9.5a2.5 2.5 0 000 5h5a2.5 2.5 0 010 5H7"
+                      stroke="currentColor"/>
+            </svg>
+
+            Revenus
+
+        </a>
+
+
+        <a href="#">
+
+            <svg fill="none" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="3"
+                        stroke="currentColor"/>
+                <path d="M19.4 15a1.7 1.7 0 00.3 1.9l.1.1-1.8 1.8-.1-.1a1.7 1.7 0 00-1.9-.3 1.7 1.7 0 00-1 1.6v.2h-2.5V20a1.7 1.7 0 00-1-1.6 1.7 1.7 0 00-1.9.3l-.1.1-1.8-1.8.1-.1a1.7 1.7 0 00.3-1.9 1.7 1.7 0 00-1.6-1H5.4v-2.5H5.6a1.7 1.7 0 001.6-1 1.7 1.7 0 00-.3-1.9l-.1-.1 1.8-1.8.1.1a1.7 1.7 0 001.9.3 1.7 1.7 0 001-1.6V5h2.5v.2a1.7 1.7 0 001 1.6 1.7 1.7 0 001.9-.3l.1-.1 1.8 1.8-.1.1a1.7 1.7 0 00-.3 1.9 1.7 1.7 0 001.6 1h.2v2.5h-.2a1.7 1.7 0 00-1.6 1z"
+                      stroke="currentColor"/>
+            </svg>
+
+            Paramètres
+
+        </a>
+
+    </nav>
+
+
+    <div class="sidebar-bottom">
+
+        <div class="profile-mini">
+
+            <div class="avatar">
+                IG
+            </div>
+
+            <div class="profile-info">
+
+                <strong>Administrateur</strong>
+
+                <span>Compte professionnel</span>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </aside>
 
 
-<!-- MAIN -->
+
+<!-- ================= MAIN ================= -->
 
 <main class="main">
 
-    <!-- HEADER -->
 
-    <header class="header">
+    <!-- TOP -->
 
-        <div>
-            <h1>Tableau de bord</h1>
-            <p>Voici un aperçu de vos ventes d'eBooks.</p>
+    <header class="topbar">
+
+        <div class="page-title">
+
+            <h1>Vue d'ensemble</h1>
+
+            <p>
+                Suivez les performances de votre eBook.
+            </p>
+
         </div>
 
-        <div class="profile">
-            IG
+
+        <div class="top-actions">
+
+            <button class="icon-btn">
+
+                <svg fill="none" viewBox="0 0 24 24">
+                    <path d="M18 8a6 6 0 00-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"
+                          stroke="currentColor"/>
+                    <path d="M10 21h4"
+                          stroke="currentColor"/>
+                </svg>
+
+            </button>
+
+
+            <button class="date-btn">
+
+                01 — 30 Septembre 2026
+
+                <svg width="13" fill="none" viewBox="0 0 24 24">
+                    <path d="M6 9l6 6 6-6"
+                          stroke="currentColor"/>
+                </svg>
+
+            </button>
+
         </div>
 
     </header>
 
 
-    <!-- STATISTICS -->
 
-    <section class="cards">
+    <!-- ================= HERO ================= -->
 
-        <div class="card sales">
-
-            <div class="card-title">
-                Nombre de ventes
-            </div>
-
-            <div class="card-value">
-                1 284
-            </div>
-
-            <div class="card-change">
-                ↑ +18,6% ce mois
-            </div>
-
-        </div>
+    <section class="hero">
 
 
-        <div class="card">
-
-            <div class="card-title">
-                Chiffre d'affaires
-            </div>
-
-            <div class="card-value">
-                1 926 000 FCFA
-            </div>
-
-            <div class="card-change">
-                ↑ +14,2%
-            </div>
-
-        </div>
+        <div class="hero-left">
 
 
-        <div class="card">
+            <div class="book-cover">
 
-            <div class="card-title">
-                Clients
-            </div>
-
-            <div class="card-value">
-                1 071
-            </div>
-
-            <div class="card-change">
-                ↑ +9,8%
-            </div>
-
-        </div>
-
-
-        <div class="card">
-
-            <div class="card-title">
-                Prix moyen
-            </div>
-
-            <div class="card-value">
-                1 500 FCFA
-            </div>
-
-            <div class="card-change">
-                Stable
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- GRAPH + GOAL -->
-
-    <section class="content">
-
-        <div class="box">
-
-            <div class="box-header">
-
-                <h2>Évolution des ventes</h2>
-
-                <select class="select">
-                    <option>30 derniers jours</option>
-                    <option>7 derniers jours</option>
-                    <option>Cette année</option>
-                </select>
-
-            </div>
-
-            <canvas id="salesChart"></canvas>
-
-        </div>
-
-
-        <div class="box">
-
-            <div class="box-header">
-                <h2>Objectif mensuel</h2>
-            </div>
-
-            <h3 style="font-size:28px;">
-                1 284 / 1 800
-            </h3>
-
-            <div class="progress">
-
-                <div class="progress-bar"></div>
-
-            </div>
-
-            <div class="goal-info">
-
-                <span>72% atteint</span>
-
-                <span>516 restantes</span>
-
-            </div>
-
-            <br>
-
-            <p style="color:#7e8997;font-size:13px;line-height:1.6;">
-                Continuez à promouvoir votre eBook
-                pour atteindre votre objectif mensuel.
-            </p>
-
-        </div>
-
-    </section>
-
-
-    <!-- BEST SELLING -->
-
-    <section class="content">
-
-        <div class="box">
-
-            <div class="box-header">
-
-                <h2>Vos eBooks</h2>
-
-                <span style="color:#248cff;font-size:13px;">
-                    Voir tout
-                </span>
-
-            </div>
-
-
-            <div class="product">
-
-                <div class="product-image">
-                    📘
+                <div class="book-small">
+                    eBook
                 </div>
 
-                <div class="product-info">
-
-                    <h3>
-                        Maîtriser le marketing digital
-                    </h3>
-
-                    <p>
-                        684 ventes
-                    </p>
-
+                <div class="book-title">
+                    COMPRENDRE<br>
+                    L'APOCALYPSE
                 </div>
 
-                <div class="product-price">
-                    1 500 FCFA
-                </div>
+                <div class="book-line"></div>
 
             </div>
 
 
-            <div class="product">
+            <div class="hero-text">
 
-                <div class="product-image">
-                    📕
-                </div>
+                <small>
+                    Votre produit
+                </small>
 
-                <div class="product-info">
+                <h2>
+                    Comprendre l'apocalypse
+                </h2>
 
-                    <h3>
-                        Créer son business en ligne
-                    </h3>
-
-                    <p>
-                        421 ventes
-                    </p>
-
-                </div>
-
-                <div class="product-price">
-                    2 000 FCFA
-                </div>
-
-            </div>
-
-
-            <div class="product">
-
-                <div class="product-image">
-                    📗
-                </div>
-
-                <div class="product-info">
-
-                    <h3>
-                        Guide de l'entrepreneur
-                    </h3>
-
-                    <p>
-                        179 ventes
-                    </p>
-
-                </div>
-
-                <div class="product-price">
-                    1 000 FCFA
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- TOP PRODUCT -->
-
-        <div class="box">
-
-            <div class="box-header">
-
-                <h2>Meilleure vente</h2>
-
-            </div>
-
-            <div style="
-                height:180px;
-                border-radius:12px;
-                background:linear-gradient(
-                    135deg,
-                    #248cff,
-                    #10151d
-                );
-                display:flex;
-                flex-direction:column;
-                align-items:center;
-                justify-content:center;
-                text-align:center;
-            ">
-
-                <div style="font-size:45px;">
-                    📘
-                </div>
-
-                <h3 style="margin-top:10px;">
-                    Marketing Digital
-                </h3>
-
-                <p style="
-                    color:#dce8f7;
-                    margin-top:6px;
-                    font-size:13px;
-                ">
-                    684 ventes
+                <p>
+                    Analysez les ventes, les revenus et les performances
+                    de votre eBook depuis un seul espace.
                 </p>
 
             </div>
 
         </div>
 
+
+        <div class="hero-actions">
+
+            <button class="btn">
+                Modifier l'eBook
+            </button>
+
+            <button class="btn primary">
+                Voir la page de vente
+            </button>
+
+        </div>
+
     </section>
 
 
-    <!-- RECENT ORDERS -->
 
-    <section class="box orders">
+    <!-- ================= KPI ================= -->
 
-        <div class="box-header">
+    <section class="kpis">
 
-            <h2>Dernières ventes</h2>
 
-            <span style="color:#248cff;font-size:13px;">
-                Voir toutes les ventes
-            </span>
+        <div class="kpi sales">
+
+            <div class="kpi-top">
+
+                <span class="kpi-label">
+                    Nombre de ventes
+                </span>
+
+                <div class="kpi-icon">
+
+                    <svg fill="none" viewBox="0 0 24 24">
+                        <path d="M6 3v18"
+                              stroke="currentColor"/>
+                        <path d="M18 3v18"
+                              stroke="currentColor"/>
+                        <path d="M6 7h9a3 3 0 010 6H6"
+                              stroke="currentColor"/>
+                        <path d="M6 13h10a3 3 0 010 6H6"
+                              stroke="currentColor"/>
+                    </svg>
+
+                </div>
+
+            </div>
+
+
+            <div class="kpi-value">
+                1 284
+            </div>
+
+
+            <div class="kpi-bottom">
+
+                <span class="up">
+                    +18,6%
+                </span>
+
+                <span>
+                    vs mois précédent
+                </span>
+
+            </div>
 
         </div>
 
 
-        <table>
 
-            <thead>
+        <div class="kpi">
 
-                <tr>
-                    <th>CLIENT</th>
-                    <th>eBOOK</th>
-                    <th>DATE</th>
-                    <th>MONTANT</th>
-                    <th>STATUT</th>
-                </tr>
+            <div class="kpi-top">
 
-            </thead>
+                <span class="kpi-label">
+                    Chiffre d'affaires
+                </span>
 
+                <div class="kpi-icon">
 
-            <tbody>
+                    <svg fill="none" viewBox="0 0 24 24">
+                        <path d="M12 3v18"
+                              stroke="currentColor"/>
+                        <path d="M17 7H9.5a2.5 2.5 0 000 5h5a2.5 2.5 0 010 5H7"
+                              stroke="currentColor"/>
+                    </svg>
 
-                <tr>
+                </div>
 
-                    <td>
-                        Jean M.
-                    </td>
-
-                    <td>
-                        Marketing Digital
-                    </td>
-
-                    <td>
-                        Aujourd'hui, 11:32
-                    </td>
-
-                    <td class="amount">
-                        1 500 FCFA
-                    </td>
-
-                    <td>
-                        <span class="status">
-                            Payé
-                        </span>
-                    </td>
-
-                </tr>
+            </div>
 
 
-                <tr>
-
-                    <td>
-                        Sarah K.
-                    </td>
-
-                    <td>
-                        Business en ligne
-                    </td>
-
-                    <td>
-                        Aujourd'hui, 10:48
-                    </td>
-
-                    <td class="amount">
-                        2 000 FCFA
-                    </td>
-
-                    <td>
-                        <span class="status">
-                            Payé
-                        </span>
-                    </td>
-
-                </tr>
+            <div class="kpi-value">
+                1,92 M
+            </div>
 
 
-                <tr>
+            <div class="kpi-bottom">
 
-                    <td>
-                        Paul T.
-                    </td>
+                <span class="up">
+                    +14,2%
+                </span>
 
-                    <td>
-                        Marketing Digital
-                    </td>
+                <span>
+                    FCFA
+                </span>
 
-                    <td>
-                        Aujourd'hui, 09:21
-                    </td>
+            </div>
 
-                    <td class="amount">
-                        1 500 FCFA
-                    </td>
-
-                    <td>
-                        <span class="status">
-                            Payé
-                        </span>
-                    </td>
-
-                </tr>
+        </div>
 
 
-                <tr>
 
-                    <td>
-                        Nadia F.
-                    </td>
+        <div class="kpi">
 
-                    <td>
-                        Guide Entrepreneur
-                    </td>
+            <div class="kpi-top">
 
-                    <td>
-                        Hier, 21:05
-                    </td>
+                <span class="kpi-label">
+                    Visiteurs
+                </span>
 
-                    <td class="amount">
-                        1 000 FCFA
-                    </td>
+                <div class="kpi-icon">
 
-                    <td>
-                        <span class="status">
-                            Payé
-                        </span>
-                    </td>
+                    <svg fill="none" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="8"
+                                stroke="currentColor"/>
+                        <path d="M4 12h16"
+                              stroke="currentColor"/>
+                        <path d="M12 4c2 2.2 3 4.8 3 8s-1 5.8-3 8"
+                              stroke="currentColor"/>
+                    </svg>
 
-                </tr>
+                </div>
 
-            </tbody>
+            </div>
 
-        </table>
+
+            <div class="kpi-value">
+                24 680
+            </div>
+
+
+            <div class="kpi-bottom">
+
+                <span class="up">
+                    +8,4%
+                </span>
+
+                <span>
+                    ce mois
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="kpi">
+
+            <div class="kpi-top">
+
+                <span class="kpi-label">
+                    Conversion
+                </span>
+
+                <div class="kpi-icon">
+
+                    <svg fill="none" viewBox="0 0 24 24">
+                        <path d="M4 18l6-6 4 3 6-8"
+                              stroke="currentColor"/>
+                        <path d="M15 7h5v5"
+                              stroke="currentColor"/>
+                    </svg>
+
+                </div>
+
+            </div>
+
+
+            <div class="kpi-value">
+                5,20%
+            </div>
+
+
+            <div class="kpi-bottom">
+
+                <span class="up">
+                    +0,8%
+                </span>
+
+                <span>
+                    cette période
+                </span>
+
+            </div>
+
+        </div>
+
 
     </section>
+
+
+
+    <!-- ================= MAIN CHART + CHANNEL ================= -->
+
+    <section class="dashboard-grid">
+
+
+        <div class="panel">
+
+            <div class="panel-header">
+
+                <div class="panel-title">
+
+                    <h3>
+                        Évolution des ventes
+                    </h3>
+
+                    <p>
+                        Nombre d'eBooks vendus
+                    </p>
+
+                </div>
+
+                <div class="panel-action">
+                    Septembre 2026
+                </div>
+
+            </div>
+
+
+            <div class="chart-wrap">
+
+                <canvas id="salesChart"></canvas>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="panel">
+
+            <div class="panel-header">
+
+                <div class="panel-title">
+
+                    <h3>
+                        Sources des ventes
+                    </h3>
+
+                    <p>
+                        D'où viennent vos acheteurs
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="channel-content">
+
+
+                <div class="channel-row">
+
+                    <div class="channel-head">
+
+                        <span>
+                            WhatsApp
+                        </span>
+
+                        <span>
+                            42%
+                        </span>
+
+                    </div>
+
+                    <div class="channel-bar">
+                        <div
+                            class="channel-progress"
+                            style="width:42%">
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+                <div class="channel-row">
+
+                    <div class="channel-head">
+
+                        <span>
+                            Facebook
+                        </span>
+
+                        <span>
+                            27%
+                        </span>
+
+                    </div>
+
+                    <div class="channel-bar">
+                        <div
+                            class="channel-progress two"
+                            style="width:27%">
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+                <div class="channel-row">
+
+                    <div class="channel-head">
+
+                        <span>
+                            TikTok
+                        </span>
+
+                        <span>
+                            18%
+                        </span>
+
+                    </div>
+
+                    <div class="channel-bar">
+                        <div
+                            class="channel-progress three"
+                            style="width:18%">
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+                <div class="channel-row">
+
+                    <div class="channel-head">
+
+                        <span>
+                            Direct
+                        </span>
+
+                        <span>
+                            13%
+                        </span>
+
+                    </div>
+
+                    <div class="channel-bar">
+                        <div
+                            class="channel-progress four"
+                            style="width:13%">
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+                <div class="goal">
+
+                    <div class="goal-top">
+
+                        <span class="goal-title">
+                            Objectif mensuel
+                        </span>
+
+                        <span class="goal-percent">
+                            71%
+                        </span>
+
+                    </div>
+
+
+                    <div class="goal-number">
+                        1 284
+                        <span>/ 1 800 ventes</span>
+                    </div>
+
+
+                    <div class="goal-bar">
+
+                        <div class="goal-fill"></div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= LOWER ================= -->
+
+    <section class="lower-grid">
+
+
+        <!-- ORDERS -->
+
+        <div class="panel">
+
+            <div class="panel-header">
+
+                <div class="panel-title">
+
+                    <h3>
+                        Dernières ventes
+                    </h3>
+
+                    <p>
+                        Transactions récentes
+                    </p>
+
+                </div>
+
+                <div class="panel-action">
+                    Voir tout
+                </div>
+
+            </div>
+
+
+            <div class="orders">
+
+
+                <div class="order">
+
+                    <div class="order-name">
+
+                        <div class="order-avatar">
+                            JM
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Jean M.
+                            </strong>
+
+                            <span>
+                                jean@email.com
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="order-product">
+                        Comprendre l'apocalypse
+                    </div>
+
+
+                    <div class="order-date">
+                        Aujourd'hui
+                    </div>
+
+
+                    <div class="order-price">
+                        1 500 FCFA
+                    </div>
+
+                </div>
+
+
+
+                <div class="order">
+
+                    <div class="order-name">
+
+                        <div class="order-avatar">
+                            SK
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Sarah K.
+                            </strong>
+
+                            <span>
+                                sarah@email.com
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="order-product">
+                        Comprendre l'apocalypse
+                    </div>
+
+
+                    <div class="order-date">
+                        Aujourd'hui
+                    </div>
+
+
+                    <div class="order-price">
+                        1 500 FCFA
+                    </div>
+
+                </div>
+
+
+
+                <div class="order">
+
+                    <div class="order-name">
+
+                        <div class="order-avatar">
+                            PT
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Paul T.
+                            </strong>
+
+                            <span>
+                                paul@email.com
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="order-product">
+                        Comprendre l'apocalypse
+                    </div>
+
+
+                    <div class="order-date">
+                        Hier
+                    </div>
+
+
+                    <div class="order-price">
+                        1 500 FCFA
+                    </div>
+
+                </div>
+
+
+
+                <div class="order">
+
+                    <div class="order-name">
+
+                        <div class="order-avatar">
+                            NF
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Nadia F.
+                            </strong>
+
+                            <span>
+                                nadia@email.com
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="order-product">
+                        Comprendre l'apocalypse
+                    </div>
+
+
+                    <div class="order-date">
+                        Hier
+                    </div>
+
+
+                    <div class="order-price">
+                        1 500 FCFA
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ACTIVITY -->
+
+        <div class="panel">
+
+            <div class="panel-header">
+
+                <div class="panel-title">
+
+                    <h3>
+                        Activité récente
+                    </h3>
+
+                    <p>
+                        Votre activité aujourd'hui
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="activity">
+
+
+                <div class="activity-item">
+
+                    <div class="activity-dot"></div>
+
+                    <div class="activity-text">
+
+                        <strong>
+                            Nouvelle vente
+                        </strong>
+                        — Comprendre l'apocalypse vendu.
+
+                        <div class="activity-time">
+                            Il y a 4 minutes
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="activity-item">
+
+                    <div class="activity-dot"></div>
+
+                    <div class="activity-text">
+
+                        <strong>
+                            12 nouvelles visites
+                        </strong>
+                        sur votre page de vente.
+
+                        <div class="activity-time">
+                            Il y a 18 minutes
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="activity-item">
+
+                    <div class="activity-dot"></div>
+
+                    <div class="activity-text">
+
+                        <strong>
+                            Nouvelle vente
+                        </strong>
+                        via WhatsApp.
+
+                        <div class="activity-time">
+                            Il y a 31 minutes
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="activity-item">
+
+                    <div class="activity-dot"></div>
+
+                    <div class="activity-text">
+
+                        <strong>
+                            7 ventes
+                        </strong>
+                        enregistrées aujourd'hui.
+
+                        <div class="activity-time">
+                            Il y a 1 heure
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </section>
+
 
 </main>
 
 
+
+<!-- ================= MOBILE NAV ================= -->
+
+<nav class="mobile-nav">
+
+    <a href="#" class="active">
+
+        <svg fill="none" viewBox="0 0 24 24">
+            <rect x="3" y="3" width="7" height="7" rx="2"
+                  stroke="currentColor"/>
+            <rect x="14" y="3" width="7" height="7" rx="2"
+                  stroke="currentColor"/>
+            <rect x="3" y="14" width="7" height="7" rx="2"
+                  stroke="currentColor"/>
+            <rect x="14" y="14" width="7" height="7" rx="2"
+                  stroke="currentColor"/>
+        </svg>
+
+        Accueil
+
+    </a>
+
+
+    <a href="#">
+
+        <svg fill="none" viewBox="0 0 24 24">
+            <path d="M4 19V5"
+                  stroke="currentColor"/>
+            <path d="M4 19h17"
+                  stroke="currentColor"/>
+            <path d="M7 15l4-4 3 2 5-7"
+                  stroke="currentColor"/>
+        </svg>
+
+        Analytics
+
+    </a>
+
+
+    <a href="#">
+
+        <svg fill="none" viewBox="0 0 24 24">
+            <path d="M6 8h12l1 12H5L6 8z"
+                  stroke="currentColor"/>
+            <path d="M9 8a3 3 0 016 0"
+                  stroke="currentColor"/>
+        </svg>
+
+        Ventes
+
+    </a>
+
+
+    <a href="#">
+
+        <svg fill="none" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="3"
+                    stroke="currentColor"/>
+            <circle cx="12" cy="12" r="9"
+                    stroke="currentColor"/>
+        </svg>
+
+        Plus
+
+    </a>
+
+</nav>
+
+
+
 <script>
 
-const ctx = document
-    .getElementById('salesChart')
-    .getContext('2d');
+const ctx =
+    document
+    .getElementById("salesChart")
+    .getContext("2d");
 
-new Chart(ctx, {
 
-    type:'line',
+const gradient =
+    ctx.createLinearGradient(
+        0,
+        0,
+        0,
+        280
+    );
+
+gradient.addColorStop(
+    0,
+    "rgba(37,136,255,.20)"
+);
+
+gradient.addColorStop(
+    1,
+    "rgba(37,136,255,0)"
+);
+
+
+new Chart(ctx,{
+
+    type:"line",
 
     data:{
 
         labels:[
-            '1',
-            '5',
-            '10',
-            '15',
-            '20',
-            '25',
-            '30'
+            "01",
+            "03",
+            "05",
+            "07",
+            "09",
+            "11",
+            "13",
+            "15",
+            "17",
+            "19",
+            "21",
+            "23",
+            "25",
+            "27",
+            "29"
         ],
 
         datasets:[{
 
-            label:'Ventes',
-
             data:[
-                25,
-                48,
-                37,
+                28,
+                35,
+                31,
+                47,
+                42,
+                58,
+                51,
+                72,
+                67,
+                81,
                 76,
-                65,
-                110,
+                95,
+                101,
+                117,
                 138
             ],
 
-            borderColor:'#248cff',
+            borderColor:"#3d96ff",
 
-            backgroundColor:'rgba(36,140,255,0.10)',
-
-            borderWidth:3,
+            backgroundColor:gradient,
 
             fill:true,
 
-            tension:.4,
+            borderWidth:2,
 
-            pointRadius:4,
+            tension:.42,
 
-            pointBackgroundColor:'#248cff'
+            pointRadius:0,
+
+            pointHoverRadius:5,
+
+            pointHoverBackgroundColor:"#3d96ff",
+
+            pointHoverBorderColor:"#fff",
+
+            pointHoverBorderWidth:2
 
         }]
 
@@ -926,38 +2388,93 @@ new Chart(ctx, {
 
         responsive:true,
 
+        maintainAspectRatio:false,
+
+        interaction:{
+            intersect:false,
+            mode:"index"
+        },
+
         plugins:{
 
             legend:{
                 display:false
+            },
+
+            tooltip:{
+
+                backgroundColor:"#11161d",
+
+                borderColor:"#26303b",
+
+                borderWidth:1,
+
+                padding:11,
+
+                displayColors:false,
+
+                titleColor:"#7e8997",
+
+                bodyColor:"#fff",
+
+                titleFont:{
+                    size:10
+                },
+
+                bodyFont:{
+                    size:12,
+                    weight:"600"
+                }
+
             }
 
         },
 
         scales:{
 
-            y:{
-                beginAtZero:true,
-
-                grid:{
-                    color:'#1c2530'
-                },
-
-                ticks:{
-                    color:'#74808f'
-                }
-
-            },
-
             x:{
+
+                border:{
+                    display:false
+                },
 
                 grid:{
                     display:false
                 },
 
                 ticks:{
-                    color:'#74808f'
+                    color:"#515c69",
+
+                    font:{
+                        size:9
+                    }
                 }
+
+            },
+
+            y:{
+
+                border:{
+                    display:false
+                },
+
+                grid:{
+                    color:"rgba(255,255,255,.045)"
+                },
+
+                ticks:{
+
+                    color:"#515c69",
+
+                    font:{
+                        size:9
+                    },
+
+                    padding:8
+
+                },
+
+                beginAtZero:true
 
             }
 
